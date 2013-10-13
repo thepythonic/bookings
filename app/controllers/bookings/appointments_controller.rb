@@ -3,6 +3,7 @@ require_dependency "bookings/application_controller"
 module Bookings
   class AppointmentsController < ApplicationController
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+    before_action :set_customers_employees, only: [:new, :edit]
 
     # GET /appointments
     def index
@@ -48,6 +49,19 @@ module Bookings
       redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
     end
 
+
+    def appointments_for_employee
+      @employee = Employee.find(params[:employee])
+      @appointments = @employee.appointments
+      render :index
+    end
+
+    def appointments_for_customer
+      @customer = Customer.find(params[:customer])
+      @appointments = @customer.appointments
+      render :index
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_appointment
@@ -56,7 +70,12 @@ module Bookings
 
       # Only allow a trusted parameter "white list" through.
       def appointment_params
-        params.require(:appointment).permit(:from, :duration, :position, :note)
+        params.require(:appointment).permit(:from, :duration, :position, :note, :customer_id, :employee_id)
+      end
+
+      def set_customers_employees
+        @customers = Bookings.customer_class.to_s.constantize.all
+        @employees = Bookings.employee_class.to_s.constantize.all
       end
   end
 end

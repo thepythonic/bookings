@@ -12,6 +12,16 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :employee %><br>
+    <%= f.select :employee_id, @employees.map{|e| [e.name, e.id]}, include_blank: '-- select --' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :customer %><br>
+    <%= f.select :customer_id, @customers.map{|e| [e.name, e.id]}, include_blank: '-- select --' %>
+  </div>
+
+  <div class="field">
     <%= f.label :from %><br>
     <%= f.datetime_select :from %>
   </div>
