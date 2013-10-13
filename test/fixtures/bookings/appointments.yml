@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  from: 2013-10-13 19:58:54
+  duration: 1
+  position: 1
+  note: MyText
+
+two:
+  from: 2013-10-13 19:58:54
+  duration: 1
+  position: 1
+  note: MyText
