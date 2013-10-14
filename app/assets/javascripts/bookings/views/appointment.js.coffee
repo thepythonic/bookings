@@ -6,35 +6,42 @@
   events:
     'click': 'reschedule'
     
-
-
-
   reschedule: (event) ->
     editView = new AppointmentEditView model: @model
-    console.log ('ZZZZZZZZZ')
     $('#form').html(editView.render().$el)
     $('#form').foundation('reveal', 'open')
-
-    
-  confirm: ->
-    console.log("confirm " + @model.get('id'))
+    $('.fdatetimepicker').fdatetimepicker
+        format: 'mm-dd-yyyy hh:ii'
 
 
 @AppointmentDayView = Backbone.Marionette.CompositeView.extend
   itemView: AppointmentItemView
+  itemViewOptions:
+    employees: @employees
+    customers: @customers
+
   template: '#appointment-day'
   tagName: 'ul'
   className: 'row'
 
+@AppointmentWeekView = Backbone.Marionette.CompositeView.extend
+  
+
+  
+@AppointmentMonthView = Backbone.Marionette.CompositeView.extend
+  
+
 @AppointmentEditView = Backbone.Marionette.ItemView.extend
   template: '#appointment-edit'
   tagName: 'form'
-  className: 'small-8 small-centered columns'
+  className: 'small-12 columns'
 
   events:
-    'click .submit': ''
+    'click .submit': 'submit'
     'click .close': 'close'
 
   close: ->
     @remove()
-    # $('#form').foundation('reveal', 'close')
+
+  submit: ->
+
