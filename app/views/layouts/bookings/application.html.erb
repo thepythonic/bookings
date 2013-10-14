@@ -14,7 +14,7 @@
 <div id="content">
 <%= yield %>
 </div>
-<div id="form" class="row"></div>
+<div id="form" class="reveal-modal"></div>
 
 <script id="appointment-itemview" type="text/x-handlebars-template" >
   <div class="small-2">
@@ -38,10 +38,9 @@
       <input id="duration" type="text" placeholder="duration" value="{{duration}}">
     </div>
   </div>
-  <div class="row">
-    <div class="large-4 columns">
-      <a class="tiny button split submit" href="#">Edit</a>
-    </div>
+  <div class="large-4 columns">
+    <a class="tiny button split submit" href="#">Edit</a>
+    <a class="close-reveal-modal close">&#215;</a>
   </div>
 </fieldset>
 </script>

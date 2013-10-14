@@ -5,19 +5,17 @@
 
   events:
     'click': 'reschedule'
-    'click a.cancel': 'cancel'
-    'click a.confirm': 'confirm'
+    
 
 
 
   reschedule: (event) ->
     editView = new AppointmentEditView model: @model
+    console.log ('ZZZZZZZZZ')
     $('#form').html(editView.render().$el)
+    $('#form').foundation('reveal', 'open')
 
     
-  cancel: ->
-    console.log("cancel " + @model.get('id'))
-
   confirm: ->
     console.log("confirm " + @model.get('id'))
 
@@ -34,4 +32,9 @@
   className: 'small-8 small-centered columns'
 
   events:
-    'click .submit'
+    'click .submit': ''
+    'click .close': 'close'
+
+  close: ->
+    @remove()
+    # $('#form').foundation('reveal', 'close')
