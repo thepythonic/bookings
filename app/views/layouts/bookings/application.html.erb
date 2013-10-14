@@ -2,13 +2,33 @@
 <html>
 <head>
   <title>Bookings</title>
+
   <%= stylesheet_link_tag    "bookings/application", media: "all" %>
   <%= javascript_include_tag "bookings/application" %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <%= csrf_meta_tags %>
+
 </head>
 <body>
 
+<div id="content">
 <%= yield %>
+</div>
+
+
+<script id="appointment-item-view" type="text/x-handlebars-template" >
+  <div class="small-2">
+    <a href="#" class="tiny button split">{{from}} <span data-dropdown="drop1"></span></a>
+    <ul id="drop1" class="f-dropdown" data-dropdown-content>
+      <li><a href="#">This is a link</a></li>
+      <li><a href="#">This is another</a></li>
+      <li><a href="#">Yet another</a></li>
+    </ul>
+  </div>
+</script>
+
+<script id="appointment-day" type="text/x-handlebars-template" >
+</script>
 
 </body>
 </html>

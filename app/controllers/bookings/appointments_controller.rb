@@ -5,9 +5,12 @@ module Bookings
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
     before_action :set_customers_employees, only: [:new, :edit]
 
+    respond_to :json, :html
+
     # GET /appointments
     def index
       @appointments = Appointment.all
+      respond_with(@appointments)
     end
 
     # GET /appointments/1
