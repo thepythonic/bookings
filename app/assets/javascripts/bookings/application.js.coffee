@@ -22,9 +22,8 @@ Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) ->
       
   
 window.Calendar = new Backbone.Marionette.Application()
-appointmentList = new AppointmentList()
+window.appointmentList = new AppointmentList()
 viewOptions = collection: appointmentList
-
 appointmentView = new AppointmentDayView(viewOptions)
 
 Calendar.addRegions
@@ -35,9 +34,12 @@ Calendar.on 'start', ->
 
 Calendar.addInitializer ->
   console.log("AAAAAAAAAAA")
-  console.log(Calendar.mainRegion)
   Calendar.mainRegion.show(appointmentView)
   appointmentList.fetch()
+
+Calendar.listenTo appointmentList, 'all', ->
+  console.log(appointmentList)
+  Calendar.mainRegion.$el.toggle(appointmentList.length > 0)
 
 $(document).ready ->
   Calendar.start()

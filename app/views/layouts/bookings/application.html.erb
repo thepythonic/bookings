@@ -14,20 +14,36 @@
 <div id="content">
 <%= yield %>
 </div>
+<div id="form" class="row"></div>
 
-
-<script id="appointment-item-view" type="text/x-handlebars-template" >
+<script id="appointment-itemview" type="text/x-handlebars-template" >
   <div class="small-2">
-    <a href="#" class="tiny button split">{{from}} <span data-dropdown="drop1"></span></a>
-    <ul id="drop1" class="f-dropdown" data-dropdown-content>
-      <li><a href="#">This is a link</a></li>
-      <li><a href="#">This is another</a></li>
-      <li><a href="#">Yet another</a></li>
-    </ul>
+    <a href="#" class="tiny button split">{{from}} - {{id}}</a>
   </div>
 </script>
 
 <script id="appointment-day" type="text/x-handlebars-template" >
+</script>
+
+<script id="appointment-edit" type="text/x-handlebars-template">
+<fieldset>
+  <legend>Edit</legend>
+  <div class="larg-9">
+    <div class="large-4 columns">
+      <label>From</label>
+      <input id="from" type="text" placeholder="from" value="{{from}}">
+    </div>
+    <div class="large-4 columns">
+      <label>Duration</label>
+      <input id="duration" type="text" placeholder="duration" value="{{duration}}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-4 columns">
+      <a class="tiny button split submit" href="#">Edit</a>
+    </div>
+  </div>
+</fieldset>
 </script>
 
 </body>
