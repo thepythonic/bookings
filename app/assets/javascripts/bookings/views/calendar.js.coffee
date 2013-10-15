@@ -59,23 +59,17 @@ class @CalendarLayout extends Backbone.Marionette.Layout
       collection.push(new CalendarDate(date: days_range.next()))
 
     collection= new CalendarDateList(collection)
-    calendarWeekLayout = new CalendarWeekLayout(collection)
+    calendarWeekLayout = new CalendarWeekLayout()
     @content.show(calendarWeekLayout)
-    
+    calendarWeekLayout.header.show(new CalendarWeekHeaderCollection(collection: collection))
+    # calendarWeekLayout.content.show(new CalendarWeek)
 
 
 class @CalendarWeekLayout extends Backbone.Marionette.Layout
-  template: '#week-view'
+  template: '#week-view-layout'
   regions:
     header: '#week-header'
     content: '#week-content'
-  
-  initialize: (collection)->
-    console.log(collection)
-    c = new CalendarWeekCollection(collection: collection)
-    c.render()
-    console.log(c.$l)
-    @header.show(c)
 
 
 class @CalendarDayHeaderView extends Backbone.Marionette.ItemView
@@ -143,12 +137,20 @@ class @CalendarDayView extends Backbone.Marionette.CollectionView
   tagName: 'tr'
   
 
-class @CalendarWeekItemView extends Backbone.Marionette.ItemView
-  template: '#week-itemview'
+class @CalendarWeekHeaderItemView extends Backbone.Marionette.ItemView
+  template: '#week-header-itemview'
   tagName: 'th'
 
-class @CalendarWeekCollection extends Backbone.Marionette.CollectionView
-  itemView: CalendarWeekItemView
+class @CalendarWeekHeaderCollection extends Backbone.Marionette.CollectionView
+  itemView: CalendarWeekHeaderItemView
+  tagName: 'tr'  
+
+class @CalendarWeekContentItemView extends Backbone.Marionette.ItemView
+  template: '#week-content-itemview'
+  tagName: 'th'
+
+class @CalendarWeekContentCollection extends Backbone.Marionette.CollectionView
+  itemView: CalendarWeekContentItemView
   tagName: 'tr'
 
 
