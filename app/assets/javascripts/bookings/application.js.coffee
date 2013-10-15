@@ -10,12 +10,14 @@
 #= require ./foundation.min
 #= require ./foundation-datepicker
 #= require ./moment
+#= require ./moment-twix
 
 
 #= require ./models/appointment
 #= require ./models/employee
 #= require ./models/customer
 #= require ./models/calendar
+#= require ./collections/calendars
 #= require ./collections/appointments
 #= require ./collections/employees
 #= require ./collections/customers

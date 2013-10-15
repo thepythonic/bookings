@@ -71,7 +71,7 @@
         <div class="small-3 columns">
           <a href="#" class="prev text-right">Previous</a>
         </div>
-        <div class="small-6 columns text-center">{{date}}</div>
+        <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
           <a href="#" class="next">Next</a>
         </div>
@@ -87,7 +87,7 @@
         <div class="small-3 columns">
           <a href="#" class="prev text-right">Previous</a>
         </div>
-        <div class="small-6 columns text-center">{{date}}</div>
+        <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
           <a href="#" class="next">Next</a>
         </div>
@@ -103,7 +103,7 @@
         <div class="small-3 columns">
           <a href="#" class="prev text-right">Previous</a>
         </div>
-        <div class="small-6 columns text-center">{{date}}</div>
+        <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
           <a href="#" class="next">Next</a>
         </div>
@@ -111,6 +111,38 @@
     </div>
   </div> 
 </script>
+
+<script id="day-itemview" type="text/x-handlebars-template">
+  <div class="small-2 columns">
+    {{date_formatted}}
+  </div>
+</script>
+
+
+
+<script id="month-itemview" type="text/x-handlebars-template">
+  <div class="small-2 columns">
+    {{date_formatted}}
+  </div>
+</script>
+
+<script id="week-itemview" type="text/x-handlebars-template">
+    {{date_formatted}}
+</script>
+
+<script id="week-view" type="text/x-handlebars-template">
+  <table>
+    <thead>
+      <tr id="week-header">
+      </tr>
+    </thead>
+    <tbody style="height:100%">
+      <tr id="week-content"></tr>
+    </tbody>
+  </table>
+</script>
+
+
 
 
 </body>
