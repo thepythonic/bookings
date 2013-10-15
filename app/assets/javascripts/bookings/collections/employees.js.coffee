@@ -1,4 +1,4 @@
-@EmployeeList = Backbone.Collection.extend
+class @EmployeeList extends Backbone.Collection
   model: Employee
   url: '/doctors.json'
   

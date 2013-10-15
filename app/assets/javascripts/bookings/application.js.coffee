@@ -15,10 +15,12 @@
 #= require ./models/appointment
 #= require ./models/employee
 #= require ./models/customer
+#= require ./models/calendar
 #= require ./collections/appointments
 #= require ./collections/employees
 #= require ./collections/customers
 #= require ./views/appointment
+#= require ./views/calendar
 #= require ./routers/appointment
 
 $(document).foundation()
@@ -40,6 +42,7 @@ appointmentView = new AppointmentDayView(viewOptions)
 
 Calendar.addRegions
   mainRegion: "#content"
+  calendar: "#calendar"
 
 Calendar.on 'start', ->
   Backbone.history.start()
@@ -49,10 +52,17 @@ Calendar.addInitializer ->
   appointmentList.fetch()
   employeeList.fetch()
   customerList.fetch()
-
-
+  c = new CalendarLayout()
+  Calendar.calendar.show(c)
+  c.header.show(new CalendarWeekHeaderView(model: new CalendarDate()))
+  
+  
 Calendar.listenTo appointmentList, 'all', ->
   Calendar.mainRegion.$el.toggle(appointmentList.length > 0)
 
+
+
+
+
 $(document).ready ->
-  # Calendar.start()
+  Calendar.start()

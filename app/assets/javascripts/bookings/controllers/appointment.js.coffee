@@ -1,4 +1,4 @@
-@Controller = Backbone.Marionette.Controller.extend
+class @Controller extends Backbone.Marionette.Controller
     
 
   

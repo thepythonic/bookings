@@ -1,4 +1,4 @@
-@AppointmentItemView = Backbone.Marionette.ItemView.extend
+class @AppointmentItemView extends Backbone.Marionette.ItemView
   template : '#appointment-itemview'
   tagName: 'li'
   className: ''
@@ -14,7 +14,7 @@
         format: 'mm-dd-yyyy hh:ii'
 
 
-@AppointmentDayView = Backbone.Marionette.CompositeView.extend
+class @AppointmentDayView extends Backbone.Marionette.CompositeView
   itemView: AppointmentItemView
   itemViewOptions:
     employees: @employees
@@ -24,14 +24,14 @@
   tagName: 'ul'
   className: 'row'
 
-@AppointmentWeekView = Backbone.Marionette.CompositeView.extend
+# class @AppointmentWeekView extends Backbone.Marionette.CompositeView
   
 
-  
-@AppointmentMonthView = Backbone.Marionette.CompositeView.extend
+
+# class @AppointmentMonthView extends Backbone.Marionette.CompositeView
   
 
-@AppointmentEditView = Backbone.Marionette.ItemView.extend
+class @AppointmentEditView extends Backbone.Marionette.ItemView
   template: '#appointment-edit'
   tagName: 'form'
   className: 'small-12 columns'

@@ -1,3 +1,3 @@
-@Customer = Backbone.Model.extend
+class @Customer extends Backbone.Model
   urlRoot: ->
     '/doctors/'
