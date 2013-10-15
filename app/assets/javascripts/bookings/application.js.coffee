@@ -16,14 +16,16 @@
 #= require ./models/appointment
 #= require ./models/employee
 #= require ./models/customer
-#= require ./models/calendar
-#= require ./collections/calendars
 #= require ./collections/appointments
 #= require ./collections/employees
 #= require ./collections/customers
 #= require ./views/appointment
-#= require ./views/calendar
 #= require ./routers/appointment
+
+# CALENDAR
+#= require ./models/calendar/calendar
+#= require ./collections/calendar/calendars
+#= require ./views/calendar/calendar
 
 $(document).foundation()
 
