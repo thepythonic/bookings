@@ -12,6 +12,7 @@
 #= require ./moment
 #= require ./moment-twix
 
+#= require ./app
 
 #= require ./models/appointment
 #= require ./models/employee
@@ -23,50 +24,52 @@
 #= require ./routers/appointment
 
 # CALENDAR
+#= require ./calendar/calendar_app
 #= require ./calendar/models/calendar
 #= require ./calendar/collections/calendars
 #= require ./calendar/views/calendar
 
-$(document).foundation()
 
-Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
-      Handlebars.compile(rawTemplate);
+# $(document).foundation()
+
+# Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
+#       Handlebars.compile(rawTemplate);
       
   
-window.Calendar = new Backbone.Marionette.Application()
-appointmentList = new AppointmentList()
-employeeList = new EmployeeList()
-customerList = new CustomerList()
-viewOptions = 
-  collection: appointmentList
-  employees: employeeList
-  customers: customerList
+# window.Calendar = new Backbone.Marionette.Application()
+# appointmentList = new AppointmentList()
+# employeeList = new EmployeeList()
+# customerList = new CustomerList()
+# viewOptions = 
+#   collection: appointmentList
+#   employees: employeeList
+#   customers: customerList
 
-appointmentView = new AppointmentDayView(viewOptions)
+# appointmentView = new AppointmentDayView(viewOptions)
 
-Calendar.addRegions
-  mainRegion: "#content"
-  calendar: "#calendar"
+# Calendar.addRegions
+#   mainRegion: "#content"
+#   calendar: "#calendar"
 
-Calendar.on 'start', ->
-  Backbone.history.start()
+# Calendar.on 'start', ->
+#   Backbone.history.start()
 
-Calendar.addInitializer ->
-  Calendar.mainRegion.show(appointmentView)
-  appointmentList.fetch()
-  employeeList.fetch()
-  customerList.fetch()
-  c = new CalendarLayout()
-  Calendar.calendar.show(c)
-  c.header.show(new CalendarWeekHeaderView(model: new CalendarDate()))
+# Calendar.addInitializer ->
+#   Calendar.mainRegion.show(appointmentView)
+#   appointmentList.fetch()
+#   employeeList.fetch()
+#   customerList.fetch()
+#   c = new CalendarLayout()
+#   Calendar.calendar.show(c)
+#   c.header.show(new CalendarWeekHeaderView(model: new CalendarDate()))
   
   
-Calendar.listenTo appointmentList, 'all', ->
-  Calendar.mainRegion.$el.toggle(appointmentList.length > 0)
+# Calendar.listenTo appointmentList, 'all', ->
+#   Calendar.mainRegion.$el.toggle(appointmentList.length > 0)
 
 
 
 
 
-$(document).ready ->
-  Calendar.start()
+# $(document).ready ->
+#   Calendar.start()
