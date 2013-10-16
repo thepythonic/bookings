@@ -37,8 +37,9 @@
       appointments.fetch()
 
     weekView: (e) ->
-      e.preventDefault()
-      @resetButtons($(e.target))
+      if e
+        e.preventDefault()
+      @resetButtons($('.week-view'))
       @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
       week_start = moment().startOf('week')
       week_end = moment().endOf('week')

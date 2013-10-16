@@ -1,7 +1,8 @@
 @Bookings.module 'CalendarApp.Week', (Week, Bookings, Backbone, Marionette, $, _)->
   class Week.Layout extends Marionette.Layout
     template: '#week-view-layout'
-    
+    className: 'row'
+      
     regions:
       header: '#week-header'
       content: '#week-content' 

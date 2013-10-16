@@ -1,3 +1,7 @@
 .button.active{
   background-color: #2284a1;
 }
+
+#week-table{
+  min-height: 170px;
+}

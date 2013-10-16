@@ -12,10 +12,10 @@
       console.log('Show Day Calendar')
 
     showWeekCalendar: ->
-      c = new CalendarApp.Views.Layout()
-      Bookings.calendar.show(c)
-      c.header.show(new CalendarApp.Week.HeaderView(model: new CalendarDate()))
-      Bookings.startSubApp('CalendarApp')
+      layout = new CalendarApp.Views.Layout()
+      Bookings.calendar.show(layout)
+      layout.header.show(new CalendarApp.Week.HeaderView(model: new CalendarDate()))
+      layout.weekView()
 
     showMonthCalendar: ->
       console.log('Show Month Calendar')
@@ -35,4 +35,6 @@
   CalendarApp.addInitializer ->
     new CalendarApp.Router
       controller: API
+
+    Bookings.trigger('calendar:week')
   

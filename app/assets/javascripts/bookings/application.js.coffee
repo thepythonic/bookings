@@ -73,5 +73,6 @@ Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) ->
 
 
 
-# $(document).ready ->
-#   Calendar.start()
+$(document).ready ->
+  Bookings.start()
+  Bookings.startSubApp('CalendarApp')
