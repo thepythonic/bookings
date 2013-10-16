@@ -19,12 +19,15 @@ class @AppointmentList extends Backbone.Collection
     prev = {}
     for a, b of response
       if moment(prev).diff(moment(a)) < -86400000 
-        collection.push({})
+        collection.push(new AppointmentList)
       b = _.map b, (a)->
         new Appointment a
 
-      collection.push new Appointment b 
+      collection.push new AppointmentList b
       prev = a
+
+    console.log collection 
+
     if @week
       collection
     else
