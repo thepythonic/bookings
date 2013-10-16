@@ -12,6 +12,11 @@
       if (Backbone.history)
         Backbone.history.start()
 
+    App.navigate = (route, options)->
+      options || (options = {})
+      Backbone.history.navigate(route, options)
+    
+
     App.startSubApp = (appName, args) ->
       currentApp = App.module appName
 
@@ -23,9 +28,6 @@
       App.currentApp = currentApp
       currentApp.start args 
     
-    App.addInitializer = ->
-      App.trigger("calendar:init")
-
-
     App
 )(Backbone, Marionette)
+

@@ -24,16 +24,18 @@
 #= require ./routers/appointment
 
 # CALENDAR
-#= require ./calendar/calendar_app
+
+#= require ./calendar/week/week_view
 #= require ./calendar/models/calendar
 #= require ./calendar/collections/calendars
-#= require ./calendar/views/calendar
+#= require ./calendar/calendar_app
+# = require ./calendar/views/calendar
 
 
-# $(document).foundation()
+$(document).foundation()
 
-# Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
-#       Handlebars.compile(rawTemplate);
+Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
+      Handlebars.compile(rawTemplate);
       
   
 # window.Calendar = new Backbone.Marionette.Application()

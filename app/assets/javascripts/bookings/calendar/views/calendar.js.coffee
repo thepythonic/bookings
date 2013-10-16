@@ -1,81 +1,76 @@
-class @CalendarLayout extends Backbone.Marionette.Layout
-  template: '#calendar-layout'
-
-  regions:
-    'header': '#calendar-header'
-    'content': '#calendar-content'
-
-  initialize: ->
-    Calendar.vent.on 'nextPrev:day', @nextDay, 'day'
-    Calendar.vent.on 'nextPrev:week', @nextPrevWeek, 'day'
-    Calendar.vent.on 'nextPrev:month', @nextPrevMonth, 'day'
-
-  events:
-    'click .day-view': 'dayView'
-    'click .week-view': 'weekView'
-    'click .month-view': 'monthView'
-    'next:Day': 'nextDay'
-
-  nextPrevDay: (day) ->
-    console.log(day)
+@Bookings.module "CalendarApp.Views", (Views, Bookings, Backbone, Marionette, $, _)->
   
-  nextPrevWeek: (day) =>
-    week_start = moment(day).startOf('week')
-    week_end = moment(day).endOf('week')
-    @calendarWeekRange(week_start, week_end)
+  class Views.Layout extends Marionette.Layout
+    template: '#calendar-layout'
 
-  nextPrevMonth: (day) ->
-    console.log(day)
+    regions:
+      'header': '#calendar-header'
+      'content': '#calendar-content'
 
-  dayView: (e) ->
-    @resetButtons($(e.target))
-    @header.show(new CalendarDayHeaderView(model: new CalendarDate()))
-    appointments =  new AppointmentList()
-    @content.show(new CalendarDayView(collection: appointments))
-    appointments.fetch()
+    initialize: ->
+      Bookings.vent.on 'nextPrev:day', @nextDay, 'day'
+      Bookings.vent.on 'nextPrev:week', @nextPrevWeek, 'day'
+      Bookings.vent.on 'nextPrev:month', @nextPrevMonth, 'day'
 
-  weekView: (e) ->
-    @resetButtons($(e.target))
-    @header.show(new CalendarWeekHeaderView(model: new CalendarDate()))
-    week_start = moment().startOf('week')
-    week_end = moment().endOf('week')
-    @calendarWeekRange(week_start, week_end)
+    events:
+      'click .day-view': 'dayView'
+      'click .week-view': 'weekView'
+      'click .month-view': 'monthView'
+      'next:Day': 'nextDay'
+
+    nextPrevDay: (day) ->
+      console.log(day)
     
+    nextPrevWeek: (day) =>
+      week_start = moment(day).startOf('week')
+      week_end = moment(day).endOf('week')
+      @calendarWeekRange(week_start, week_end)
 
-  monthView: (e) ->
-    @resetButtons($(e.target))
-    @header.show(new CalendarMonthHeaderView(model: new CalendarDate()))
-    @content.show(new CalendarMonthView())
+    nextPrevMonth: (day) ->
+      console.log(day)
 
-  resetButtons: (target) ->
-    $('.button-bar .active').removeClass('active')
-    target.addClass('active')
+    dayView: (e) ->
+      @resetButtons($(e.target))
+      @header.show(new CalendarDayHeaderView(model: new CalendarDate()))
+      appointments =  new AppointmentList()
+      @content.show(new CalendarDayView(collection: appointments))
+      appointments.fetch()
 
-  calendarWeekRange: (week_start, week_end) ->
-    days_range = moment(week_start).twix(week_end, true).iterate('days')
-    collection = []
+    weekView: (e) ->
+      @resetButtons($(e.target))
+      @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
+      week_start = moment().startOf('week')
+      week_end = moment().endOf('week')
+      @calendarWeekRange(week_start, week_end)
+      
+
+    monthView: (e) ->
+      @resetButtons($(e.target))
+      @header.show(new CalendarMonthHeaderView(model: new CalendarDate()))
+      @content.show(new CalendarMonthView())
+
+    resetButtons: (target) ->
+      $('.button-bar .active').removeClass('active')
+      target.addClass('active')
+
+    calendarWeekRange: (week_start, week_end) ->
+      days_range = moment(week_start).twix(week_end, true).iterate('days')
+      collection = []
    
-    while days_range.hasNext()
-      collection.push(new CalendarDate(date: days_range.next()))
+      while days_range.hasNext()
+        collection.push(new CalendarDate(date: days_range.next()))
 
-    collection = new CalendarDateList(collection)
-    calendarWeekLayout = new CalendarWeekLayout()
-    @content.show(calendarWeekLayout)
-    calendarWeekLayout.header.show(new CalendarWeekHeaderCollection(collection: collection))
-    appointmentList = new AppointmentList
-      week: true
-      start: week_start.unix()
-      end: week_end.unix()
+      collection = new CalendarDateList(collection)
+      calendarWeekLayout = new Bookings.CalendarApp.Week.Layout()
+      @content.show(calendarWeekLayout)
+      calendarWeekLayout.header.show(new Bookings.CalendarApp.Week.HeaderCollection(collection: collection))
+      appointmentList = new AppointmentList
+        week: true
+        start: week_start.unix()
+        end: week_end.unix()
 
-    calendarWeekLayout.content.show(new CalendarWeekContentCollection(collection: appointmentList))
-    appointmentList.fetch()
-
-
-class @CalendarWeekLayout extends Backbone.Marionette.Layout
-  template: '#week-view-layout'
-  regions:
-    header: '#week-header'
-    content: '#week-content'
+      calendarWeekLayout.content.show(new Bookings.CalendarApp.Week.ContentCollection(collection: appointmentList))
+      appointmentList.fetch()
 
 
 class @CalendarDayHeaderView extends Backbone.Marionette.ItemView
@@ -89,32 +84,13 @@ class @CalendarDayHeaderView extends Backbone.Marionette.ItemView
     n = moment(@model.get('date')).add('days', 1)
     @model.set('date', n.format('MMM D, YYYY'))
     @render()
-    Calendar.vent.trigger('nextPrev:day', n)
+    Bookings.vent.trigger('nextPrev:day', n)
 
   prevDay: ->
     n = moment(@model.get('date')).subtract('days', 1)
     @model.set('date', n.format('MMM D, YYYY'))
     @render()
-    Calendar.vent.trigger('nextPrev:day', n)
-
-class @CalendarWeekHeaderView extends Backbone.Marionette.ItemView
-  template: '#calendar-week-header'
-
-  events:
-    'click .next': 'nextWeek'
-    'click .prev': 'prevWeek'
-
-  nextWeek: ->
-    n = moment(@model.get('date')).startOf('week').add('weeks', 1)
-    @model.set('date', n)
-    @render()
-    Calendar.vent.trigger('nextPrev:week', n)
-
-  prevWeek: ->
-    n = moment(@model.get('date')).startOf('week').subtract('weeks', 1)
-    @model.set('date', n)
-    @render()
-    Calendar.vent.trigger('nextPrev:week', n)
+    Bookings.vent.trigger('nextPrev:day', n)
 
 class @CalendarMonthHeaderView extends Backbone.Marionette.ItemView
   template: '#calendar-month-header'
@@ -141,30 +117,7 @@ class @CalendarDayItemView extends Backbone.Marionette.ItemView
 class @CalendarDayView extends Backbone.Marionette.CollectionView
   itemView: CalendarDayItemView
   tagName: 'tr'
-  
-#WEEK
-class @CalendarWeekHeaderItemView extends Backbone.Marionette.ItemView
-  template: '#week-header-itemview'
-  tagName: 'th'
-
-class @CalendarWeekHeaderCollection extends Backbone.Marionette.CollectionView
-  itemView: CalendarWeekHeaderItemView
-  tagName: 'tr'  
-
-class @CalendarWeekContentItemView extends Backbone.Marionette.ItemView
-  template: '#week-content-itemview'
-  tagName: 'td'
-
-  onRender: ->
-    console.log(@model)
-
-  
-class @CalendarWeekContentCollection extends Backbone.Marionette.CollectionView
-  itemView: CalendarWeekContentItemView
-  tagName: 'tr'
-  
-  onRender: ->
-    console.log(@collection)
+ 
 
 #MONTH
 class @CalendarMonthItemView extends Backbone.Marionette.ItemView
