@@ -65,6 +65,11 @@ module Bookings
       render :index
     end
 
+    def within_date_range
+      @appointments = Appointment.where("`from` <= ? and `from` >= ?", DateTime.strptime(params[:end], "%s"), DateTime.strptime(params[:start], "%s"))
+      respond_with(@appointments)
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_appointment

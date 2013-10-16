@@ -8,7 +8,7 @@ class @CalendarLayout extends Backbone.Marionette.Layout
   initialize: ->
     Calendar.vent.on 'nextPrev:day', @nextDay, 'day'
     Calendar.vent.on 'nextPrev:week', @nextPrevWeek, 'day'
-    Calendar.vent.on 'nextPrev:month', @nextMonth, 'day'
+    Calendar.vent.on 'nextPrev:month', @nextPrevMonth, 'day'
 
   events:
     'click .day-view': 'dayView'
@@ -58,11 +58,16 @@ class @CalendarLayout extends Backbone.Marionette.Layout
     while days_range.hasNext()
       collection.push(new CalendarDate(date: days_range.next()))
 
-    collection= new CalendarDateList(collection)
+    collection = new CalendarDateList(collection)
     calendarWeekLayout = new CalendarWeekLayout()
     @content.show(calendarWeekLayout)
     calendarWeekLayout.header.show(new CalendarWeekHeaderCollection(collection: collection))
-    # calendarWeekLayout.content.show(new CalendarWeek)
+    appointmentList = new AppointmentList
+      start: week_start.unix()
+      end: week_end.unix()
+
+    calendarWeekLayout.content.show(new CalendarWeekContentCollection(collection: appointmentList))
+    appointmentList.fetch()
 
 
 class @CalendarWeekLayout extends Backbone.Marionette.Layout
@@ -106,7 +111,7 @@ class @CalendarWeekHeaderView extends Backbone.Marionette.ItemView
 
   prevWeek: ->
     n = moment(@model.get('date')).startOf('week').subtract('weeks', 1)
-    @model.set('date')
+    @model.set('date', n)
     @render()
     Calendar.vent.trigger('nextPrev:week', n)
 
@@ -128,7 +133,7 @@ class @CalendarMonthHeaderView extends Backbone.Marionette.ItemView
     @render()
 
 
-
+#DAY
 class @CalendarDayItemView extends Backbone.Marionette.ItemView
   template: '#day-itemview'
 
@@ -136,7 +141,7 @@ class @CalendarDayView extends Backbone.Marionette.CollectionView
   itemView: CalendarDayItemView
   tagName: 'tr'
   
-
+#WEEK
 class @CalendarWeekHeaderItemView extends Backbone.Marionette.ItemView
   template: '#week-header-itemview'
   tagName: 'th'
@@ -147,13 +152,13 @@ class @CalendarWeekHeaderCollection extends Backbone.Marionette.CollectionView
 
 class @CalendarWeekContentItemView extends Backbone.Marionette.ItemView
   template: '#week-content-itemview'
-  tagName: 'th'
+  tagName: 'td'
 
 class @CalendarWeekContentCollection extends Backbone.Marionette.CollectionView
   itemView: CalendarWeekContentItemView
   tagName: 'tr'
 
-
+#MONTH
 class @CalendarMonthItemView extends Backbone.Marionette.ItemView
   template: '#month-itemview'
 

@@ -1,3 +1,14 @@
 class @AppointmentList extends Backbone.Collection
   model: Appointment
-  url: '/bookings/appointments.json'
+
+  initialize: (options) ->
+    options || (options = {})
+    @start = options.start
+    @end = options.end
+
+  url: ->
+    x = ''
+    x += '/start/' + @start if @start
+    x += '/end/' + @end if @end
+    x += '.json' 
+    '/bookings/appointments' + x

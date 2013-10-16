@@ -132,12 +132,9 @@
 
 <script id="week-view-layout" type="text/x-handlebars-template">
   <table>
-    <thead>
-      <tr id="week-header">
-      </tr>
+    <thead id="week-header">
     </thead>
-    <tbody style="height:100%">
-      <tr id="week-content"></tr>
+    <tbody id="week-content" style="height:100%">
     </tbody>
   </table>
 </script>
@@ -147,7 +144,7 @@
 </script>
 
 <script id="week-content-itemview" type="text/x-handlebars-template">
-    {{date_formatted}}
+    {{from_formatted}}
 </script>
 
 </body>
