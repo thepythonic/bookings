@@ -8,7 +8,7 @@
       'content': '#calendar-content'
 
     initialize: ->
-      Bookings.vent.on 'nextPrev:day', @nextDay, 'day'
+      Bookings.vent.on 'nextPrev:day', @nextPrevDay, 'day'
       Bookings.vent.on 'nextPrev:week', @nextPrevWeek, 'day'
       Bookings.vent.on 'nextPrev:month', @nextPrevMonth, 'day'
 
@@ -16,7 +16,6 @@
       'click .day-view': 'dayView'
       'click .week-view': 'weekView'
       'click .month-view': 'monthView'
-      'next:Day': 'nextDay'
 
     nextPrevDay: (day) ->
       console.log(day)
@@ -30,6 +29,7 @@
       console.log(day)
 
     dayView: (e) ->
+      e.preventDefault()
       @resetButtons($(e.target))
       @header.show(new CalendarDayHeaderView(model: new CalendarDate()))
       appointments =  new AppointmentList()
@@ -37,6 +37,7 @@
       appointments.fetch()
 
     weekView: (e) ->
+      e.preventDefault()
       @resetButtons($(e.target))
       @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
       week_start = moment().startOf('week')
@@ -45,6 +46,7 @@
       
 
     monthView: (e) ->
+      e.preventDefault()
       @resetButtons($(e.target))
       @header.show(new CalendarMonthHeaderView(model: new CalendarDate()))
       @content.show(new CalendarMonthView())
@@ -80,13 +82,15 @@ class @CalendarDayHeaderView extends Backbone.Marionette.ItemView
     'click .next': 'nextDay'
     'click .prev': 'prevDay'
 
-  nextDay: ->
+  nextDay: (e) ->
+    e.preventDefault()
     n = moment(@model.get('date')).add('days', 1)
     @model.set('date', n.format('MMM D, YYYY'))
     @render()
     Bookings.vent.trigger('nextPrev:day', n)
 
-  prevDay: ->
+  prevDay: (e) ->
+    e.preventDefault()
     n = moment(@model.get('date')).subtract('days', 1)
     @model.set('date', n.format('MMM D, YYYY'))
     @render()
