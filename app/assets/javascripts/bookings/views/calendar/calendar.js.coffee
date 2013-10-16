@@ -63,6 +63,7 @@ class @CalendarLayout extends Backbone.Marionette.Layout
     @content.show(calendarWeekLayout)
     calendarWeekLayout.header.show(new CalendarWeekHeaderCollection(collection: collection))
     appointmentList = new AppointmentList
+      week: true
       start: week_start.unix()
       end: week_end.unix()
 
@@ -154,9 +155,16 @@ class @CalendarWeekContentItemView extends Backbone.Marionette.ItemView
   template: '#week-content-itemview'
   tagName: 'td'
 
+  onRender: ->
+    console.log(@model)
+
+  
 class @CalendarWeekContentCollection extends Backbone.Marionette.CollectionView
   itemView: CalendarWeekContentItemView
   tagName: 'tr'
+  
+  onRender: ->
+    console.log(@collection)
 
 #MONTH
 class @CalendarMonthItemView extends Backbone.Marionette.ItemView

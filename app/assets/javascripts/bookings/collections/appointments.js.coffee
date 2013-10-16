@@ -5,6 +5,7 @@ class @AppointmentList extends Backbone.Collection
     options || (options = {})
     @start = options.start
     @end = options.end
+    @week = options.week
 
   url: ->
     x = ''
@@ -12,3 +13,16 @@ class @AppointmentList extends Backbone.Collection
     x += '/end/' + @end if @end
     x += '.json' 
     '/bookings/appointments' + x
+
+  parse: (response)->
+    collection = []
+    prev = {}
+    for a, b of response
+      if moment(prev).diff(moment(a)) < -86400000 
+        collection.push({})  
+      collection.push(new Appointment(b))
+      prev = a
+    if @week
+      collection
+    else
+      response 

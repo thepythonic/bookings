@@ -144,7 +144,10 @@
 </script>
 
 <script id="week-content-itemview" type="text/x-handlebars-template">
-    {{from_formatted}}
+    {{#each this }}
+      <a appointment-id="{{id}}" href="#">{{from_formatted}}</a>
+      <br />
+    {{/each}}
 </script>
 
 </body>

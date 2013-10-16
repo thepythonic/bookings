@@ -67,6 +67,7 @@ module Bookings
 
     def within_date_range
       @appointments = Appointment.where("`from` <= ? and `from` >= ?", DateTime.strptime(params[:end], "%s"), DateTime.strptime(params[:start], "%s"))
+      @appointments = @appointments.group_by { |t| t.from.beginning_of_day }
       respond_with(@appointments)
     end
 
