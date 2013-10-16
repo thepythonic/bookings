@@ -23,9 +23,9 @@
 #= require ./routers/appointment
 
 # CALENDAR
-#= require ./models/calendar/calendar
-#= require ./collections/calendar/calendars
-#= require ./views/calendar/calendar
+#= require ./calendar/models/calendar
+#= require ./calendar/collections/calendars
+#= require ./calendar/views/calendar
 
 $(document).foundation()
 
