@@ -109,10 +109,44 @@
 
 <!-- MONTH -->
 
-<script id="month-itemview" type="text/x-handlebars-template">
-  <div class="small-2 columns">
-    {{date_formatted}}
-  </div>
+<script id="calendar-month-header" type="text/x-handlebars-template">
+  <div class="row">
+    <div class="small-5 small-centered columns">
+      <div class="row">
+        <div class="small-3 columns">
+          <a href="#" class="prev text-right">Previous</a>
+        </div>
+        <div class="small-6 columns text-center">{{date_formatted}}</div>
+        <div class="small-3 columns">
+          <a href="#" class="next">Next</a>
+        </div>
+      </div>
+    </div>
+  </div> 
+</script>
+
+<script id="month-view-layout" type="text/x-handlebars-template">
+  <table id="month-table" class="small-12">
+    <thead id="month-header">
+    </thead>
+    <tbody id="month-content" style="height:100%">
+    </tbody>
+  </table>
+</script>
+
+<script id="month-header-itemview" type="text/x-handlebars-template">
+    {{date_formatted_day}}
+</script>
+
+<script id="month-content-itemview" type="text/x-handlebars-template">
+    {{#each appointments.models }}  
+      <div class="small-12">
+      <a href="{{url}}">{{from_formatted}}</a>
+      </div>
+    {{/each}}
+    <hr />
+    <div class="small-12 add-appointment"><a>Add</a></div>
+
 </script>
 
 <!-- WEEK -->
@@ -142,14 +176,18 @@
 </script>
 
 <script id="week-header-itemview" type="text/x-handlebars-template">
-    {{date_formatted}}
+    {{date_formatted_day}}
 </script>
 
 <script id="week-content-itemview" type="text/x-handlebars-template">
-    {{#each models }}
-      <a appointment-id="{{id}}" href="{{url}}">{{from_formatted}}</a>
-      <br />
+    {{#each appointments.models }}  
+      <div class="small-12">
+      <a href="{{url}}">{{from_formatted}}</a>
+      </div>
     {{/each}}
+    <hr />
+    <div class="small-12 add-appointment"><a>Add</a></div>
+
 </script>
 
 

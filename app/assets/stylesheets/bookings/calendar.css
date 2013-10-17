@@ -5,3 +5,6 @@
 #week-table{
   min-height: 170px;
 }
+table#week-table tr td{
+  vertical-align: top;
+}

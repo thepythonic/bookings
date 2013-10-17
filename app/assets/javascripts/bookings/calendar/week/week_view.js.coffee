@@ -2,7 +2,7 @@
   class Week.Layout extends Marionette.Layout
     template: '#week-view-layout'
     className: 'row'
-      
+
     regions:
       header: '#week-header'
       content: '#week-content' 
@@ -40,6 +40,15 @@
     template: '#week-content-itemview'
     tagName: 'td'
 
+    events:
+      "click .add-appointment": 'addAppointmentView'
+
+    
+    addAppointmentView: ->
+      @model.get('appointments').add(new Appointment({from: @model.get('date')}))
+      @render()
+      # console.log(@model.get('date'))
+
     onRender: ->
       console.log(@model)
 
@@ -47,5 +56,3 @@
     itemView: Week.ContentItemView
     tagName: 'tr'
     
-    onRender: ->
-      console.log(@collection)

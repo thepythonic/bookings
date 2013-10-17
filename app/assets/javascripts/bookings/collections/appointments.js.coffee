@@ -14,20 +14,27 @@ class @AppointmentList extends Backbone.Collection
     x += '.json' 
     '/bookings/appointments' + x
 
+  comparator: (item) ->
+    item.get('from')
+
   parse: (response)->
     collection = []
     prev = {}
     for a, b of response
       if moment(prev).diff(moment(a)) < -86400000 
-        collection.push(new AppointmentList)
+        collection.push
+          date: moment(a)
+          appointments: new AppointmentList
       b = _.map b, (a)->
-        new Appointment a
+       new Appointment a
+       
+      collection.push 
+        date: moment(a)
+        appointments: new AppointmentList b
 
-      collection.push new AppointmentList b
       prev = a
 
-    console.log collection 
-
+    
     if @week
       collection
     else

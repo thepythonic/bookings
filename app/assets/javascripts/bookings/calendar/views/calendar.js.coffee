@@ -23,10 +23,12 @@
     nextPrevWeek: (day) =>
       week_start = moment(day).startOf('week')
       week_end = moment(day).endOf('week')
-      @calendarWeekRange(week_start, week_end)
+      @calendarDaysRange(week_start, week_end)
 
     nextPrevMonth: (day) ->
-      console.log(day)
+      month_start = moment(day).startOf('month')
+      month_end = moment(day).endOf('month')
+      @calendarDaysRange(month_start, month_end)
 
     dayView: (e) ->
       e.preventDefault()
@@ -43,21 +45,24 @@
       @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
       week_start = moment().startOf('week')
       week_end = moment().endOf('week')
-      @calendarWeekRange(week_start, week_end)
+      @calendarDaysRange(week_start, week_end, week=true)
       
 
     monthView: (e) ->
-      e.preventDefault()
+      if e
+        e.preventDefault()
       @resetButtons($(e.target))
-      @header.show(new CalendarMonthHeaderView(model: new CalendarDate()))
-      @content.show(new CalendarMonthView())
+      @header.show(new Bookings.CalendarApp.Month.HeaderView(model: new CalendarDate()))
+      month_start = moment().startOf('month')
+      month_end = moment().endOf('month')
+      @calendarDaysRange(month_start, month_end)
 
     resetButtons: (target) ->
       $('.button-bar .active').removeClass('active')
       target.addClass('active')
 
-    calendarWeekRange: (week_start, week_end) ->
-      days_range = moment(week_start).twix(week_end, true).iterate('days')
+    calendarDaysRange: (start, end, week=false) ->
+      days_range = moment(start).twix(end, true).iterate('days')
       collection = []
    
       while days_range.hasNext()
@@ -68,9 +73,9 @@
       @content.show(calendarWeekLayout)
       calendarWeekLayout.header.show(new Bookings.CalendarApp.Week.HeaderCollection(collection: collection))
       appointmentList = new AppointmentList
-        week: true
-        start: week_start.unix()
-        end: week_end.unix()
+        week: week
+        start: start.unix()
+        end: end.unix()
 
       calendarWeekLayout.content.show(new Bookings.CalendarApp.Week.ContentCollection(collection: appointmentList))
       appointmentList.fetch()

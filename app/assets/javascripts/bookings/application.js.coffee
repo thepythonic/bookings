@@ -26,6 +26,7 @@
 # CALENDAR
 
 #= require ./calendar/week/week_view
+#= require ./calendar/month/month_view
 #= require ./calendar/models/calendar
 #= require ./calendar/collections/calendars
 #= require ./calendar/calendar_app

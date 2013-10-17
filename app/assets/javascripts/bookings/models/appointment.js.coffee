@@ -5,9 +5,10 @@ class @Appointment extends Backbone.Model
 
   initialize: (model) ->
     @model = model
-    if @model instanceof Array
-      _.each @model, (m) ->
-        m.from_formatted = moment(m.from).format('hh:mm a')
+    if @model.hasOwnProperty('appointments')
+      _.each @model.appointments.models, (m) ->
+        console.log(m.from)
+        m.set('from_formatted', moment(m.get('from')).format('hh:mm a'))
 
   toJSON: ->
     data = _(@attributes).clone();
