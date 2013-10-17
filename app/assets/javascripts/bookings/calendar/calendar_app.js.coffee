@@ -2,42 +2,46 @@
   
   class CalendarApp.Router extends Marionette.AppRouter
     appRoutes:
-      "calendar": "showDayCalendar" 
-      "calendar/day": "showDayCalendar" 
-      "calendar/week": "showWeekCalendar" 
-      "calendar/month": "showMonthCalendar" 
+      "calendar/:year/day(/:n)": "showDayCalendar" 
+      "calendar/:year/week(/:n)": "calendarView" 
+      "calendar/:year/month(/:n)": "showMonthCalendar" 
 
   API =
     showDayCalendar: ->
       console.log('Show Day Calendar')
 
-    showWeekCalendar: (options)->
-      CalendarApp.Week.Controller.ShowWeek(options)
+    calendarView: (year, n)->
+      today = moment()
+      year || (year = today.year())
+      n || (n = today.week())
+      Bookings.trigger 'calendar:week', year, n
+
+    showWeekCalendar: (year, n)->
+      date_s = year + " " + n
+      date = moment(date_s, "YYYY ww")
+      layout = new CalendarApp.Views.Layout()
+      header = new CalendarApp.Views.CalendarHeader(model: new CalendarDate(date: date))
+
+      Bookings.calendar.show(layout)
+      layout.header.show(header)
+
       
-    showMonthCalendar: (options)->
-      CalendarApp.Month.Controller.ShowMonth(options)
+    showMonthCalendar: (n)->
+      CalendarApp.Month.Controller.ShowMonth(n)
 
-    showWeekAppointments: (options)->
-      CalendarApp.Views.Week.Controller.showAppointments(options)
+    showWeekAppointments: (n)->
+      CalendarApp.Views.Week.Controller.showAppointments(n)
     
-    showMonthAppointments: (options)->
-      CalendarApp.Views.Month.Controller.showAppointments(options)
+    showMonthAppointments: (n)->
+      CalendarApp.Views.Month.Controller.showAppointments(n)
 
-  Bookings.on 'calendar:day', ->
-    Bookings.navigate("calendar")
-    API.showDayCalendar()
-
-  Bookings.on 'calendar:week', ->
-    Bookings.navigate("calendar/week")
-    API.showWeekCalendar()
-    
-  Bookings.on 'calendar:month', ->
-    Bookings.navigate("calendar/month")
-    API.showMonthCalendar()
 
   CalendarApp.addInitializer ->
     new CalendarApp.Router
       controller: API
-      
-    Bookings.trigger('calendar:week')
   
+  Bookings.on 'calendar:week', (year, n)->
+    Bookings.navigate("calendar/" + year + "/week/" + n)
+    API.showWeekCalendar(year, n)
+    
+

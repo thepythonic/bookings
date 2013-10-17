@@ -5,12 +5,10 @@
     App = new Marionette.Application()
 
     App.addRegions
-      mainRegion: "#content"
       calendar: "#calendar"
 
-    App.on "initialize:after", ->
-      if (Backbone.history)
-        Backbone.history.start()
+    App.on "initialize:before", ->
+      Backbone.history.start()
 
     App.navigate = (route, options)->
       options || (options = {})

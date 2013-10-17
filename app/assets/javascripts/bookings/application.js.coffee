@@ -24,15 +24,10 @@
 #= require ./routers/appointment
 
 # CALENDAR
-
-#= require ./calendar/week/week_view
-#= require ./calendar/week/week_controller
-#= require ./calendar/month/month_view
-#= require ./calendar/month/month_controller
-#= require ./calendar/models/calendar
-#= require ./calendar/collections/calendars
+#= require ./calendar/calendar
 #= require ./calendar/calendar_app
-# = require ./calendar/views/calendar
+#= require ./calendar/calendar_views
+
 
 
 $(document).foundation()
@@ -78,4 +73,3 @@ Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) ->
 
 $(document).ready ->
   Bookings.start()
-  Bookings.startSubApp('CalendarApp')

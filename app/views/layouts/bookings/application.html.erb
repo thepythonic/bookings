@@ -13,9 +13,6 @@
 </head>
 <body>
 
-<div id="content">
-<%= yield %>
-</div>
 <div id="form" class="reveal-modal"></div>
 
 <div id="calendar"></div>
@@ -49,9 +46,7 @@
   </fieldset>
 </script>
 
-<!-- CALENDAR -->
-<script id="calendar-layout" type="text/x-handlebars-template">
-
+<script id="calendar-view-switch" type="text/x-handlebars-template">
   <div id="calendar-switch" class="row">
     <div class="small-3 small-offset-9 columns button-bar">
       <ul class="button-group">
@@ -60,97 +55,16 @@
         <li><a href="#" class="small button month-view">Month</a></li>
       </ul>
     </div>
-  </div>  
-
-  <div id="calendar-header"></div>  
-  <div id="calendar-content"></div>  
-</script>
-
-<script id="calendar-day-header" type="text/x-handlebars-template">
-  <div class="row">
-    <div class="small-5 small-centered columns">
-      <div class="row">
-        <div class="small-3 columns">
-          <span class="prev text-right span-link">Previous</span>
-        </div>
-        <div class="small-6 columns text-center">{{date_formatted}}</div>
-        <div class="small-3 columns">
-          <span class="next span-link">Next</span>
-        </div>
-      </div>
-    </div>
-  </div> 
-</script>
-
-
-
-<script id="calendar-month-header" type="text/x-handlebars-template">
-  <div class="row">
-    <div class="small-5 small-centered columns">
-      <div class="row">
-        <div class="small-3 columns">
-          <a href="#" class="prev text-right span-link">Previous</a>
-        </div>
-        <div class="small-6 columns text-center">{{date_formatted}}</div>
-        <div class="small-3 columns">
-          <a href="#" class="next span-link">Next</a>
-        </div>
-      </div>
-    </div>
-  </div> 
-</script>
-
-<!-- DAY -->
-<script id="day-itemview" type="text/x-handlebars-template">
-  <div class="small-2 columns">
-    {{date_formatted}}
   </div>
 </script>
 
-<!-- MONTH -->
-
-<script id="calendar-month-header" type="text/x-handlebars-template">
-  <div class="row">
-    <div class="small-5 small-centered columns">
-      <div class="row">
-        <div class="small-3 columns">
-          <span class="prev text-right">Previous</span>
-        </div>
-        <div class="small-6 columns text-center">{{date_formatted}}</div>
-        <div class="small-3 columns">
-          <span class="next">Next</span>
-        </div>
-      </div>
-    </div>
-  </div> 
+<!-- CALENDAR -->
+<script id="module-layout" type="text/x-handlebars-template">
+  <div id="module-header"></div>  
+  <div id="module-content"></div>  
 </script>
 
-<script id="month-view-layout" type="text/x-handlebars-template">
-  <table id="month-table" class="small-12">
-    <thead id="month-header">
-    </thead>
-    <tbody id="month-content" style="height:100%">
-    </tbody>
-  </table>
-</script>
-
-<script id="month-header-itemview" type="text/x-handlebars-template">
-    {{date_formatted_day}}
-</script>
-
-<script id="month-content-itemview" type="text/x-handlebars-template">
-    {{#each appointments.models }}  
-      <div class="small-12">
-      <span class="span-link edit">{{from_formatted}}</span>
-      </div>
-    {{/each}}
-    <hr />
-    <div class="small-12 add-appointment"><span class="span-link">Add</span></div>
-
-</script>
-
-<!-- WEEK -->
-<script id="calendar-week-header" type="text/x-handlebars-template">
+<script id="calendar-header" type="text/x-handlebars-template">
   <div class="row">
     <div class="small-5 small-centered columns">
       <div class="row">
@@ -166,20 +80,20 @@
   </div> 
 </script>
 
-<script id="week-view-layout" type="text/x-handlebars-template">
-  <table id="week-table" class="small-12">
-    <thead id="week-header">
+<script id="calendar-layout" type="text/x-handlebars-template">
+  <table id="calendar-table" class="small-12">
+    <thead id="calendar-table-header">
     </thead>
-    <tbody id="week-content" style="height:100%">
+    <tbody id="calendar.table-content" style="height:100%">
     </tbody>
   </table>
 </script>
 
-<script id="week-header-itemview" type="text/x-handlebars-template">
+<script id="header-itemview" type="text/x-handlebars-template">
     {{date_formatted_day}}
 </script>
 
-<script id="week-content-itemview" type="text/x-handlebars-template">
+<script id="content-itemview" type="text/x-handlebars-template">
     {{#each appointments.models }}  
       <div class="small-12">
       <span class="span-link">{{from_formatted}}</span>
