@@ -5,7 +5,7 @@ class @AppointmentList extends Backbone.Collection
     options || (options = {})
     @start = options.start
     @end = options.end
-    @week = options.week
+    @mode = options.mode
 
   url: ->
     x = ''
@@ -19,7 +19,7 @@ class @AppointmentList extends Backbone.Collection
 
   parse: (response)->
     collection = []
-    prev = {}
+    prev = moment(@start, 'X')
     for a, b of response
       diff = moment(prev).diff(moment(a))
       while diff < -86400000
@@ -37,14 +37,25 @@ class @AppointmentList extends Backbone.Collection
 
       prev = a
 
+
+    # console.log(@mode == 'week')
     
-    if @week
-      console.log(collection.length)
+    if @mode == 'week'
       for i in [collection.length...7]
         collection.push
           date: moment(collection[collection.length-1].date).add('days', 1)
           appointments: new AppointmentList 
       
       collection
+    
+    else if @mode == 'month'
+      for i in [collection.length...31]
+        collection.push
+          date: moment(collection[collection.length-1].date).add('days', 1)
+          appointments: new AppointmentList 
+
+      console.log(collection)
+      collection
+
     else
       response 
