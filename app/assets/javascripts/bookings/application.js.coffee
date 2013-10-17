@@ -25,6 +25,7 @@
 
 # CALENDAR
 #= require ./calendar/calendar
+#= require ./calendar/collections/calendars
 #= require ./calendar/calendar_app
 #= require ./calendar/calendar_views
 

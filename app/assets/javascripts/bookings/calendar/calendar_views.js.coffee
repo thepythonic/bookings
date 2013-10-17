@@ -21,7 +21,10 @@
 
     nextWeek: (e) ->
       e.preventDefault()
-      n = moment(@model.get('date')).startOf('week').add('weeks', 1)
+      console.log(moment(@model.get('date')).toString())
+      n = moment(@model.get('date')).add('weeks', 1)
+      console.log(n.year())
+      console.log(n.toString())
       @updateHeader n
 
     prevWeek: (e) ->
@@ -45,7 +48,7 @@
     itemView: Views.HeaderItem
     tagName: 'tr'
 
-  class Views.ContentItemView extends Marionette.ItemView
+  class Views.ContentItem extends Marionette.ItemView
     template: '#content-itemview'
     tagName: 'td'
 
