@@ -11,11 +11,17 @@
     showDayCalendar: ->
       console.log('Show Day Calendar')
 
-    showWeekCalendar: ->
-      CalendarApp.Week.Controller.ShowWeek()
+    showWeekCalendar: (options)->
+      CalendarApp.Week.Controller.ShowWeek(options)
       
-    showMonthCalendar: ->
-      CalendarApp.Month.Controller.ShowMonth()
+    showMonthCalendar: (options)->
+      CalendarApp.Month.Controller.ShowMonth(options)
+
+    showWeekAppointments: (options)->
+      CalendarApp.Views.Week.Controller.showAppointments(options)
+    
+    showMonthAppointments: (options)->
+      CalendarApp.Views.Month.Controller.showAppointments(options)
 
   Bookings.on 'calendar:day', ->
     Bookings.navigate("calendar")
@@ -32,6 +38,6 @@
   CalendarApp.addInitializer ->
     new CalendarApp.Router
       controller: API
-
+      
     Bookings.trigger('calendar:week')
   

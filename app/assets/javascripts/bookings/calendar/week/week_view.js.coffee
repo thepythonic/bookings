@@ -18,17 +18,15 @@
       e.preventDefault()
       n = moment(@model.get('date')).startOf('week').add('weeks', 1)
       @model.set('date', n)
-      console.log 
       @trigger('calendar:week:nextPrev', n)
-      @render()
-      
+      @render()    
 
     prevWeek: (e) ->
       e.preventDefault()
       n = moment(@model.get('date')).startOf('week').subtract('weeks', 1)
       @model.set('date', n)
+      @trigger('calendar:week:nextPrev', n)
       @render()
-      Bookings.vent.trigger('nextPrev:week', n)
 
   class Week.HeaderItemView extends Marionette.ItemView
     template: '#week-header-itemview'

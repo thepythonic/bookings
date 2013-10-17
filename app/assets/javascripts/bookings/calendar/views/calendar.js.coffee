@@ -40,16 +40,16 @@
       # appointments.fetch()
 
     weekView: (e) ->
+      e.preventDefault()
       @resetButtons($('.week-view'))
-      # @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
       week_start = moment().startOf('week')
       week_end = moment().endOf('week')
       @calendarDaysRange(week_start, week_end, "week")
       
 
     monthView: (e) ->
+      e.preventDefault()
       @resetButtons($(e.target))
-      @header.show(new Bookings.CalendarApp.Month.HeaderView(model: new CalendarDate()))
       month_start = moment().startOf('month')
       month_end = moment().endOf('month')
       @calendarDaysRange(month_start, month_end, 'month')
@@ -61,20 +61,31 @@
     calendarDaysRange: (start, end, mode) ->
       days_range = moment(start).twix(end, true).iterate('days')
       collection = []
-   
       while days_range.hasNext()
         collection.push(new CalendarDate(date: days_range.next()))
 
-      collection = new CalendarDateList(collection)
-      calendarWeekLayout = new Bookings.CalendarApp.Week.Layout()
-      @content.show(calendarWeekLayout)
-      calendarWeekLayout.header.show(new Bookings.CalendarApp.Week.HeaderCollection(collection: collection))
-      appointmentList = new AppointmentList
+      options = 
         mode: mode
         start: start.unix()
         end: end.unix()
 
-      calendarWeekLayout.content.show(new Bookings.CalendarApp.Week.ContentCollection(collection: appointmentList))
+      @trigger('calendar:show:appointments', options)
+
+      collection = new CalendarDateList(collection)
+      appointmentList = new AppointmentList options
+        
+      if mode == 'week'
+        calendarLayout = new Bookings.CalendarApp.Week.Layout()
+        headerCollection = new Bookings.CalendarApp.Week.HeaderCollection(collection: collection)
+        contectCollection = new Bookings.CalendarApp.Week.ContentCollection(collection: appointmentList)
+      else if mode == 'month'
+        calendarLayout = new Bookings.CalendarApp.Month.Layout()
+        headerCollection = new Bookings.CalendarApp.Month.HeaderCollection(collection: collection)
+        contectCollection = new Bookings.CalendarApp.Month.ContentCollection(collection: appointmentList)
+      
+      @content.show(calendarLayout)
+      calendarLayout.header.show(headerCollection)
+      calendarLayout.content.show(contectCollection)
       appointmentList.fetch()
 
 
@@ -96,24 +107,6 @@ class @CalendarDayHeaderView extends Backbone.Marionette.ItemView
     @model.set('date', n.format('MMM D, YYYY'))
     @render()
     Bookings.vent.trigger('nextPrev:day', n)
-
-class @CalendarMonthHeaderView extends Backbone.Marionette.ItemView
-  template: '#calendar-month-header'
-  
-  events:
-    'click .next': 'nextMonth'
-    'click .prev': 'prevMonth'
-
-  nextMonth: ->
-    n = moment(@model.get('date')).startOf('month').add('months', 1)
-    @model.set('date', n.format('MMM D, YYYY'))
-    @render()
-
-  prevMonth: ->
-    n = moment(@model.get('date')).startOf('month').subtract('months', 1)
-    @model.set('date', n.format('MMM D, YYYY'))
-    @render()
-
 
 #DAY
 class @CalendarDayItemView extends Backbone.Marionette.ItemView
