@@ -21,10 +21,7 @@
 
     nextWeek: (e) ->
       e.preventDefault()
-      console.log(moment(@model.get('date')).toString())
       n = moment(@model.get('date')).add('weeks', 1)
-      console.log(n.year())
-      console.log(n.toString())
       @updateHeader n
 
     prevWeek: (e) ->
@@ -62,3 +59,12 @@
   class Views.ContentCollection extends Backbone.Marionette.CollectionView
     itemView: Views.ContentItem
     tagName: 'tr'
+
+  class Views.AddLinkItem extends Marionette.ItemView
+    template: '#add-link'
+    tagName: 'td'
+
+  class Views.AddLinkCollection extends Marionette.CollectionView
+    itemView: Views.AddLinkItem
+    tagName: 'tr'
+    className: 'add-links'

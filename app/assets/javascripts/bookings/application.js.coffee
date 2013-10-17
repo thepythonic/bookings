@@ -17,15 +17,13 @@
 #= require ./models/appointment
 #= require ./models/employee
 #= require ./models/customer
-#= require ./collections/appointments
 #= require ./collections/employees
 #= require ./collections/customers
 #= require ./views/appointment
 #= require ./routers/appointment
 
 # CALENDAR
-#= require ./calendar/calendar
-#= require ./calendar/collections/calendars
+#= require ./calendar/models/calendars
 #= require ./calendar/calendar_app
 #= require ./calendar/calendar_views
 

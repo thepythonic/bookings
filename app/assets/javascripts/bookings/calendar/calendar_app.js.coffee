@@ -22,18 +22,13 @@
       week_start = d.startOf('week').unix()
       week_end = d.endOf('week').unix()
       days_range = moment(d.startOf('week')).twix(d.endOf('week'), true).iterate('days')
-      collection = []
-      while days_range.hasNext()
-        collection.push(new CalendarDate(date: days_range.next()))
+      
+      collection = Bookings.request('calendar:datelist:range', days_range)
 
-      collection = new CalendarDateList(collection)
-      appointmentList = new AppointmentList
-        mode: "week"
-        start: week_start
-        end: week_end
-
+      appointmentList = Bookings.request('calendar:appointments:range', week_start, week_end, "week")
+      
       layout = new CalendarApp.Views.Layout()
-      header = new CalendarApp.Views.CalendarHeader(model: new CalendarDate(date: d))
+      header = new CalendarApp.Views.CalendarHeader(model: new CalendarApp.Models.CalendarDate(date: d))
       
       #calendar layout regions
       calendarheader = new CalendarApp.Views.HeaderCollection(collection: collection)
@@ -47,6 +42,8 @@
 
       calendarLayout.header.show(calendarheader)
       calendarLayout.content.show(calendarContent)
+      linksRow = new CalendarApp.Views.AddLinkCollection(collection: collection)
+      calendarLayout.content.$el.append(linksRow.render().$el)
       appointmentList.fetch()
 
       

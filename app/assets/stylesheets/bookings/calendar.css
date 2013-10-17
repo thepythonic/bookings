@@ -2,14 +2,20 @@
   background-color: #2284a1;
 }
 
-#week-table{
+#calendar-table{
   min-height: 170px;
 }
-table#week-table tr td{
+table#calendar-table tr td{
   vertical-align: top;
 }
 
+table#calendar-table ul li{
+  list-style-type: none;
+}
 .span-link{
   color:#2ba6cb;
   cursor: pointer;
+}
+.add-links{
+  text-align: center;
 }
