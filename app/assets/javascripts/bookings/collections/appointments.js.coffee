@@ -36,14 +36,16 @@ class @AppointmentList extends Backbone.Collection
         appointments: new AppointmentList b
 
       prev = a
-
-
-    # console.log(@mode == 'week')
     
     if @mode == 'week'
       for i in [collection.length...7]
+        if collection.length > 0
+          date = collection[collection.length-1].date   
+        else
+          date = @start
+
         collection.push
-          date: moment(collection[collection.length-1].date).add('days', 1)
+          date: moment(date).add('days', 1)
           appointments: new AppointmentList 
       
       collection
@@ -54,7 +56,6 @@ class @AppointmentList extends Backbone.Collection
           date: moment(collection[collection.length-1].date).add('days', 1)
           appointments: new AppointmentList 
 
-      console.log(collection)
       collection
 
     else

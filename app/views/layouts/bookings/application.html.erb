@@ -71,11 +71,11 @@
     <div class="small-5 small-centered columns">
       <div class="row">
         <div class="small-3 columns">
-          <a href="#" class="prev text-right">Previous</a>
+          <span class="prev text-right span-link">Previous</span>
         </div>
         <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
-          <a href="#" class="next">Next</a>
+          <span class="next span-link">Next</span>
         </div>
       </div>
     </div>
@@ -89,11 +89,11 @@
     <div class="small-5 small-centered columns">
       <div class="row">
         <div class="small-3 columns">
-          <a href="#" class="prev text-right">Previous</a>
+          <a href="#" class="prev text-right span-link">Previous</a>
         </div>
         <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
-          <a href="#" class="next">Next</a>
+          <a href="#" class="next span-link">Next</a>
         </div>
       </div>
     </div>
@@ -114,11 +114,11 @@
     <div class="small-5 small-centered columns">
       <div class="row">
         <div class="small-3 columns">
-          <a href="#" class="prev text-right">Previous</a>
+          <span class="prev text-right">Previous</span>
         </div>
         <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
-          <a href="#" class="next">Next</a>
+          <span class="next">Next</span>
         </div>
       </div>
     </div>
@@ -141,11 +141,11 @@
 <script id="month-content-itemview" type="text/x-handlebars-template">
     {{#each appointments.models }}  
       <div class="small-12">
-      <a href="{{url}}">{{from_formatted}}</a>
+      <span class="span-link edit">{{from_formatted}}</span>
       </div>
     {{/each}}
     <hr />
-    <div class="small-12 add-appointment"><a>Add</a></div>
+    <div class="small-12 add-appointment"><span class="span-link">Add</span></div>
 
 </script>
 
@@ -155,11 +155,11 @@
     <div class="small-5 small-centered columns">
       <div class="row">
         <div class="small-3 columns">
-          <a href="#" class="prev text-right">Previous</a>
+          <span class="prev text-right span-link">Previous</span>
         </div>
         <div class="small-6 columns text-center">{{date_formatted}}</div>
         <div class="small-3 columns">
-          <a href="#" class="next">Next</a>
+          <span class="next span-link">Next</span>
         </div>
       </div>
     </div>
@@ -182,11 +182,11 @@
 <script id="week-content-itemview" type="text/x-handlebars-template">
     {{#each appointments.models }}  
       <div class="small-12">
-      <a href="{{url}}">{{from_formatted}}</a>
+      <span class="span-link">{{from_formatted}}</span>
       </div>
     {{/each}}
     <hr />
-    <div class="small-12 add-appointment"><a>Add</a></div>
+    <div class="small-12 add-appointment"><span class="span-link">Add</span></div>
 
 </script>
 

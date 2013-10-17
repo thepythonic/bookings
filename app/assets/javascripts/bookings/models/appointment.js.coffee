@@ -7,7 +7,6 @@ class @Appointment extends Backbone.Model
     @model = model
     if @model.hasOwnProperty('appointments')
       _.each @model.appointments.models, (m) ->
-        console.log(m.from)
         m.set('from_formatted', moment(m.get('from')).format('hh:mm a'))
 
   toJSON: ->

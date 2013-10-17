@@ -8,3 +8,8 @@
 table#week-table tr td{
   vertical-align: top;
 }
+
+.span-link{
+  color:#2ba6cb;
+  cursor: pointer;
+}

@@ -37,12 +37,7 @@
     template: '#month-content-itemview'
     tagName: 'td'
 
-    onRender: ->
-      console.log(@model)
-
   class Month.ContentCollection extends Backbone.Marionette.CollectionView
     itemView: Month.ContentItemView
     tagName: 'tr'
     
-    onRender: ->
-      console.log(@collection)

@@ -31,26 +31,23 @@
       @calendarDaysRange(month_start, month_end, "month")
 
     dayView: (e) ->
-      e.preventDefault()
-      @resetButtons($(e.target))
-      @header.show(new CalendarDayHeaderView(model: new CalendarDate()))
-      appointments =  new AppointmentList()
-      @content.show(new CalendarDayView(collection: appointments))
-      appointments.fetch()
+      Bookings.trigger('calendar:day')
+      # e.preventDefault()
+      # @resetButtons($(e.target))
+      # @header.show(new CalendarDayHeaderView(model: new CalendarDate()))
+      # appointments =  new AppointmentList()
+      # @content.show(new CalendarDayView(collection: appointments))
+      # appointments.fetch()
 
     weekView: (e) ->
-      if e
-        e.preventDefault()
       @resetButtons($('.week-view'))
-      @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
+      # @header.show(new Bookings.CalendarApp.Week.HeaderView(model: new CalendarDate()))
       week_start = moment().startOf('week')
       week_end = moment().endOf('week')
       @calendarDaysRange(week_start, week_end, "week")
       
 
     monthView: (e) ->
-      if e
-        e.preventDefault()
       @resetButtons($(e.target))
       @header.show(new Bookings.CalendarApp.Month.HeaderView(model: new CalendarDate()))
       month_start = moment().startOf('month')
@@ -89,14 +86,12 @@ class @CalendarDayHeaderView extends Backbone.Marionette.ItemView
     'click .prev': 'prevDay'
 
   nextDay: (e) ->
-    e.preventDefault()
     n = moment(@model.get('date')).add('days', 1)
     @model.set('date', n.format('MMM D, YYYY'))
     @render()
     Bookings.vent.trigger('nextPrev:day', n)
 
   prevDay: (e) ->
-    e.preventDefault()
     n = moment(@model.get('date')).subtract('days', 1)
     @model.set('date', n.format('MMM D, YYYY'))
     @render()

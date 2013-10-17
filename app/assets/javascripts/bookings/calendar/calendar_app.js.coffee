@@ -12,13 +12,10 @@
       console.log('Show Day Calendar')
 
     showWeekCalendar: ->
-      layout = new CalendarApp.Views.Layout()
-      Bookings.calendar.show(layout)
-      layout.header.show(new CalendarApp.Week.HeaderView(model: new CalendarDate()))
-      layout.weekView()
-
+      CalendarApp.Week.Controller.ShowWeek()
+      
     showMonthCalendar: ->
-      console.log('Show Month Calendar')
+      CalendarApp.Month.Controller.ShowMonth()
 
   Bookings.on 'calendar:day', ->
     Bookings.navigate("calendar")

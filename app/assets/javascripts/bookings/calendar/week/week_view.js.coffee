@@ -18,8 +18,10 @@
       e.preventDefault()
       n = moment(@model.get('date')).startOf('week').add('weeks', 1)
       @model.set('date', n)
+      console.log 
+      @trigger('calendar:week:nextPrev', n)
       @render()
-      Bookings.vent.trigger('nextPrev:week', n)
+      
 
     prevWeek: (e) ->
       e.preventDefault()
