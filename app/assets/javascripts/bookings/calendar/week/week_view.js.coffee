@@ -43,14 +43,9 @@
     events:
       "click .add-appointment": 'addAppointmentView'
 
-    
     addAppointmentView: ->
       @model.get('appointments').add(new Appointment({from: @model.get('date')}))
       @render()
-      # console.log(@model.get('date'))
-
-    onRender: ->
-      console.log(@model)
 
   class Week.ContentCollection extends Backbone.Marionette.CollectionView
     itemView: Week.ContentItemView
