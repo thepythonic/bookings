@@ -29,7 +29,7 @@
 
     prevWeek: (e) ->
       e.preventDefault()
-      n = moment(@model.get('date')).startOf('week').subtract('weeks', 1)
+      n = moment(@model.get('date')).subtract('weeks', 1)
       @updateHeader n
 
   class Views.CalendarLayout extends Marionette.Layout
