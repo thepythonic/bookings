@@ -7,7 +7,7 @@
     App.addRegions
       calendar: "#calendar"
 
-    App.on "initialize:before", ->
+    App.on "initialize:after", ->
       Backbone.history.start()
 
     App.navigate = (route, options)->

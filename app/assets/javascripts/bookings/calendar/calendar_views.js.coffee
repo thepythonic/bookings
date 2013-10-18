@@ -64,6 +64,12 @@
     template: '#add-link'
     tagName: 'td'
 
+    events:
+      'click .span-link': 'editView'
+
+    editView: (e)->
+      console.log(a)
+      
   class Views.AddLinkCollection extends Marionette.CollectionView
     itemView: Views.AddLinkItem
     tagName: 'tr'
