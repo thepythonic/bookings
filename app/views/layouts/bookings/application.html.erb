@@ -47,20 +47,20 @@
 </script>
 
 <script id="calendar-view-switch" type="text/x-handlebars-template">
-  <div id="calendar-switch" class="row">
-    <div class="small-3 small-offset-9 columns button-bar">
-      <ul class="button-group">
-        <li><a href="#" class="small button day-view">Day</a></li>
-        <li><a href="#" class="small button week-view">Week</a></li>
-        <li><a href="#" class="small button month-view">Month</a></li>
-      </ul>
-    </div>
+  <div class="row">
+    <ul class="button-group">
+      <li><a href="#" class="small button week-view">Week</a></li>
+      <li><a href="#" class="small button month-view">Month</a></li>
+    </ul>
   </div>
 </script>
 
 <!-- CALENDAR -->
 <script id="module-layout" type="text/x-handlebars-template">
-  <div id="module-header"></div>  
+  <div id="header-container" class="row">
+    <div id="calendar-switcher" class="small-2"></div>
+    <div id="module-header" class="small-12 columns"></div>  
+  </div>
   <div id="module-content"></div>  
 </script>
 

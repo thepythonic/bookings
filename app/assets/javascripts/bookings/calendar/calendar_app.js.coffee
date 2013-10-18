@@ -35,21 +35,25 @@
       
       layout = new CalendarApp.Views.Week.Layout()
       header = new CalendarApp.Views.Week.CalendarHeader(model: new CalendarApp.Models.CalendarDate(date: d))
-      
+      switcher = new CalendarApp.Views.Swicther()
+
       #calendar layout regions
       calendarheader = new CalendarApp.Views.Week.HeaderCollection(collection: collection)
       calendarContent = new CalendarApp.Views.Week.ContentCollection(collection: appointmentList)
-      #calendar layout
       calendarLayout = new CalendarApp.Views.Week.CalendarLayout()
 
       Bookings.calendar.show(layout)
       layout.header.show(header)
       layout.content.show(calendarLayout)
+      layout.switcher.show(switcher)
+      switcher.resetButtons($('.button-group .week-view'))
 
       calendarLayout.header.show(calendarheader)
       calendarLayout.content.show(calendarContent)
+      
       linksRow = new CalendarApp.Views.Week.AddLinkCollection(collection: collection)
       calendarLayout.content.$el.append(linksRow.render().$el)
+      
       appointmentList.fetch()
 
       
@@ -68,14 +72,15 @@
       
       layout = new CalendarApp.Views.Month.Layout()
       header = new CalendarApp.Views.Month.CalendarHeader(model: new CalendarApp.Models.CalendarDate(date: d, mode: 'month'))
-      
+      switcher = new CalendarApp.Views.Swicther()
       calendar = new CalendarApp.Views.Month.Calendar(collection: collection)
+      
       Bookings.calendar.show(layout)
       layout.header.show(header)
       layout.content.show(calendar)
-
-      linksRow = new CalendarApp.Views.Month.AddLinkCollection(collection: collection)
-      calendar.$el.append(linksRow.render().$el)
+      layout.switcher.show(switcher)
+      switcher.resetButtons($('.button-group .month-view'))
+      
      
 
   CalendarApp.addInitializer ->
@@ -87,8 +92,6 @@
     API.showWeekCalendar(year, n)
 
   Bookings.on 'calendar:month', (year, n)->
-    console.log(year)
-    console.log(n)
     Bookings.navigate("calendar/" + year + "/month/" + n)
     API.showMonthCalendar(year, n)
     

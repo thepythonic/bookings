@@ -4,8 +4,9 @@
     template: '#module-layout'
 
     regions:
-      'header': '#module-header'
-      'content': '#module-content'
+      switcher: '#calendar-switcher'
+      header: '#module-header'
+      content: '#module-content'
 
   class Week.CalendarHeader extends Marionette.ItemView
     template: '#calendar-header'

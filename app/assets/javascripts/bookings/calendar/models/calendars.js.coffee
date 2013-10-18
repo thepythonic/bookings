@@ -16,9 +16,9 @@
 
     date_formatted: ->
       if @get('mode') == 'week'
-        "<strong>" + @month_formatted() + @range_formatted()+ "</strong> "+ @year_formatted()
+        "<strong>" + @month_formatted() + ' ' + @range_formatted() + ",</strong> "+ @year_formatted()
       else
-        "<strong>" + moment(@get('date')).format('MMMM')+ "</strong> " 
+        "<strong>" + moment(@get('date')).format('MMMM') + "</strong>" 
 
    
     date_formatted_day: ->

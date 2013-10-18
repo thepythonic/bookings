@@ -4,8 +4,9 @@
     template: '#module-layout'
 
     regions:
-      'header': '#module-header'
-      'content': '#module-content'
+      switcher: '#calendar-switcher'
+      header: '#module-header'
+      content: '#module-content'
 
   class Month.CalendarHeader extends Marionette.ItemView
     template: '#calendar-header'
@@ -43,6 +44,7 @@
   class Month.Calendar extends Marionette.CompositeView
     itemView: Month.ContentItem
     template: '#calendar-month-layout'
+    className: 'row'
     itemViewContainer: 'tbody'
 
 
