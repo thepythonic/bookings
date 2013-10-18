@@ -71,7 +71,7 @@
         <div class="small-3 columns">
           <span class="prev text-right span-link">Previous</span>
         </div>
-        <div class="small-6 columns text-center">{{date_formatted}}</div>
+        <div class="small-6 columns text-center">{{{date_formatted}}}</div>
         <div class="small-3 columns">
           <span class="next span-link">Next</span>
         </div>
@@ -107,6 +107,31 @@
   <div class="small-12 add-appointment"><span class="span-link">Add</span></div>
 </script>
 
+
+
+<script id="calendar-month-layout" type="text/x-handlebars-template">
+  <table id="calendar-table" class="small-12">
+    <thead id="calendar-table-header">
+      <tr>
+        <td>Sun</td>
+        <td>Mon</td>
+        <td>Tue</td>
+        <td>Wed</td>
+        <td>Thu</td>
+        <td>Fri</td>
+        <td>Sat</td>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</script>
+
+<script id="content-month-itemview" type="text/x-handlebars-template">
+  {{#each models}}
+  <td class="span-link">{{day_formatted}}</td>
+  {{/each}}
+</script>
 
   
 </body>

@@ -1,13 +1,13 @@
-@Bookings.module "CalendarApp.Views", (Views, Bookings, Backbone, Marionette, $, _)->
+@Bookings.module "CalendarApp.Views.Week", (Week, Bookings, Backbone, Marionette, $, _)->
   
-  class Views.Layout extends Marionette.Layout
+  class Week.Layout extends Marionette.Layout
     template: '#module-layout'
 
     regions:
       'header': '#module-header'
       'content': '#module-content'
 
-  class Views.CalendarHeader extends Marionette.ItemView
+  class Week.CalendarHeader extends Marionette.ItemView
     template: '#calendar-header'
 
     events:
@@ -29,7 +29,7 @@
       n = moment(@model.get('date')).subtract('weeks', 1)
       @updateHeader n
 
-  class Views.CalendarLayout extends Marionette.Layout
+  class Week.CalendarLayout extends Marionette.Layout
     template: '#calendar-layout'
     className: 'row'
 
@@ -37,15 +37,15 @@
       header: '#calendar-table-header'
       content: '#calendar-table-content' 
 
-  class Views.HeaderItem extends Marionette.ItemView
+  class Week.HeaderItem extends Marionette.ItemView
     template: '#header-itemview'
     tagName: 'th'
 
-  class Views.HeaderCollection extends Marionette.CollectionView
-    itemView: Views.HeaderItem
+  class Week.HeaderCollection extends Marionette.CollectionView
+    itemView: Week.HeaderItem
     tagName: 'tr'
 
-  class Views.ContentItem extends Marionette.ItemView
+  class Week.ContentItem extends Marionette.ItemView
     template: '#content-itemview'
     tagName: 'td'
 
@@ -56,11 +56,11 @@
       @model.get('appointments').add(new Appointment({from: @model.get('date')}))
       @render()
 
-  class Views.ContentCollection extends Backbone.Marionette.CollectionView
-    itemView: Views.ContentItem
+  class Week.ContentCollection extends Backbone.Marionette.CollectionView
+    itemView: Week.ContentItem
     tagName: 'tr'
 
-  class Views.AddLinkItem extends Marionette.ItemView
+  class Week.AddLinkItem extends Marionette.ItemView
     template: '#add-link'
     tagName: 'td'
 
@@ -68,9 +68,9 @@
       'click .span-link': 'editView'
 
     editView: (e)->
-      console.log(a)
-      
-  class Views.AddLinkCollection extends Marionette.CollectionView
-    itemView: Views.AddLinkItem
+      console.log(@model)
+
+  class Week.AddLinkCollection extends Marionette.CollectionView
+    itemView: Week.AddLinkItem
     tagName: 'tr'
     className: 'add-links'

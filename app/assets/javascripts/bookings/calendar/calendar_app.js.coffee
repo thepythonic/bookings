@@ -3,14 +3,20 @@
   class CalendarApp.Router extends Marionette.AppRouter
     appRoutes:
       "calendar/:year/day(/:n)": "showDayCalendar" 
-      "calendar/:year/week(/:n)": "calendarView" 
-      "calendar/:year/month(/:n)": "showMonthCalendar" 
+      "calendar/:year/week(/:n)": "calendarWeekView" 
+      "calendar/:year/month(/:n)": "calendarMonthView" 
 
   API =
     showDayCalendar: ->
       console.log('Show Day Calendar')
 
-    calendarView: (year, n)->
+    calendarMonthView: (year, n)->
+      today = moment()
+      year || (year = today.year())
+      n || (n = today.month())
+      Bookings.trigger 'calendar:month', year, n
+
+    calendarWeekView: (year, n)->
       today = moment()
       year || (year = today.year())
       n || (n = today.week())
@@ -19,22 +25,22 @@
     showWeekCalendar: (year, n)->
       date_s = year + " " + n + ' 1'
       d = moment().year(year).week(n)
-      week_start = d.startOf('week').unix()
-      week_end = d.endOf('week').unix()
+      start = d.startOf('week').unix()
+      end = d.endOf('week').unix()
       days_range = moment(d.startOf('week')).twix(d.endOf('week'), true).iterate('days')
       
       collection = Bookings.request('calendar:datelist:range', days_range)
 
-      appointmentList = Bookings.request('calendar:appointments:range', week_start, week_end, "week")
+      appointmentList = Bookings.request('calendar:appointments:range', start, end, "week")
       
-      layout = new CalendarApp.Views.Layout()
-      header = new CalendarApp.Views.CalendarHeader(model: new CalendarApp.Models.CalendarDate(date: d))
+      layout = new CalendarApp.Views.Week.Layout()
+      header = new CalendarApp.Views.Week.CalendarHeader(model: new CalendarApp.Models.CalendarDate(date: d))
       
       #calendar layout regions
-      calendarheader = new CalendarApp.Views.HeaderCollection(collection: collection)
-      calendarContent = new CalendarApp.Views.ContentCollection(collection: appointmentList)
+      calendarheader = new CalendarApp.Views.Week.HeaderCollection(collection: collection)
+      calendarContent = new CalendarApp.Views.Week.ContentCollection(collection: appointmentList)
       #calendar layout
-      calendarLayout = new CalendarApp.Views.CalendarLayout()
+      calendarLayout = new CalendarApp.Views.Week.CalendarLayout()
 
       Bookings.calendar.show(layout)
       layout.header.show(header)
@@ -42,20 +48,35 @@
 
       calendarLayout.header.show(calendarheader)
       calendarLayout.content.show(calendarContent)
-      linksRow = new CalendarApp.Views.AddLinkCollection(collection: collection)
+      linksRow = new CalendarApp.Views.Week.AddLinkCollection(collection: collection)
       calendarLayout.content.$el.append(linksRow.render().$el)
       appointmentList.fetch()
 
       
-    showMonthCalendar: (n)->
-      CalendarApp.Month.Controller.ShowMonth(n)
+    showMonthCalendar: (year, n)->
+      date_s = year + " " + n + ' 1'
+      d = moment().year(year).month(n) 
+      d_start = moment().year(year).month(n) 
+      d_end = moment().year(year).month(n)
+      start = d_start.startOf('month').unix()
+      end = d_end.endOf('month').unix()
+      month_start = d_start.startOf('month').startOf('week')
+      month_end = d_end.endOf('month').endOf('week')
+      days_range = moment(month_start).twix(month_end, true).iterate('days')
 
-    showWeekAppointments: (n)->
-      CalendarApp.Views.Week.Controller.showAppointments(n)
-    
-    showMonthAppointments: (n)->
-      CalendarApp.Views.Month.Controller.showAppointments(n)
+      collection = Bookings.request('calendar:datelist:month:range', days_range)
+      
+      layout = new CalendarApp.Views.Month.Layout()
+      header = new CalendarApp.Views.Month.CalendarHeader(model: new CalendarApp.Models.CalendarDate(date: d, mode: 'month'))
+      
+      calendar = new CalendarApp.Views.Month.Calendar(collection: collection)
+      Bookings.calendar.show(layout)
+      layout.header.show(header)
+      layout.content.show(calendar)
 
+      linksRow = new CalendarApp.Views.Month.AddLinkCollection(collection: collection)
+      calendar.$el.append(linksRow.render().$el)
+     
 
   CalendarApp.addInitializer ->
     new CalendarApp.Router
@@ -64,5 +85,11 @@
   Bookings.on 'calendar:week', (year, n)->
     Bookings.navigate("calendar/" + year + "/week/" + n)
     API.showWeekCalendar(year, n)
+
+  Bookings.on 'calendar:month', (year, n)->
+    console.log(year)
+    console.log(n)
+    Bookings.navigate("calendar/" + year + "/month/" + n)
+    API.showMonthCalendar(year, n)
     
 
