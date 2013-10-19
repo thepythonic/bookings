@@ -4,6 +4,7 @@
     defaults:
       date: moment().format 'MMM D, YYYY'
       mode: 'week'
+      outOfRange: false
     
     month_formatted: ->
       (moment @get 'date').format 'MMM'
@@ -27,13 +28,21 @@
     day_formatted: ->
       (moment @get 'date').format 'D'
 
+    outOfRange: ->
+      @get 'outOfRange'
+
+    mode: ->
+      @get 'mode'
+
     toJSON: ->
-      data = _(@attributes).clone();
+      data = _.clone @attributes ;
       data.date_formatted = @date_formatted()
       data.month_formatted = @month_formatted()
       data.range_formatted = @range_formatted()
       data.year_formatted = @year_formatted()
       data.date_formatted_day = @date_formatted_day()
+      data.mode =  @mode()
+      data.outOfRange =  @outOfRange()
       data
 
   class Models.CalendarDateList extends Backbone.Collection
@@ -47,15 +56,25 @@
 
       new Models.CalendarDateList(collection)
 
-    getCalendatDateListForMonthRange: (days_range)->
+    getCalendatDateListForMonthRange: (days_range, month)->
       week = []
       collection = []
       i = 1
-      
+
       while days_range.hasNext()
         date = days_range.next()
-        week.push new Models.CalendarDate date: date
+        if date.month().toString() == month.toString()
+          outOfRange = false
+        else
+          outOfRange = true
+
+        calendateDate =  new Models.CalendarDate 
+          date: date
+          mode: "month"
+          outOfRange: outOfRange
         
+        week.push calendateDate
+
         if (i % 7) == 0
           collection.push new Models.CalendarDateList week
           week = []
@@ -68,5 +87,5 @@
   Bookings.reqres.setHandler 'calendar:datelist:range', (days_range)->
     API.getCalendatDateListForRange days_range
 
-  Bookings.reqres.setHandler 'calendar:datelist:month:range', (days_range)->
-    API.getCalendatDateListForMonthRange days_range
+  Bookings.reqres.setHandler 'calendar:datelist:month:range', (days_range, month)->
+    API.getCalendatDateListForMonthRange days_range, month

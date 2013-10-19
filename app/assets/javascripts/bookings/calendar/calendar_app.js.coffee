@@ -23,7 +23,6 @@
       Bookings.trigger 'calendar:week', year, n
 
     showWeekCalendar: (year, n)->
-      date_s = year + " " + n + ' 1'
       d = (moment().year year).week(n)
       start = (d.startOf 'week').unix()
       end = (d.endOf 'week').unix()
@@ -58,8 +57,8 @@
 
       
     showMonthCalendar: (year, n)->
-      date_s = year + " " + n + ' 1'
-      d = (moment().year year).month n 
+      d = moment().year(year).month(n) 
+      console.log d.toString()
       d_start = (moment().year year).month n 
       d_end = (moment().year year).month n 
       start = (d_start.startOf 'month').unix()
@@ -68,7 +67,7 @@
       month_end = (d_end.endOf 'month').endOf 'week' 
       days_range = (moment month_start).twix(month_end, true).iterate 'days'
 
-      collection = Bookings.request 'calendar:datelist:month:range', days_range
+      collection = Bookings.request 'calendar:datelist:month:range', days_range, n
       
       layout = new CalendarApp.Views.Month.Layout()
       header = new CalendarApp.Views.Month.CalendarHeader model: new CalendarApp.Models.CalendarDate date: d, mode: 'month'
@@ -87,12 +86,12 @@
     new CalendarApp.Router
       controller: API
   
-  Bookings.on 'calendar:week', (year, n, trigger=false)->
-    Bookings.navigate "calendar/" + year + "/week/" + n, trigger: trigger 
-    API.showWeekCalendar year, n
+  Bookings.on 'calendar:week', (year, n)->
+    Bookings.navigate "calendar/" + year + "/week/" + n
+    API.showWeekCalendar parseInt(year), parseInt(n)
 
-  Bookings.on 'calendar:month', (year, n, trigger=false)->
-    Bookings.navigate "calendar/" + year + "/month/" + n, trigger: trigger
-    API.showMonthCalendar year, n
+  Bookings.on 'calendar:month', (year, n)->
+    Bookings.navigate "calendar/" + year + "/month/" + n
+    API.showMonthCalendar parseInt(year), parseInt(n)
     
 
