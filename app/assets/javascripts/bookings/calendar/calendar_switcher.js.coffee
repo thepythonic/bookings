@@ -9,7 +9,7 @@ Bookings.module "CalendarApp.Views", (Views, Bookings, Backbone, Marionette, $, 
 
     weekView: (e) ->
       e.preventDefault() if e
-      @resetButtons($('.week-view'))
+      @resetButtons $ '.week-view'
       today = moment()
       year || (year = today.year())
       n || (n = today.week())
@@ -17,13 +17,13 @@ Bookings.module "CalendarApp.Views", (Views, Bookings, Backbone, Marionette, $, 
 
     monthView: (e) ->
       e.preventDefault() if e
-      @resetButtons($('.month-view'))
+      @resetButtons $ '.month-view'
       today = moment()
       year || (year = today.year())
       n || (n = today.month())
       Bookings.trigger 'calendar:month', year, n
 
     resetButtons: (target) ->
-      $('.button-group .active').removeClass('active')
-      target.addClass('active')
+      ($ '.button-group .active').removeClass 'active'
+      target.addClass 'active'
  

@@ -16,18 +16,18 @@
       'click .prev': 'prevWeek'
 
     updateHeader: (n)->
-      @model.set('date', n)
-      Bookings.trigger('calendar:week', n.year(), n.week())
+      @model.set 'date', n
+      Bookings.trigger 'calendar:week', n.year(), n.week()
       @render() 
 
     nextWeek: (e) ->
       e.preventDefault()
-      n = moment(@model.get('date')).add('weeks', 1)
+      n = (moment @model.get 'date').add 'weeks', 1
       @updateHeader n
 
     prevWeek: (e) ->
       e.preventDefault()
-      n = moment(@model.get('date')).subtract('weeks', 1)
+      n = (moment @model.get 'date').subtract 'weeks', 1
       @updateHeader n
 
   class Week.CalendarLayout extends Marionette.Layout
@@ -54,7 +54,7 @@
       "click .add-appointment": 'addAppointmentView'
 
     addAppointmentView: ->
-      @model.get('appointments').add(new Appointment({from: @model.get('date')}))
+      (@model.get 'appointments').add new Appointment from: @model.get 'date'
       @render()
 
   class Week.ContentCollection extends Backbone.Marionette.CollectionView
