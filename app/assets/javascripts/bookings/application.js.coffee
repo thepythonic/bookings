@@ -37,41 +37,6 @@ $(document).foundation()
 Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
       Handlebars.compile(rawTemplate);
       
-  
-# window.Calendar = new Backbone.Marionette.Application()
-# appointmentList = new AppointmentList()
-# employeeList = new EmployeeList()
-# customerList = new CustomerList()
-# viewOptions = 
-#   collection: appointmentList
-#   employees: employeeList
-#   customers: customerList
-
-# appointmentView = new AppointmentDayView(viewOptions)
-
-# Calendar.addRegions
-#   mainRegion: "#content"
-#   calendar: "#calendar"
-
-# Calendar.on 'start', ->
-#   Backbone.history.start()
-
-# Calendar.addInitializer ->
-#   Calendar.mainRegion.show(appointmentView)
-#   appointmentList.fetch()
-#   employeeList.fetch()
-#   customerList.fetch()
-#   c = new CalendarLayout()
-#   Calendar.calendar.show(c)
-#   c.header.show(new CalendarWeekHeaderView(model: new CalendarDate()))
-  
-  
-# Calendar.listenTo appointmentList, 'all', ->
-#   Calendar.mainRegion.$el.toggle(appointmentList.length > 0)
-
-
-
-
-
+      
 $(document).ready ->
   Bookings.start()

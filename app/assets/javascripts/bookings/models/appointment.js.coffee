@@ -28,21 +28,23 @@
       @mode = options.mode
 
     url: ->
-      x = ''
-      x += '/start/' + @start if @start
-      x += '/end/' + @end if @end
-      x += '.json' 
-      '/bookings/appointments' + x
+      q = ''
+      q += '/start/' + @start if @start
+      q += '/end/' + @end if @end
+      q += '.json' 
+      "/bookings/appointments#{q}"
 
     comparator: (item) ->
       item.get('from')
 
     parse: (response)->
+      #TODO HZ: What about getting the data from server??!
       collection = []
-      prev = moment(@start, 'X')
+      prev = moment(@start, 'X') #convert unix time to date
       for a, b of response
         diff = moment(prev).diff(moment(a))
-        while diff < -86400000
+        #TODO HZ: check logic here, need more accurate calculation.
+        while diff < -86400000 
           diff += 86400000
           collection.push
             date: moment(a)
@@ -58,6 +60,7 @@
         prev = a
       
       if @mode == 'week'
+        # add emtpy list at the end of the collection if the collection length is less than 7 (days)
         for i in [collection.length...7]
           if collection.length > 0
             date = collection[collection.length-1].date   
@@ -80,7 +83,6 @@
 
       else
         response 
-
 
 
   API = 

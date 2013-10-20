@@ -24,13 +24,6 @@ class @AppointmentDayView extends Backbone.Marionette.CompositeView
   tagName: 'ul'
   className: 'row'
 
-# class @AppointmentWeekView extends Backbone.Marionette.CompositeView
-  
-
-
-# class @AppointmentMonthView extends Backbone.Marionette.CompositeView
-  
-
 class @AppointmentEditView extends Backbone.Marionette.ItemView
   template: '#appointment-edit'
   tagName: 'form'
