@@ -57,10 +57,9 @@
 
       
     showMonthCalendar: (year, n)->
-      d = moment().year(year).month(n) 
-      console.log d.toString()
-      d_start = (moment().year year).month n 
-      d_end = (moment().year year).month n 
+      d = (moment().year year).month n  
+      d_start = d.clone()
+      d_end = d.clone()
       start = (d_start.startOf 'month').unix()
       end = (d_end.endOf 'month').unix()
       month_start = (d_start.startOf 'month').startOf 'week' 
