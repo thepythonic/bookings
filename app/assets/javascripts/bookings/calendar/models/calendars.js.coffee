@@ -19,7 +19,7 @@
       if @get('mode') == 'week'
         "<strong>" + @month_formatted() + ' ' + @range_formatted() + ",</strong> "+ @year_formatted()
       else
-        "<strong>" + (moment @get 'date').format 'MMMM'  + "</strong>" 
+        "<strong>" + (moment @get 'date').format 'MMMM, YYYY'  + "</strong>" 
 
    
     date_formatted_day: ->
@@ -28,21 +28,17 @@
     day_formatted: ->
       (moment @get 'date').format 'D'
 
-    outOfRange: ->
-      @get 'outOfRange'
-
-    mode: ->
-      @get 'mode'
-
     toJSON: ->
-      data = _.clone @attributes ;
+      data = _.clone @attributes
+      data.models = _.map data.models, (m)->
+        m.toJSON()
+        m
+
       data.date_formatted = @date_formatted()
       data.month_formatted = @month_formatted()
       data.range_formatted = @range_formatted()
       data.year_formatted = @year_formatted()
       data.date_formatted_day = @date_formatted_day()
-      data.mode =  @mode()
-      data.outOfRange =  @outOfRange()
       data
 
   class Models.CalendarDateList extends Backbone.Collection
