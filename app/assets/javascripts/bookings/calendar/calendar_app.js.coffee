@@ -49,10 +49,7 @@
 
       calendarLayout.header.show calendarheader
       calendarLayout.content.show calendarContent
-      
-      linksRow = new CalendarApp.Views.Week.AddLinkCollection collection: collection
-      calendarLayout.content.$el.append linksRow.render().$el
-      
+            
       appointmentList.fetch()
 
       

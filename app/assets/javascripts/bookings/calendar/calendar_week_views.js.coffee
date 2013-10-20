@@ -1,16 +1,9 @@
 @Bookings.module "CalendarApp.Views.Week", (Week, Bookings, Backbone, Marionette, $, _)->
   
-  class Week.Layout extends Marionette.Layout
-    template: '#module-layout'
+  class Week.Layout extends Bookings.CalendarApp.Views.Layout
 
-    regions:
-      switcher: '#calendar-switcher'
-      header: '#module-header'
-      content: '#module-content'
 
-  class Week.CalendarHeader extends Marionette.ItemView
-    template: '#calendar-header'
-
+  class Week.CalendarHeader extends Bookings.CalendarApp.Views.CalendarHeader
     events:
       'click .next': 'nextWeek'
       'click .prev': 'prevWeek'
@@ -60,18 +53,3 @@
   class Week.ContentCollection extends Backbone.Marionette.CollectionView
     itemView: Week.ContentItem
     tagName: 'tr'
-
-  class Week.AddLinkItem extends Marionette.ItemView
-    template: '#add-link'
-    tagName: 'td'
-
-    events:
-      'click .span-link': 'editView'
-
-    editView: (e)->
-      console.log(@model)
-
-  class Week.AddLinkCollection extends Marionette.CollectionView
-    itemView: Week.AddLinkItem
-    tagName: 'tr'
-    className: 'add-links'

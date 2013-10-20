@@ -1,16 +1,10 @@
 @Bookings.module "CalendarApp.Views.Month", (Month, Bookings, Backbone, Marionette, $, _)->
   
-  class Month.Layout extends Marionette.Layout
-    template: '#module-layout'
+  class Month.Layout extends Bookings.CalendarApp.Views.Layout
+    
 
-    regions:
-      switcher: '#calendar-switcher'
-      header: '#module-header'
-      content: '#module-content'
-
-  class Month.CalendarHeader extends Marionette.ItemView
-    template: '#calendar-header'
-
+  class Month.CalendarHeader extends Bookings.CalendarApp.Views.CalendarHeader
+    
     events:
       'click .next': 'nextMonth'
       'click .prev': 'prevMonth'
@@ -46,19 +40,3 @@
     template: '#calendar-month-layout'
     className: 'row'
     itemViewContainer: 'tbody'
-
-
-  class Month.AddLinkItem extends Marionette.ItemView
-    template: '#add-link'
-    tagName: 'td'
-
-    events:
-      'click .span-link': 'editView'
-
-    editView: (e)->
-      console.log(@model)
-
-  class Month.AddLinkCollection extends Marionette.CollectionView
-    itemView: Month.AddLinkItem
-    tagName: 'tr'
-    className: 'add-links'
