@@ -39,16 +39,16 @@
       #calendar layout regions
       calendarheader = new CalendarApp.Views.Week.HeaderCollection collection: collection
       calendarContent = new CalendarApp.Views.Week.ContentCollection collection: appointmentList
-      calendarLayout = new CalendarApp.Views.Week.CalendarLayout()
+      calendarContentLayout = new CalendarApp.Views.Week.CalendarContentLayout()
 
       Bookings.calendar.show layout
       layout.header.show header
-      layout.content.show calendarLayout
+      layout.content.show calendarContentLayout
       layout.switcher.show switcher
       switcher.resetButtons $ '.button-group .week-view'
 
-      calendarLayout.header.show calendarheader
-      calendarLayout.content.show calendarContent
+      calendarContentLayout.header.show calendarheader
+      calendarContentLayout.content.show calendarContent
             
       appointmentList.fetch()
 

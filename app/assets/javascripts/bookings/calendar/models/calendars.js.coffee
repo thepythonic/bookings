@@ -5,7 +5,7 @@
       date: moment().format 'MMM D, YYYY'
       mode: 'week'
       outOfRange: false
-    
+
     month_formatted: ->
       (moment @get 'date').format 'MMM'
     
@@ -28,11 +28,14 @@
     day_formatted: ->
       (moment @get 'date').format 'D'
 
+    outOfRange: ->
+      @get 'outOfRange'
+
+    mode: ->
+      @get 'mode'
+
     toJSON: ->
       data = _.clone @attributes
-      data.models = _.map data.models, (m)->
-        m.toJSON()
-        m
 
       data.date_formatted = @date_formatted()
       data.month_formatted = @month_formatted()

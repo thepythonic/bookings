@@ -23,7 +23,7 @@
       n = (moment @model.get 'date').subtract 'weeks', 1
       @updateHeader n
 
-  class Week.CalendarLayout extends Marionette.Layout
+  class Week.CalendarContentLayout extends Marionette.Layout
     template: '#calendar-layout'
     className: 'row'
 
