@@ -26,10 +26,25 @@
 
   class Month.ContentItem extends Marionette.ItemView
     template: '#content-month-itemview'
+    tagName: 'td'
+
+    initialize: ->
+      @model.toJSON()
+
+    events:
+      'click .span-link': 'logMe'
+
+    logMe: ->
+      console.log(@model)
+
+  class Month.ContentItems extends Marionette.CollectionView
+    itemView: Month.ContentItem
     tagName: 'tr'
 
+    initialize: (options)->
+      @collection =  new Bookings.CalendarApp.Models.CalendarDateList(options.model.get('models'))
+
   class Month.Calendar extends Marionette.CompositeView
-    itemView: Month.ContentItem
+    itemView: Month.ContentItems
     template: '#calendar-month-layout'
-    className: 'row'
     itemViewContainer: 'tbody'

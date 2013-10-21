@@ -35,13 +35,14 @@
       @get 'mode'
 
     toJSON: ->
-      data = _.clone @attributes
+      data = @attributes
 
       data.date_formatted = @date_formatted()
       data.month_formatted = @month_formatted()
       data.range_formatted = @range_formatted()
       data.year_formatted = @year_formatted()
       data.date_formatted_day = @date_formatted_day()
+      data.day_formatted = @day_formatted()
       data
 
   class Models.CalendarDateList extends Backbone.Collection

@@ -30,13 +30,23 @@
 #= require ./calendar/calendar_week_views
 #= require ./calendar/calendar_month_views
 
-
+Handlebars.registerHelper "debug", (optionalValue) ->
+  console.log("Current Context")
+  console.log("====================")
+  console.log(@)
+ 
+  if (optionalValue)
+    console.log("Value")
+    console.log("====================")
+    console.log(optionalValue)
 
 $(document).foundation()
 
 Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
       Handlebars.compile(rawTemplate);
       
-      
+
 $(document).ready ->
   Bookings.start()
+
+ 
