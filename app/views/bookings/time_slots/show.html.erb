@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>From time:</strong>
+  <%= @time_slot.from_time %>
+</p>
+
+<p>
+  <strong>To time:</strong>
+  <%= @time_slot.to_time %>
+</p>
+
+<p>
+  <strong>Reservable:</strong>
+  <%= @time_slot.reservable_id %>
+</p>
+
+<%= link_to 'Edit', edit_time_slot_path(@time_slot) %> |
+<%= link_to 'Back', time_slots_path %>

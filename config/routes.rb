@@ -1,4 +1,6 @@
 Bookings::Engine.routes.draw do
+  resources :time_slots
+
   resources :template_slots
 
   resources :appointments

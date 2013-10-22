@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  from_time: 2013-10-22 18:24:50
+  to_time: 2013-10-22 18:24:50
+  reservable_id: 1
+
+two:
+  from_time: 2013-10-22 18:24:50
+  to_time: 2013-10-22 18:24:50
+  reservable_id: 1
