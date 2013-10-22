@@ -6,39 +6,40 @@ module Bookings
 
     # GET /template_slots
     def index
-      @template_slots = TemplateSlot.all
+      @template_slot = TemplateSlot.new
+
     end
 
     def slots
-      y, m,d = 2013, 9,22
+      y, m,d = 2013, 10,22
       @x= [
-      {title: "All Day Event", start: Date.new(y, m, 1)},
+      {title: "All Day Event", start: DateTime.new(y, m, 1, 8)},
       {title: "Long Event",
-      start: Date.new(y, m, d - 5),
-      :end => Date.new(y, m, d - 2),
+      start: DateTime.new(y, m, d - 5),
+      :end => DateTime.new(y, m, d - 2),
       name: "xxxx"},
       {id: 999,
       title: "Repeating Event",
-      start: Date.new(y, m, d - 3, 16),
+      start: DateTime.new(y, m, d - 3, 16),
       allDay: false},
       {id: 999,
       title: "Repeating Event",
-      start: Date.new(y, m, d + 4, 16),
+      start: DateTime.new(y, m, d + 4, 16),
       allDay: false},
       {title: "Meeting",
-      start: Date.new(y, m, d, 10),
+      start: DateTime.new(y, m, d, 10),
       allDay: false},
       {title: "Lunch",
-      start: Date.new(y, m, d, 12),
-      :end => Date.new(y, m, d, 14),
+      start: DateTime.new(y, m, d, 12),
+      :end => DateTime.new(y, m, d, 14),
       allDay: false},
       {title: "Birthday Party",
-      start: Date.new(y, m, d + 1, 19),
-      :end => Date.new(y, m, d + 1, 22),
+      start: DateTime.new(y, m, d + 1, 19),
+      :end => DateTime.new(y, m, d + 1, 22),
       allDay: false},
      {title: "Click for Google",
-      start: Date.new(y, m, 28),
-      :end => Date.new(y, m, 29),
+      start: DateTime.new(y, m, 28),
+      :end => DateTime.new(y, m, 29),
       url: "http://google.com/"}
     ]
       render json: @x
