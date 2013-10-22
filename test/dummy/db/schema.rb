@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131020160249) do
+ActiveRecord::Schema.define(version: 20131022132811) do
 
   create_table "bookings_appointments", force: true do |t|
     t.datetime "from"

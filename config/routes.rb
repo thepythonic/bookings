@@ -1,4 +1,6 @@
 Bookings::Engine.routes.draw do
+  resources :template_slots
+
   resources :appointments
   get 'appointments/for/:reservable', to: 'appointments#appointments_for_reservable'
   

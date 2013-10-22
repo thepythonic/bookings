@@ -1,0 +1,33 @@
+<h1>Listing template_slots</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>From time</th>
+      <th>To time</th>
+      <th>Reservable</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @template_slots.each do |template_slot| %>
+      <tr>
+        <td><%= template_slot.day %></td>
+        <td><%= template_slot.from_time %></td>
+        <td><%= template_slot.to_time %></td>
+        <td><%= template_slot.reservable %></td>
+        <td><%= link_to 'Show', template_slot %></td>
+        <td><%= link_to 'Edit', edit_template_slot_path(template_slot) %></td>
+        <td><%= link_to 'Destroy', template_slot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Template slot', new_template_slot_path %>

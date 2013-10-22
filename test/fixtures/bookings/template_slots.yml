@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day: MyString
+  from_time: 1
+  to_time: 1
+  reservable_id: 
+
+two:
+  day: MyString
+  from_time: 1
+  to_time: 1
+  reservable_id: 
