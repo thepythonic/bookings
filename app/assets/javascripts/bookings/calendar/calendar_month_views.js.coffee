@@ -48,3 +48,4 @@
     itemView: Month.ContentItems
     template: '#calendar-month-layout'
     itemViewContainer: 'tbody'
+    className: 'row'

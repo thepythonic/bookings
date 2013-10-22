@@ -59,7 +59,7 @@ module Bookings
       render :index
     end
 
-    def appointments_for_customer
+    def appointments_for_reservable
       @customer = Customer.find(params[:customer])
       @appointments = @customer.appointments
       render :index
@@ -83,7 +83,7 @@ module Bookings
       end
 
       def set_customers_employees
-        @customers = Bookings.customer_class.to_s.constantize.all
+        @customers = Bookings.reservable_class.to_s.constantize.all
         @employees = Bookings.employee_class.to_s.constantize.all
       end
   end

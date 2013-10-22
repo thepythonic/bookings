@@ -4,7 +4,7 @@ module Bookings
     default_scope -> { order('`from` ASC') }
 
     #TODO HZ: classes should be configurable
-    belongs_to :employee, class_name: Bookings.employee_class.to_s
+    belongs_to :reservable, class_name: Bookings.reservable_class.to_s
     belongs_to :customer, class_name: Bookings.customer_class.to_s
   end
 end
