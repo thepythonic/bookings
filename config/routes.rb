@@ -10,6 +10,4 @@ Bookings::Engine.routes.draw do
   get 'appointments/start/:start/end/:end', to: 'appointments#within_date_range'
 
 
-  resources :template_solts
-
 end
