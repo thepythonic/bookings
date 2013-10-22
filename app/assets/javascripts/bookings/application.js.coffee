@@ -1,52 +1,75 @@
 
-#= require ./backbonejs/jquery
-#= require ./backbonejs/underscore
-#= require ./backbonejs/json2
-#= require ./backbonejs/handlebars
-#= require ./backbonejs/backbone
-#= require ./backbonejs/backbone.babysitter
-#= require ./backbonejs/backbone.wreqr
-#= require ./backbonejs/backbone.marionette
-#= require ./foundation.min
-#= require ./foundation-datepicker
-#= require ./moment
-#= require ./moment-twix
-
-#= require ./app
-
-#= require ./models/appointment
-#= require ./models/employee
-#= require ./models/customer
-#= require ./collections/employees
-#= require ./collections/customers
-#= require ./views/appointment
-#= require ./routers/appointment
-
-# CALENDAR
-#= require ./calendar/models/calendars
-#= require ./calendar/calendar_app
-#= require ./calendar/calendar_base_views
-#= require ./calendar/calendar_switcher
-#= require ./calendar/calendar_week_views
-#= require ./calendar/calendar_month_views
-
-Handlebars.registerHelper "debug", (optionalValue) ->
-  console.log("Current Context")
-  console.log("====================")
-  console.log(@)
- 
-  if (optionalValue)
-    console.log("Value")
-    console.log("====================")
-    console.log(optionalValue)
-
-$(document).foundation()
-
-Backbone.Marionette.TemplateCache.prototype.compileTemplate = (rawTemplate) -> 
-      Handlebars.compile(rawTemplate);
-      
+#= require ./jquery/jquery
+#= require ./jquery-ui/ui/jquery-ui
+#= require ./full_calendar/fullcalendar
 
 $(document).ready ->
-  Bookings.start()
+  date = new Date()
+  d = date.getDate()
+  m = date.getMonth()
+  y = date.getFullYear()
 
- 
+  calendar = $("#calendar").fullCalendar(
+    eventClick: (event, element) ->
+      event.title = "CLICKED!"
+      $("#calendar").fullCalendar "updateEvent", event
+
+    theme: false
+
+    header:
+      left: "prev,next today"
+      center: "title"
+      right: "month,agendaWeek,agendaDay"
+
+    selectable: true
+    selectHelper: true
+    select: (start, end, allDay) ->
+      title = prompt("Event Title:")
+      if title
+        calendar.fullCalendar "renderEvent",
+          title: title
+          start: start
+          end: end
+          allDay: allDay
+        , true # make the event "stick"
+      calendar.fullCalendar "unselect"
+
+    editable: true
+    events: [
+      title: "All Day Event"
+      start: new Date(y, m, 1)
+    ,
+      title: "Long Event"
+      start: new Date(y, m, d - 5)
+      end: new Date(y, m, d - 2)
+    ,
+      id: 999
+      title: "Repeating Event"
+      start: new Date(y, m, d - 3, 16, 0)
+      allDay: false
+    ,
+      id: 999
+      title: "Repeating Event"
+      start: new Date(y, m, d + 4, 16, 0)
+      allDay: false
+    ,
+      title: "Meeting"
+      start: new Date(y, m, d, 10, 30)
+      allDay: false
+    ,
+      title: "Lunch"
+      start: new Date(y, m, d, 12, 0)
+      end: new Date(y, m, d, 14, 0)
+      allDay: false
+    ,
+      title: "Birthday Party"
+      start: new Date(y, m, d + 1, 19, 0)
+      end: new Date(y, m, d + 1, 22, 30)
+      allDay: false
+    ,
+      title: "Click for Google"
+      start: new Date(y, m, 28)
+      end: new Date(y, m, 29)
+      url: "http://google.com/"
+    ]
+  )
