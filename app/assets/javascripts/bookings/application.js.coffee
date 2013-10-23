@@ -51,15 +51,15 @@ $(document).ready ->
           success: (data)->
             $('#template_form').html('')
             $('#template_form').html('<p class="success">Saved Successfully</p>')
-            console.log start
-            console.log end
+            start.setHours(data.from_time)
+            end.setHours(data.to_time)
             tableSlotCalendar.fullCalendar "renderEvent",
               title: data.id.toString()
               start: start
               end: end
               allDay: false
             , true # make the event "stick"
-            tableSlotCalendar.fullCalendar "unselect"
+            # tableSlotCalendar.fullCalendar "unselect"
           error: (xhr, textStatus, errorThrown) ->
             ul = "<ul class='error'>"
             for key, value of xhr.responseJSON.errors
@@ -69,7 +69,7 @@ $(document).ready ->
             ul += "</ul>"
             $('#template_form').prepend(ul)
             tableSlotCalendar.fullCalendar "unselect"
-        false
+       
 
     
 
