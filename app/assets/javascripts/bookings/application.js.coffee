@@ -11,6 +11,16 @@ Date.prototype.getDayName = ->
   d = ['Sunday','Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday']
   d[@getDay()]
 
+FormHandler = 
+  showForm: (id, start, end, recurrence=1)->
+      $('#template_form').html(templateSlotForm)
+      
+      $('#template_slot_day').val(start.getDayName())
+      $('#from_time_hour').val(start.getHours())
+      $('#from_time_minute').val(start.getMinutes())
+      $('#to_time_hour').val(end.getHours())
+      $('#to_time_minute').val(end.getMinutes())
+
 
 $(document).ready ->
   date = new Date()
@@ -20,6 +30,8 @@ $(document).ready ->
 
   window.tableSlotCalendar = $("#calendar").fullCalendar(
     eventClick: (event, element) ->
+      console.log event.end
+      FormHandler.showForm(null, event.start, event.end)
       event.title = "CLICKED!"
       $("#calendar").fullCalendar "updateEvent", event
 
@@ -36,13 +48,7 @@ $(document).ready ->
     selectable: true
     selectHelper: true
     select: (start, end, allDay) ->
-      $('#template_form').html(templateSlotForm)
-      
-      $('#template_slot_day').val(start.getDayName())
-      $('#from_time_hour').val(start.getHours())
-      $('#from_time_minute').val(start.getMinutes())
-      $('#to_time_hour').val(end.getHours())
-      $('#to_time_minute').val(end.getMinutes())
+      FormHandler.showForm(null, start, end)
       
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
@@ -64,6 +70,7 @@ $(document).ready ->
             tableSlotCalendar.fullCalendar "renderEvent",
               title: data.id.toString()
               start: start
+              recurrence: data.recurrence
               end: end
               allDay: false
             , true # make the event "stick"
