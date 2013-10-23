@@ -26,6 +26,8 @@ $(document).ready ->
     theme: false
     slotMinutes: 15
     defaultView: 'agendaWeek'
+    columnFormat: 'dddd'
+    allDay: false
     header:
       left: "prev,next today"
       center: "title"
@@ -37,9 +39,11 @@ $(document).ready ->
       $('#template_form').html(templateSlotForm);
       
       $('#template_slot_day').val(start.getDayName());
-      $('#template_slot_from_time').val(start.getHours());
-      $('#template_slot_to_time').val(end.getHours());
-
+      $('#from_time_hour').val(start.getHours());
+      $('#from_time_minute').val(start.getMinutes());
+      $('#to_time_hour').val(end.getHours());
+      $('#to_time_minute').val(end.getMinutes());
+      
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
 
@@ -70,18 +74,6 @@ $(document).ready ->
             $('#template_form').prepend(ul)
             tableSlotCalendar.fullCalendar "unselect"
        
-
-    
-
-      # title = prompt("Event Title:")
-      # if title
-      #   calendar.fullCalendar "renderEvent",
-      #     title: title
-      #     start: start
-      #     end: end
-      #     allDay: allDay
-      #   , true # make the event "stick"
-      # calendar.fullCalendar "unselect"
 
     editable: true
     events: "/bookings/template/slots"
