@@ -36,13 +36,13 @@ $(document).ready ->
     selectable: true
     selectHelper: true
     select: (start, end, allDay) ->
-      $('#template_form').html(templateSlotForm);
+      $('#template_form').html(templateSlotForm)
       
-      $('#template_slot_day').val(start.getDayName());
-      $('#template_slot_from_time_4i').val(("0" + start.getHours()).slice(-2));
-      $('#template_slot_from_time_5i').val(("0" + start.getMinutes()).slice(-2));
-      $('#template_slot_to_time_4i').val(("0" + end.getHours()).slice(-2));
-      $('#template_slot_to_time_5i').val(("0" + end.getMinutes()).slice(-2));
+      $('#template_slot_day').val(start.getDayName())
+      $('#from_time_hour').val(start.getHours())
+      $('#from_time_minute').val(start.getMinutes())
+      $('#to_time_hour').val(end.getHours())
+      $('#to_time_minute').val(end.getMinutes())
       
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
