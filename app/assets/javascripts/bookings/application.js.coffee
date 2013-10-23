@@ -11,55 +11,47 @@ Date.prototype.getDayName = ->
   d = ['Sunday','Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday']
   d[@getDay()]
 
-
-$(document).ready ->
-  date = new Date()
-  d = date.getDate()
-  m = date.getMonth()
-  y = date.getFullYear()
-
-  window.tableSlotCalendar = $("#calendar").fullCalendar(
-    eventClick: (event, element) ->
-      event.title = "CLICKED!"
-      $("#calendar").fullCalendar "updateEvent", event
-
-    theme: false
-    slotMinutes: 15
-    defaultView: 'agendaWeek'
-    header:
-      left: "prev,next today"
-      center: "title"
-      right: "agendaWeek"
-
-    selectable: true
-    selectHelper: true
-    select: (start, end, allDay) ->
-      $('#template_form').html(templateSlotForm);
+FormHandler = 
+  showForm: (id, start, end, recurrence=1)->
+      $('#template_form').html(templateSlotForm)
       
-      $('#template_slot_day').val(start.getDayName());
-      $('#template_slot_from_time').val(start.getHours());
-      $('#template_slot_to_time').val(end.getHours());
+      $('#template_slot_day').val(start.getDayName())
+      $('#from_time_hour').val(start.getHours())
+      $('#from_time_minute').val(start.getMinutes())
+      $('#to_time_hour').val(end.getHours())
+      $('#to_time_minute').val(end.getMinutes())
 
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
+        url =$(@).attr('action') + '.json'
+        data = $(@).serialize()
+        if $('#template_form form').attr('method') == 'patch'
+          data['_method'] = 'patch'
+          type = 'patch'
+        else
+          type = 'POST'
 
         $.ajax
-          type: "POST"
-          url: $(@).attr('action') + '.json'
-          data: $(@).serialize()
+          type: type
+          url: url
+          data: data 
           dataType: 'json'
+
           success: (data)->
             $('#template_form').html('')
             $('#template_form').html('<p class="success">Saved Successfully</p>')
-            console.log start
-            console.log end
+            start.setHours(data.from_time.split(':')[0])
+            start.setMinutes(data.from_time.split(':')[1])
+            end.setHours(data.to_time.split(':')[0])
+            end.setMinutes(data.to_time.split(':')[1])
+
             tableSlotCalendar.fullCalendar "renderEvent",
               title: data.id.toString()
               start: start
+              recurrence: data.recurrence
               end: end
               allDay: false
             , true # make the event "stick"
-            tableSlotCalendar.fullCalendar "unselect"
           error: (xhr, textStatus, errorThrown) ->
             ul = "<ul class='error'>"
             for key, value of xhr.responseJSON.errors
@@ -69,19 +61,36 @@ $(document).ready ->
             ul += "</ul>"
             $('#template_form').prepend(ul)
             tableSlotCalendar.fullCalendar "unselect"
-        false
 
-    
 
-      # title = prompt("Event Title:")
-      # if title
-      #   calendar.fullCalendar "renderEvent",
-      #     title: title
-      #     start: start
-      #     end: end
-      #     allDay: allDay
-      #   , true # make the event "stick"
-      # calendar.fullCalendar "unselect"
+
+$(document).ready ->
+  date = new Date()
+  d = date.getDate()
+  m = date.getMonth()
+  y = date.getFullYear()
+
+  window.tableSlotCalendar = $("#calendar").fullCalendar(
+    eventClick: (event, element) ->
+      FormHandler.showForm(event.title, event.start, event.end)
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('method', 'patch')
+
+    theme: false
+    slotMinutes: 15
+    defaultView: 'agendaWeek'
+    # columnFormat: 'dddd'  #display dayName without date
+    allDay: false
+    header:
+      left: "prev,next today"
+      center: "title"
+      right: "agendaWeek"
+
+    selectable: true
+    selectHelper: true
+    select: (start, end, allDay) ->
+      FormHandler.showForm(null, start, end)
+      
 
     editable: true
     events: "/bookings/template/slots"

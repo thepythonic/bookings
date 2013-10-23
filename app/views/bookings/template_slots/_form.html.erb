@@ -17,15 +17,17 @@
   </div>
   <div class="field">
     <%= f.label :from_time %><br>
-    <%= f.number_field :from_time %>
+    <%= select_tag :from_time_hour, options_for_select(hours_span_options) %>
+    <%= select_tag :from_time_minute, options_for_select(minutes_span_options) %>
   </div>
   <div class="field">
     <%= f.label :to_time %><br>
-    <%= f.number_field :to_time %>
+     <%= select_tag :to_time_hour, options_for_select(hours_span_options) %>
+     <%= select_tag :to_time_minute, options_for_select(minutes_span_options) %>
   </div>
   <div class="field">
-    <%= f.label :reservable %><br>
-    <%= f.text_field :reservable %>
+    <%= f.label :recurrence %><br>
+    <%= f.select :recurrence,  week_recurrence_options %>
   </div>
   <div class="actions">
     <%= f.submit %>
