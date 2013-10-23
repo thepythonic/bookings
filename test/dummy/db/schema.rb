@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022171259) do
+ActiveRecord::Schema.define(version: 20131023212834) do
 
   create_table "bookings_appointments", force: true do |t|
     t.datetime "from"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20131022171259) do
 
   create_table "bookings_template_slots", force: true do |t|
     t.string   "day"
-    t.integer  "from_time"
-    t.integer  "to_time"
+    t.string   "from_time"
+    t.string   "to_time"
+    t.integer  "recurrence"
     t.integer  "reservable_id"
     t.datetime "created_at"
     t.datetime "updated_at"

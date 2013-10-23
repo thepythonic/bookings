@@ -100,7 +100,8 @@ module Bookings
 
       # Only allow a trusted parameter "white list" through.
       def template_slot_params
-        params.require(:template_slot).permit(:day, :from_time, :to_time, :reservable_id)
+        params.require(:template_slot).permit(:day, :from_time_hour, :from_time_minute, 
+          :to_time_hour, :to_time_minute, :recurrence)
       end
   end
 end

@@ -26,8 +26,8 @@
     <%= select_tag :to_time_minute, options_for_select(minutes_span_options) %>
   </div>
   <div class="field">
-    <%= f.label :reservable %><br>
-    <%= f.text_field :reservable %>
+    <%= f.label :recurrence %><br>
+    <%= f.select :recurrence,  week_recurrence_options %>
   </div>
   <div class="actions">
     <%= f.submit %>

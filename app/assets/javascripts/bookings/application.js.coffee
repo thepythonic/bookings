@@ -55,8 +55,10 @@ $(document).ready ->
           success: (data)->
             $('#template_form').html('')
             $('#template_form').html('<p class="success">Saved Successfully</p>')
-            start.setHours(data.from_time)
-            end.setHours(data.to_time)
+            start.setHours(data.from_time.split(':')[0])
+            start.setMinutes(data.from_time.split(':')[1])
+            end.setHours(data.to_time.split(':')[0])
+            end.setMinutes(data.to_time.split(':')[1])
             tableSlotCalendar.fullCalendar "renderEvent",
               title: data.id.toString()
               start: start
