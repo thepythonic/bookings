@@ -21,42 +21,20 @@ FormHandler =
       $('#to_time_hour').val(end.getHours())
       $('#to_time_minute').val(end.getMinutes())
 
-
-$(document).ready ->
-  date = new Date()
-  d = date.getDate()
-  m = date.getMonth()
-  y = date.getFullYear()
-
-  window.tableSlotCalendar = $("#calendar").fullCalendar(
-    eventClick: (event, element) ->
-      console.log event.end
-      FormHandler.showForm(null, event.start, event.end)
-      event.title = "CLICKED!"
-      $("#calendar").fullCalendar "updateEvent", event
-
-    theme: false
-    slotMinutes: 15
-    defaultView: 'agendaWeek'
-    # columnFormat: 'dddd'  #display dayName without date
-    allDay: false
-    header:
-      left: "prev,next today"
-      center: "title"
-      right: "agendaWeek"
-
-    selectable: true
-    selectHelper: true
-    select: (start, end, allDay) ->
-      FormHandler.showForm(null, start, end)
-      
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
+        url =$(@).attr('action') + '.json'
+        data = $(@).serialize()
+        if $('#template_form form').attr('method') == 'patch'
+          data['_method'] = 'patch'
+          type = 'patch'
+        else
+          type = 'POST'
 
         $.ajax
-          type: "POST"
-          url: $(@).attr('action') + '.json'
-          data: $(@).serialize()
+          type: type
+          url: url
+          data: data 
           dataType: 'json'
 
           success: (data)->
@@ -83,6 +61,36 @@ $(document).ready ->
             ul += "</ul>"
             $('#template_form').prepend(ul)
             tableSlotCalendar.fullCalendar "unselect"
+
+
+
+$(document).ready ->
+  date = new Date()
+  d = date.getDate()
+  m = date.getMonth()
+  y = date.getFullYear()
+
+  window.tableSlotCalendar = $("#calendar").fullCalendar(
+    eventClick: (event, element) ->
+      FormHandler.showForm(event.title, event.start, event.end)
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('method', 'patch')
+
+    theme: false
+    slotMinutes: 15
+    defaultView: 'agendaWeek'
+    # columnFormat: 'dddd'  #display dayName without date
+    allDay: false
+    header:
+      left: "prev,next today"
+      center: "title"
+      right: "agendaWeek"
+
+    selectable: true
+    selectHelper: true
+    select: (start, end, allDay) ->
+      FormHandler.showForm(null, start, end)
+      
 
     editable: true
     events: "/bookings/template/slots"

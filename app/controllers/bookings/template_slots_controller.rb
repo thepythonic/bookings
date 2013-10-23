@@ -65,7 +65,6 @@ module Bookings
 
     # POST /template_slots
     def create
-      puts template_slot_params
       @template_slot = TemplateSlot.new(template_slot_params)
       @template_slot.from_time = "#{params[:from_time_hour]}:#{params[:from_time_minute]}"
       @template_slot.to_time = "#{params[:to_time_hour]}:#{params[:to_time_minute]}"
@@ -83,10 +82,18 @@ module Bookings
 
     # PATCH/PUT /template_slots/1
     def update
-      if @template_slot.update(template_slot_params)
-        redirect_to @template_slot, notice: 'Template slot was successfully updated.'
+      @template_slot.update(template_slot_params)
+      @template_slot.from_time = "#{params[:from_time_hour]}:#{params[:from_time_minute]}"
+      @template_slot.to_time = "#{params[:to_time_hour]}:#{params[:to_time_minute]}"
+      if @template_slot.save
+        respond_with(@template_slot, :status => :created, :location => @template_slot) do |format|
+          format.json { render json: @template_slot }
+          format.html { redirect_to @template_slot,  notice: 'Template slot was successfully updated.' }
+        end
       else
-        render action: 'edit'
+        respond_with(@template_slot) do |format|
+          format.html { render :action => :edit }
+        end
       end
     end
 
