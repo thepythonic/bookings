@@ -26,7 +26,7 @@ $(document).ready ->
     theme: false
     slotMinutes: 15
     defaultView: 'agendaWeek'
-    columnFormat: 'dddd'
+    # columnFormat: 'dddd'  #display dayName without date
     allDay: false
     header:
       left: "prev,next today"
@@ -39,10 +39,10 @@ $(document).ready ->
       $('#template_form').html(templateSlotForm);
       
       $('#template_slot_day').val(start.getDayName());
-      $('#from_time_hour').val(start.getHours());
-      $('#from_time_minute').val(start.getMinutes());
-      $('#to_time_hour').val(end.getHours());
-      $('#to_time_minute').val(end.getMinutes());
+      $('#template_slot_from_time_4i').val(("0" + start.getHours()).slice(-2));
+      $('#template_slot_from_time_5i').val(("0" + start.getMinutes()).slice(-2));
+      $('#template_slot_to_time_4i').val(("0" + end.getHours()).slice(-2));
+      $('#template_slot_to_time_5i').val(("0" + end.getMinutes()).slice(-2));
       
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
@@ -52,6 +52,7 @@ $(document).ready ->
           url: $(@).attr('action') + '.json'
           data: $(@).serialize()
           dataType: 'json'
+
           success: (data)->
             $('#template_form').html('')
             $('#template_form').html('<p class="success">Saved Successfully</p>')
@@ -59,13 +60,13 @@ $(document).ready ->
             start.setMinutes(data.from_time.split(':')[1])
             end.setHours(data.to_time.split(':')[0])
             end.setMinutes(data.to_time.split(':')[1])
+
             tableSlotCalendar.fullCalendar "renderEvent",
               title: data.id.toString()
               start: start
               end: end
               allDay: false
             , true # make the event "stick"
-            # tableSlotCalendar.fullCalendar "unselect"
           error: (xhr, textStatus, errorThrown) ->
             ul = "<ul class='error'>"
             for key, value of xhr.responseJSON.errors
@@ -75,7 +76,6 @@ $(document).ready ->
             ul += "</ul>"
             $('#template_form').prepend(ul)
             tableSlotCalendar.fullCalendar "unselect"
-       
 
     editable: true
     events: "/bookings/template/slots"

@@ -13,7 +13,10 @@ module Bookings
     end
 
     def slots
-      y, m,d = 2013, 10,22
+      @template_slots_by_day = TemplateSlot.all.group_by(&:day)
+      date = DateTime.now
+
+      y, m,d = date.year, date.month, date.day
       @x= [
       {title: "All Day Event", start: DateTime.new(y, m, 1, 8)},
       {title: "Long Event",
@@ -44,7 +47,7 @@ module Bookings
       :end => DateTime.new(y, m, 29),
       url: "http://google.com/"}
     ]
-      render json: @x
+      render json: @template_slots_by_day
     end
 
     # GET /template_slots/1
@@ -62,6 +65,7 @@ module Bookings
 
     # POST /template_slots
     def create
+      puts template_slot_params
       @template_slot = TemplateSlot.new(template_slot_params)
       @template_slot.from_time = "#{params[:from_time_hour]}:#{params[:from_time_minute]}"
       @template_slot.to_time = "#{params[:to_time_hour]}:#{params[:to_time_minute]}"
