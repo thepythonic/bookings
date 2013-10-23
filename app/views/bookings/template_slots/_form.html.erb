@@ -1,0 +1,33 @@
+<%= form_for(@template_slot, remote: true) do |f| %>
+  <% if @template_slot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@template_slot.errors.count, "error") %> prohibited this template_slot from being saved:</h2>
+
+      <ul>
+      <% @template_slot.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :day %><br>
+    <%= f.text_field :day %>
+  </div>
+  <div class="field">
+    <%= f.label :from_time %><br>
+    <%= f.number_field :from_time %>
+  </div>
+  <div class="field">
+    <%= f.label :to_time %><br>
+    <%= f.number_field :to_time %>
+  </div>
+  <div class="field">
+    <%= f.label :reservable %><br>
+    <%= f.text_field :reservable %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
