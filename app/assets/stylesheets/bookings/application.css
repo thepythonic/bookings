@@ -15,3 +15,9 @@
 		width: 900px;
 		margin: 0 auto;
 	}
+
+  .error li{
+    list-style-type: none;
+    color: red;
+    text-align: left;
+  }

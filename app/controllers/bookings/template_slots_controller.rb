@@ -4,6 +4,8 @@ module Bookings
   class TemplateSlotsController < ApplicationController
     before_action :set_template_slot, only: [:show, :edit, :update, :destroy]
 
+    respond_to :json, :html
+
     # GET /template_slots
     def index
       @template_slot = TemplateSlot.new
@@ -63,9 +65,13 @@ module Bookings
       @template_slot = TemplateSlot.new(template_slot_params)
 
       if @template_slot.save
-        redirect_to @template_slot, notice: 'Template slot was successfully created.'
+        respond_with(@template_slot, :status => :created, :location => @template_slot) do |format|
+          format.html { redirect_to @template_slot,  notice: 'Template slot was successfully created.' }
+        end
       else
-        render action: 'new'
+        respond_with(@template_slot) do |format|
+          format.html { render :action => :new }
+        end
       end
     end
 
