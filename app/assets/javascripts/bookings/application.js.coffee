@@ -59,31 +59,42 @@ FormHandler =
     $('#template_form').css('display', 'block')
     event
 
+  updateForm: (event)->
+    $('#template_form').css('display', 'none')
+    $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
+    $('#template_form form').attr('method', 'patch')
+    $('#template_form form').submit()
+
+  showUpdatForm: (event)->
+    FormHandler.showForm(event)
+    $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
+    $('#template_form form').attr('method', 'patch')
+
   showForm: (event)->
-      $('#template_form').html(templateSlotForm)
-      FormHandler.setFormFieldsValue(event)
+    $('#template_form').html(templateSlotForm)
+    FormHandler.setFormFieldsValue(event)
 
-      $('#template_form form').on 'submit', (e) ->
-        e.preventDefault()
-        url =$(@).attr('action') + '.json'
-        data = $(@).serialize()
-        if $('#template_form form').attr('method') == 'patch'
-          data['_method'] = 'patch'
-          type = 'patch'
-        else
-          type = 'POST'
+    $('#template_form form').on 'submit', (e) ->
+      e.preventDefault()
+      url =$(@).attr('action') + '.json'
+      data = $(@).serialize()
+      if $('#template_form form').attr('method') == 'patch'
+        data['_method'] = 'patch'
+        type = 'patch'
+      else
+        type = 'POST'
 
-        $.ajax
-          type: type
-          url: url
-          data: data 
-          dataType: 'json'
+      $.ajax
+        type: type
+        url: url
+        data: data 
+        dataType: 'json'
 
-          success: (data)->
-            FormHandler.successHandler event, data
-            console.log event
-          error: (xhr, textStatus, errorThrown) ->
-            FormHandler.displayErros xhr.responseJSON.errors
+        success: (data)->
+          FormHandler.successHandler event, data
+          console.log event
+        error: (xhr, textStatus, errorThrown) ->
+          FormHandler.displayErros xhr.responseJSON.errors
 
 
 
@@ -93,11 +104,10 @@ $(document).ready ->
   m = date.getMonth()
   y = date.getFullYear()
 
-  window.templateSlotCalendar = $("#calendar").fullCalendar(
+  window.templateSlotCalendar = $("#calendar").fullCalendar
     eventClick: (event, element) ->
-      FormHandler.showForm(event)
-      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
-      $('#template_form form').attr('method', 'patch')
+      FormHandler.showUpdatForm(event)
+      
 
     theme: false
     slotMinutes: 15
@@ -136,17 +146,10 @@ $(document).ready ->
 
     eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
       FormHandler.showForm(event)
-      $('#template_form').css('display', 'none')
-      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
-      $('#template_form form').attr('method', 'patch')
-      $('#template_form form').submit()
+      FormHandler.updateForm(event)
+      
       
     eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
       FormHandler.showForm(event)
-      $('#template_form').css('display', 'none')
-      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
-      $('#template_form form').attr('method', 'patch')
-      $('#template_form form').submit()
-
-
-  )
+      FormHandler.updateForm(event)
+  
