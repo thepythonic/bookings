@@ -9,44 +9,10 @@ module Bookings
     # GET /template_slots
     def index
       @template_slot = TemplateSlot.new
-
     end
 
     def slots
-      @template_slots_by_day = TemplateSlot.all#.group_by(&:day)
-      date = DateTime.now
-
-      y, m,d = date.year, date.month, date.day
-      @x= [
-      {title: "All Day Event", start: DateTime.new(y, m, 1, 8)},
-      {title: "Long Event",
-      start: DateTime.new(y, m, d - 5),
-      :end => DateTime.new(y, m, d - 2),
-      name: "xxxx"},
-      {id: 999,
-      title: "Repeating Event",
-      start: DateTime.new(y, m, d - 3, 16),
-      allDay: false},
-      {id: 999,
-      title: "Repeating Event",
-      start: DateTime.new(y, m, d + 4, 16),
-      allDay: false},
-      {title: "Meeting",
-      start: DateTime.new(y, m, d, 10),
-      allDay: false},
-      {title: "Lunch",
-      start: DateTime.new(y, m, d, 12),
-      :end => DateTime.new(y, m, d, 14),
-      allDay: false},
-      {title: "Birthday Party",
-      start: DateTime.new(y, m, d + 1, 19),
-      :end => DateTime.new(y, m, d + 1, 22),
-      allDay: false},
-     {title: "Click for Google",
-      start: DateTime.new(y, m, 28),
-      :end => DateTime.new(y, m, 29),
-      url: "http://google.com/"}
-    ]
+      @template_slots_by_day = TemplateSlot.all
       render json: @template_slots_by_day, each_serializer: TemplateSlotsSerializer
     end
 
