@@ -46,7 +46,7 @@ $(document).ready ->
 
     # resize event 
     eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
-      FormHandler.showForm(event)
+      FormHandler.showForm(event, revertFunc)
       FormHandler.sumitUpdateForm(event)    
     
     # drop and event  
