@@ -6,12 +6,7 @@ $(document).ready ->
   y = date.getFullYear()
 
   window.templateSlotCalendar = $("#calendar").fullCalendar
-    eventClick: (event, element) ->
-      FormHandler.showUpdateForm(event)
-      
-
     theme: false
-    
     minTime: config.minTime || '0'
     maxTime: config.maxTime || '24'
     slotMinutes: 15
@@ -26,12 +21,8 @@ $(document).ready ->
 
     selectable: true
     selectHelper: true
-
-    select: (start, end, allDay) ->
-      FormHandler.showForm( {start: start, end: end, isNew: true} )
-      
     editable: true
-
+    
     events: (start, end, callback) ->
       $.ajax
         url: "/bookings/template/slots"
@@ -47,14 +38,22 @@ $(document).ready ->
               recurring: slot.recurring
               allDay: false
             
-          callback(events)
+          callback(events)  
 
+    # click on event
+    eventClick: (event, element) ->
+      FormHandler.showUpdateForm(event)
+
+    # resize event 
     eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
       FormHandler.showForm(event)
-      FormHandler.sumitUpdateForm(event)
-      
-      
+      FormHandler.sumitUpdateForm(event)    
+    
+    # drop and event  
     eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
       FormHandler.showForm(event)
       FormHandler.sumitUpdateForm(event)
-  
+    
+    # create new event
+    select: (start, end, allDay) ->
+      FormHandler.showForm( {start: start, end: end, isNew: true} )
