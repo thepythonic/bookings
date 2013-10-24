@@ -9,7 +9,6 @@ class DoctorsController < ApplicationController
   end
 
   def show
-    puts "xxxx"
   end
   
   def new

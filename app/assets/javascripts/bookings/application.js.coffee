@@ -99,12 +99,10 @@ $(document).ready ->
     editable: true
 
     events: (start, end, callback) ->
-      console.log 'AAA'
       $.ajax
         url: "/bookings/template/slots"
         dataType: 'json'
         success: (doc)->
-          console.log doc
           events = []
           for slot in doc.template_slots 
             events.push
