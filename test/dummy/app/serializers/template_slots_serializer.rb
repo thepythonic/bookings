@@ -13,17 +13,21 @@ class TemplateSlotsSerializer < ActiveModel::Serializer
 
   def start
   	h_m = object.from_time.split(':')
-  	day = beginning_of_this_week#.change(hour: h_m[0].to_i, minute: h_m[1].to_i)
-  	day + week_days.index(object.day) + h_m[0].to_i.hour + h_m[1].to_i.minute
+  	format_date(h_m)
   end
 
   def end
   	h_m = object.to_time.split(':')
-  	day = beginning_of_this_week#.change(hour: h_m[0].to_i, minute: h_m[1].to_i)
-  	day + week_days.index(object.day) + h_m[0].to_i.hour + h_m[1].to_i.minute
+  	format_date(h_m)
   end
 
   def title
   	object.id
   end
+
+ 	private
+ 	def format_date(hour_minute)
+ 		day = beginning_of_this_week
+  	day + week_days.index(object.day) + hour_minute[0].to_i.hour + hour_minute[1].to_i.minute
+ 	end
 end
