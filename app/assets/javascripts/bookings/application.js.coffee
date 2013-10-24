@@ -18,6 +18,7 @@ FormHandler =
     event.end.setHours(data.to_time.split(':')[0])
     event.end.setMinutes(data.to_time.split(':')[1])
     event.recurring = data.recurring
+    event.id = data.id if data.id
     event
 
   displayErros: (errors)->
@@ -31,7 +32,7 @@ FormHandler =
     templateSlotCalendar.fullCalendar "unselect"
     $('#template_form').css('display', 'block')
 
-  setFormInputsValues: (event)->
+  setFormFieldsValue: (event)->
     $('#template_slot_day').val(event.start.getDayName())
     $('#from_time_hour').val(event.start.getHours())
     $('#from_time_minute').val(event.start.getMinutes())
@@ -39,9 +40,28 @@ FormHandler =
     $('#to_time_minute').val(event.end.getMinutes())
     $('#template_slot_recurring').val(event.recurring || 0)
 
+  successHandler: (event, data)->
+    $('#template_form').html('')
+    $('#template_form').html('<p class="success">Saved Successfully</p>')
+    event = FormHandler.setEvent event, data
+    unless event.isNew # refresh events if update
+      templateSlotCalendar.fullCalendar 'rerenderEvents' 
+    else
+      event.isNew = false
+      templateSlotCalendar.fullCalendar "renderEvent",
+        title: data.id.toString()
+        start: event.start
+        recurring: data.recurring
+        end: event.end
+        id: data.id
+        allDay: false
+      , true # make the event "stick"
+    $('#template_form').css('display', 'block')
+    event
+
   showForm: (event)->
       $('#template_form').html(templateSlotForm)
-      FormHandler.setFormInputsValues(event)
+      FormHandler.setFormFieldsValue(event)
 
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
@@ -60,20 +80,8 @@ FormHandler =
           dataType: 'json'
 
           success: (data)->
-            $('#template_form').html('')
-            $('#template_form').html('<p class="success">Saved Successfully</p>')
-            event = FormHandler.setEvent event, data
-            if event.id # refresh events if update
-              templateSlotCalendar.fullCalendar 'rerenderEvents' 
-            else
-              templateSlotCalendar.fullCalendar "renderEvent",
-                title: data.id.toString()
-                start: event.start
-                recurring: data.recurring
-                end: event.end
-                allDay: false
-              , true # make the event "stick"
-            $('#template_form').css('display', 'block')
+            FormHandler.successHandler event, data
+            console.log event
           error: (xhr, textStatus, errorThrown) ->
             FormHandler.displayErros xhr.responseJSON.errors
 
@@ -88,7 +96,7 @@ $(document).ready ->
   window.templateSlotCalendar = $("#calendar").fullCalendar(
     eventClick: (event, element) ->
       FormHandler.showForm(event)
-      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
       $('#template_form form').attr('method', 'patch')
 
     theme: false
@@ -105,7 +113,7 @@ $(document).ready ->
     selectHelper: true
 
     select: (start, end, allDay) ->
-      FormHandler.showForm( {start: start, end: end} )
+      FormHandler.showForm( {start: start, end: end, isNew: true} )
       
     editable: true
 
@@ -129,14 +137,14 @@ $(document).ready ->
     eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
       FormHandler.showForm(event)
       $('#template_form').css('display', 'none')
-      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
       $('#template_form form').attr('method', 'patch')
       $('#template_form form').submit()
       
     eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
       FormHandler.showForm(event)
       $('#template_form').css('display', 'none')
-      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
       $('#template_form form').attr('method', 'patch')
       $('#template_form form').submit()
 
