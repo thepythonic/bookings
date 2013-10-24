@@ -4,7 +4,12 @@
 <%= link_to 'New Template slot', new_template_slot_path %>
 
 <script type="text/javascript">
-var templateSlotForm = '<%=j render "form", locals: @template_slot %>';
+//TODO HZ: get these values dynamically
+var config = {
+	form: '<%=j render "form", locals: @template_slot %>',
+	minTime: '8:00',
+	maxTime: '18:00'
+};
 </script>
 
 <%= javascript_include_tag "bookings/template_slots" %>

@@ -71,7 +71,7 @@ Date.prototype.getDayName = ->
     $('#template_form form').attr('method', 'patch')
 
   showForm: (event)->
-    $('#template_form').html(templateSlotForm)
+    $('#template_form').html(config.form)
     FormHandler.setFormFieldsValue(event)
 
     $('#template_form form').on 'submit', (e) ->
