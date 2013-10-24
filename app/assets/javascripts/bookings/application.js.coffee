@@ -60,13 +60,13 @@ Date.prototype.getDayName = ->
     $('#template_form').css('display', 'block')
     event
 
-  updateForm: (event)->
+  sumitUpdateForm: (event)->
     $('#template_form').css('display', 'none')
     $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
     $('#template_form form').attr('method', 'patch')
     $('#template_form form').submit()
 
-  showUpdatForm: (event)->
+  showUpdateForm: (event)->
     FormHandler.showForm(event)
     $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
     $('#template_form form').attr('method', 'patch')

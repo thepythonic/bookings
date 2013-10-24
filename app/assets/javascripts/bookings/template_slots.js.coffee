@@ -7,7 +7,7 @@ $(document).ready ->
 
   window.templateSlotCalendar = $("#calendar").fullCalendar
     eventClick: (event, element) ->
-      FormHandler.showUpdatForm(event)
+      FormHandler.showUpdateForm(event)
       
 
     theme: false
@@ -51,10 +51,10 @@ $(document).ready ->
 
     eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
       FormHandler.showForm(event)
-      FormHandler.updateForm(event)
+      FormHandler.sumitUpdateForm(event)
       
       
     eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
       FormHandler.showForm(event)
-      FormHandler.updateForm(event)
+      FormHandler.sumitUpdateForm(event)
   
