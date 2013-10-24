@@ -22,6 +22,7 @@ Date.prototype.getDayName = ->
     event
 
   displayErros: (errors)->
+    $('#template_form .error').remove()
     ul = "<ul class='error'>"
     for key, value of errors
       ul += "<li>#{key}"
@@ -34,10 +35,10 @@ Date.prototype.getDayName = ->
 
   setFormFieldsValue: (event)->
     $('#template_slot_day').val(event.start.getDayName())
-    $('#from_time_hour').val(event.start.getHours())
-    $('#from_time_minute').val(event.start.getMinutes())
-    $('#to_time_hour').val(event.end.getHours())
-    $('#to_time_minute').val(event.end.getMinutes())
+    $('#from_time_hour').val(("0" + event.start.getHours()).slice(-2))
+    $('#from_time_minute').val(("0" + event.start.getMinutes()).slice(-2))
+    $('#to_time_hour').val(("0" + event.end.getHours()).slice(-2))
+    $('#to_time_minute').val(("0" + event.end.getMinutes()).slice(-2))
     $('#template_slot_recurring').val(event.recurring || 0)
 
   successHandler: (event, data)->
