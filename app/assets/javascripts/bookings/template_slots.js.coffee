@@ -51,7 +51,7 @@ $(document).ready ->
     
     # drop and event  
     eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
-      FormHandler.showForm(event)
+      FormHandler.showForm(event, revertFunc)
       FormHandler.sumitUpdateForm(event)
     
     # create new event

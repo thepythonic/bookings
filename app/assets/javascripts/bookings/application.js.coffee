@@ -71,7 +71,7 @@ Date.prototype.getDayName = ->
     $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
     $('#template_form form').attr('method', 'patch')
 
-  showForm: (event)->
+  showForm: (event, revertFunc=null)->
     $('#template_form').html(config.form)
     FormHandler.setFormFieldsValue(event)
 
@@ -96,3 +96,4 @@ Date.prototype.getDayName = ->
           
         error: (xhr, textStatus, errorThrown) ->
           FormHandler.displayErros xhr.responseJSON.errors
+          revertFunc() if revertFunc
