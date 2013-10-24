@@ -15,14 +15,14 @@ $(document).ready ->
     minTime: config.minTime || '0'
     maxTime: config.maxTime || '24'
     slotMinutes: 15
-    
+    allDaySlot: false
     defaultView: 'agendaWeek'
-    # columnFormat: 'dddd'  #display dayName without date
+    columnFormat: 'dddd'  #display dayName without date
     allDay: false
     header:
-      left: "prev,next today"
-      center: "title"
-      right: "agendaWeek"
+      left: ""
+      center: ""
+      right: ""
 
     selectable: true
     selectHelper: true
