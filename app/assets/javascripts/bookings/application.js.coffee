@@ -31,15 +31,17 @@ FormHandler =
     templateSlotCalendar.fullCalendar "unselect"
     $('#template_form').css('display', 'block')
 
+  setFormInputsValues: (event)->
+    $('#template_slot_day').val(event.start.getDayName())
+    $('#from_time_hour').val(event.start.getHours())
+    $('#from_time_minute').val(event.start.getMinutes())
+    $('#to_time_hour').val(event.end.getHours())
+    $('#to_time_minute').val(event.end.getMinutes())
+    $('#template_slot_recurring').val(event.recurring || 0)
+
   showForm: (event)->
       $('#template_form').html(templateSlotForm)
-      
-      $('#template_slot_day').val(event.start.getDayName())
-      $('#from_time_hour').val(event.start.getHours())
-      $('#from_time_minute').val(event.start.getMinutes())
-      $('#to_time_hour').val(event.end.getHours())
-      $('#to_time_minute').val(event.end.getMinutes())
-      $('#template_slot_recurring').val(event.recurring || 0)
+      FormHandler.setFormInputsValues(event)
 
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
