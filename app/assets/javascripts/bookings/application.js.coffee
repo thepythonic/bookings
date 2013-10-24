@@ -12,14 +12,16 @@ Date.prototype.getDayName = ->
   d[@getDay()]
 
 FormHandler = 
-  showForm: (id, start, end, recurring=1, event)->
+  showForm: (event)->
       $('#template_form').html(templateSlotForm)
       
-      $('#template_slot_day').val(start.getDayName())
-      $('#from_time_hour').val(start.getHours())
-      $('#from_time_minute').val(start.getMinutes())
-      $('#to_time_hour').val(end.getHours())
-      $('#to_time_minute').val(end.getMinutes())
+      $('#template_slot_day').val(event.start.getDayName())
+      $('#from_time_hour').val(event.start.getHours())
+      $('#from_time_minute').val(event.start.getMinutes())
+      $('#to_time_hour').val(event.end.getHours())
+      $('#to_time_minute').val(event.end.getMinutes())
+      console.log event.recurring
+      $('#template_slot_recurring').val(event.recurring || 0)
 
       $('#template_form form').on 'submit', (e) ->
         e.preventDefault()
@@ -40,19 +42,19 @@ FormHandler =
           success: (data)->
             $('#template_form').html('')
             $('#template_form').html('<p class="success">Saved Successfully</p>')
-            start.setHours(data.from_time.split(':')[0])
-            start.setMinutes(data.from_time.split(':')[1])
-            end.setHours(data.to_time.split(':')[0])
-            end.setMinutes(data.to_time.split(':')[1])
-
-            if id # refresh events if update
+            event.start.setHours(data.from_time.split(':')[0])
+            event.start.setMinutes(data.from_time.split(':')[1])
+            event.end.setHours(data.to_time.split(':')[0])
+            event.end.setMinutes(data.to_time.split(':')[1])
+            event.recurring = data.recurring
+            if event.id # refresh events if update
               templateSlotCalendar.fullCalendar 'rerenderEvents' 
             else
               templateSlotCalendar.fullCalendar "renderEvent",
                 title: data.id.toString()
-                start: start
+                start: event.start
                 recurring: data.recurring
-                end: end
+                end: event.end
                 allDay: false
               , true # make the event "stick"
           error: (xhr, textStatus, errorThrown) ->
@@ -75,7 +77,7 @@ $(document).ready ->
 
   window.templateSlotCalendar = $("#calendar").fullCalendar(
     eventClick: (event, element) ->
-      FormHandler.showForm(event.title, event.start, event.end)
+      FormHandler.showForm(event)
       $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
       $('#template_form form').attr('method', 'patch')
 
@@ -93,7 +95,7 @@ $(document).ready ->
     selectHelper: true
 
     select: (start, end, allDay) ->
-      FormHandler.showForm(null, start, end)
+      FormHandler.showForm( {start: start, end: end} )
       
     editable: true
     events: (start, end, callback) ->
@@ -110,6 +112,7 @@ $(document).ready ->
               start: slot.start
               end: slot.end
               id: slot.id.toString()
+              recurring: slot.recurring
               allDay: false
             
           callback(events)

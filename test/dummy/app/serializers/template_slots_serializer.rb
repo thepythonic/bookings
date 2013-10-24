@@ -1,5 +1,5 @@
 class TemplateSlotsSerializer < ActiveModel::Serializer
-  attributes :id, :day, :start, :end, :title
+  attributes :id, :day, :start, :end, :title, :recurring
 
   #TODO HZ: first day is Sunday
   def week_days
