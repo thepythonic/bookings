@@ -3,6 +3,7 @@ module Bookings
     belongs_to :reservable
 
     validates :from_time, :to_time, presence: true
+    validates :day, inclusion: DateTime::DAYNAMES
   end
 
 end

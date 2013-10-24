@@ -11,7 +11,26 @@ Date.prototype.getDayName = ->
   d = ['Sunday','Monday','Tuesday','Wednesday', 'Thursday','Friday','Saturday']
   d[@getDay()]
 
-FormHandler = 
+FormHandler =
+  setEvent: (event, data)->
+    event.start.setHours(data.from_time.split(':')[0])
+    event.start.setMinutes(data.from_time.split(':')[1])
+    event.end.setHours(data.to_time.split(':')[0])
+    event.end.setMinutes(data.to_time.split(':')[1])
+    event.recurring = data.recurring
+    event
+
+  displayErros: (errors)->
+    ul = "<ul class='error'>"
+    for key, value of errors
+      ul += "<li>#{key}"
+      li = "<ul>" + ["<li>#{v}</li>" for v in value].join() + "</ul>"
+      ul += li + "</li>"
+    ul += "</ul>"
+    $('#template_form').prepend(ul)
+    templateSlotCalendar.fullCalendar "unselect"
+    $('#template_form').css('display', 'block')
+
   showForm: (event)->
       $('#template_form').html(templateSlotForm)
       
@@ -41,11 +60,7 @@ FormHandler =
           success: (data)->
             $('#template_form').html('')
             $('#template_form').html('<p class="success">Saved Successfully</p>')
-            event.start.setHours(data.from_time.split(':')[0])
-            event.start.setMinutes(data.from_time.split(':')[1])
-            event.end.setHours(data.to_time.split(':')[0])
-            event.end.setMinutes(data.to_time.split(':')[1])
-            event.recurring = data.recurring
+            event = FormHandler.setEvent event, data
             if event.id # refresh events if update
               templateSlotCalendar.fullCalendar 'rerenderEvents' 
             else
@@ -58,15 +73,7 @@ FormHandler =
               , true # make the event "stick"
             $('#template_form').css('display', 'block')
           error: (xhr, textStatus, errorThrown) ->
-            ul = "<ul class='error'>"
-            for key, value of xhr.responseJSON.errors
-              ul += "<li>#{key}"
-              li = "<ul>" + ["<li>#{v}</li>" for v in value].join() + "</ul>"
-              ul += li + "</li>"
-            ul += "</ul>"
-            $('#template_form').prepend(ul)
-            templateSlotCalendar.fullCalendar "unselect"
-            $('#template_form').css('display', 'block')
+            FormHandler.displayErros xhr.responseJSON.errors
 
 
 
