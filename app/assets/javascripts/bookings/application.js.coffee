@@ -56,6 +56,7 @@ FormHandler =
                 end: event.end
                 allDay: false
               , true # make the event "stick"
+            $('#template_form').css('display', 'block')
           error: (xhr, textStatus, errorThrown) ->
             ul = "<ul class='error'>"
             for key, value of xhr.responseJSON.errors
@@ -65,6 +66,7 @@ FormHandler =
             ul += "</ul>"
             $('#template_form').prepend(ul)
             templateSlotCalendar.fullCalendar "unselect"
+            $('#template_form').css('display', 'block')
 
 
 
@@ -117,12 +119,17 @@ $(document).ready ->
 
     eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
       FormHandler.showForm(event)
+      $('#template_form').css('display', 'none')
       $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
       $('#template_form form').attr('method', 'patch')
-
+      $('#template_form form').submit()
+      
     eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
       FormHandler.showForm(event)
+      $('#template_form').css('display', 'none')
       $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
       $('#template_form form').attr('method', 'patch')
+      $('#template_form form').submit()
+
 
   )
