@@ -10,5 +10,8 @@ module Bookings
     def week_recurring_options
       (1..52).to_a.map{|t| ["#{t} Week", t]}
     end
+    def day_names_options
+      DateTime::DAYNAMES.map { |d| [d,d] }
+    end
   end
 end
