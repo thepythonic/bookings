@@ -4,4 +4,5 @@ module Bookings
 
     validates :from_time, :to_time, presence: true
   end
+
 end

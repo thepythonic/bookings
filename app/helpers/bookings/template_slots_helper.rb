@@ -7,7 +7,7 @@ module Bookings
     def hours_span_options
       (0..23).map{|t| [t,t]}
     end
-    def week_recurrence_options
+    def week_recurring_options
       (1..52).to_a.map{|t| ["#{t} Week", t]}
     end
   end

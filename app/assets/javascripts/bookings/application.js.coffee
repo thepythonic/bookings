@@ -12,7 +12,7 @@ Date.prototype.getDayName = ->
   d[@getDay()]
 
 FormHandler = 
-  showForm: (id, start, end, recurrence=1)->
+  showForm: (id, start, end, recurring=1, event)->
       $('#template_form').html(templateSlotForm)
       
       $('#template_slot_day').val(start.getDayName())
@@ -45,13 +45,16 @@ FormHandler =
             end.setHours(data.to_time.split(':')[0])
             end.setMinutes(data.to_time.split(':')[1])
 
-            tableSlotCalendar.fullCalendar "renderEvent",
-              title: data.id.toString()
-              start: start
-              recurrence: data.recurrence
-              end: end
-              allDay: false
-            , true # make the event "stick"
+            if id # refresh events if update
+              templateSlotCalendar.fullCalendar 'rerenderEvents' 
+            else
+              templateSlotCalendar.fullCalendar "renderEvent",
+                title: data.id.toString()
+                start: start
+                recurring: data.recurring
+                end: end
+                allDay: false
+              , true # make the event "stick"
           error: (xhr, textStatus, errorThrown) ->
             ul = "<ul class='error'>"
             for key, value of xhr.responseJSON.errors
@@ -60,7 +63,7 @@ FormHandler =
               ul += li + "</li>"
             ul += "</ul>"
             $('#template_form').prepend(ul)
-            tableSlotCalendar.fullCalendar "unselect"
+            templateSlotCalendar.fullCalendar "unselect"
 
 
 
@@ -70,7 +73,7 @@ $(document).ready ->
   m = date.getMonth()
   y = date.getFullYear()
 
-  window.tableSlotCalendar = $("#calendar").fullCalendar(
+  window.templateSlotCalendar = $("#calendar").fullCalendar(
     eventClick: (event, element) ->
       FormHandler.showForm(event.title, event.start, event.end)
       $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
@@ -88,10 +91,27 @@ $(document).ready ->
 
     selectable: true
     selectHelper: true
+
     select: (start, end, allDay) ->
       FormHandler.showForm(null, start, end)
       
-
     editable: true
-    events: "/bookings/template/slots"
+    events: (start, end, callback) ->
+      console.log 'AAA'
+      $.ajax
+        url: "/bookings/template/slots"
+        dataType: 'json'
+        success: (doc)->
+          console.log doc
+          events = []
+          for slot in doc.template_slots 
+            events.push
+              title: slot.title.toString()
+              start: slot.start
+              end: slot.end
+              id: slot.id.toString()
+              allDay: false
+            
+          callback(events)
+          # console.log events
   )

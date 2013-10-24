@@ -13,5 +13,5 @@ gemspec
 # To use debugger
 # gem 'debugger'
 gem 'coffee-rails'
-
+gem 'active_model_serializers'
 gem 'devise'

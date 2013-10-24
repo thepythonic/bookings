@@ -13,7 +13,7 @@ module Bookings
     end
 
     def slots
-      @template_slots_by_day = TemplateSlot.all.group_by(&:day)
+      @template_slots_by_day = TemplateSlot.all#.group_by(&:day)
       date = DateTime.now
 
       y, m,d = date.year, date.month, date.day
@@ -47,7 +47,7 @@ module Bookings
       :end => DateTime.new(y, m, 29),
       url: "http://google.com/"}
     ]
-      render json: @template_slots_by_day
+      render json: @template_slots_by_day, each_serializer: TemplateSlotsSerializer
     end
 
     # GET /template_slots/1
@@ -112,7 +112,7 @@ module Bookings
       # Only allow a trusted parameter "white list" through.
       def template_slot_params
         params.require(:template_slot).permit(:day, :from_time_hour, :from_time_minute, 
-          :to_time_hour, :to_time_minute, :recurrence)
+          :to_time_hour, :to_time_minute, :recurring)
       end
   end
 end
