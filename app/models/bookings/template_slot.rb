@@ -6,6 +6,7 @@ module Bookings
     validates :day, inclusion: DateTime::DAYNAMES
 
     validate :no_intersection
+    validate :from_less_than_to
 
     def no_intersection
     	# TODO HZ: reservable.time_slots.where
@@ -15,6 +16,14 @@ module Bookings
     	results = results.where("id != ?",  id) unless new_record?
     	errors.add(:from_date, "Can't overlap another slot") if results.exists?
     end
+
+    def from_less_than_to
+      if from_time && to_time && from_time >= to_time
+        self.errors.add(:to_time, "should be after from_time.")
+        return false
+      end
+    end
+
   end
 
 end
