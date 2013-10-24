@@ -20,7 +20,6 @@ FormHandler =
       $('#from_time_minute').val(event.start.getMinutes())
       $('#to_time_hour').val(event.end.getHours())
       $('#to_time_minute').val(event.end.getMinutes())
-      console.log event.recurring
       $('#template_slot_recurring').val(event.recurring || 0)
 
       $('#template_form form').on 'submit', (e) ->
@@ -98,6 +97,7 @@ $(document).ready ->
       FormHandler.showForm( {start: start, end: end} )
       
     editable: true
+
     events: (start, end, callback) ->
       console.log 'AAA'
       $.ajax
@@ -116,5 +116,15 @@ $(document).ready ->
               allDay: false
             
           callback(events)
-          # console.log events
+
+    eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
+      FormHandler.showForm(event)
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('method', 'patch')
+
+    eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
+      FormHandler.showForm(event)
+      $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.title}")
+      $('#template_form form').attr('method', 'patch')
+
   )
