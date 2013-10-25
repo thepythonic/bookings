@@ -1,6 +1,6 @@
 
 $(document).ready ->
-  
+
   window.calendar = $("#calendar").fullCalendar
     theme: false
     minTime: config.minTime || '0'
@@ -26,7 +26,7 @@ $(document).ready ->
         dataType: 'json'
         success: (doc)->
           events = []
-          for slot in doc.template_slots 
+          for slot in doc.template_slots
             events.push
               title: slot.title.toString()
               start: slot.start
@@ -54,3 +54,20 @@ $(document).ready ->
     # # create new event
     select: (start, end, allDay) ->
       FormHandler.showForm( {start: start, end: end, isNew: true} )
+      $('#appointment_customer').autocomplete
+        autoFocus: true 
+        minLength: 3
+        source: (request, response)->
+          $.ajax
+            url: '/bookings/customers'
+            data: {term: request.term},
+            dataType: "json",
+            success: (data)->
+              response $.map( data.customers, (item)-> 
+                    console.log item
+                    {
+                      label: item.customers.email
+                      value: item.customers.id
+                    }
+                    )
+        

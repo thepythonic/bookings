@@ -84,8 +84,8 @@ module Bookings
       end
 
       def set_customers_employees
-        @customers = Bookings.reservable_class.to_s.constantize.all
-        @employees = Bookings.employee_class.to_s.constantize.all
+        @customers = Bookings.customer_class.to_s.constantize.all
+        @employees = Bookings.reservable_class.to_s.constantize.all
       end
   end
 end

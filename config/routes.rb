@@ -13,5 +13,5 @@ Bookings::Engine.routes.draw do
   get 'appointments/customers/:customer', to: 'appointments#appointments_for_customer'
   get 'appointments/start/:start/end/:end', to: 'appointments#within_date_range'
 
-
+  get 'customers', to: "customers#find"
 end

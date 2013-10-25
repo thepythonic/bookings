@@ -1,3 +1,5 @@
+<h2>TODO: Create/Search for Patient</h2>
+
 <%= form_for(@appointment) do |f| %>
   <% if @appointment.errors.any? %>
     <div id="error_explanation">
@@ -10,6 +12,12 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="field">
+    <%= f.label :customer %><br>
+    <%= f.text_field :customer %>
+  </div>
+
 
 
   <div class="field">
