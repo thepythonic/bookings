@@ -17,7 +17,7 @@ Date.prototype.getDayName = ->
     event.start.setMinutes(data.from_time.split(':')[1])
     event.end.setHours(data.to_time.split(':')[0])
     event.end.setMinutes(data.to_time.split(':')[1])
-    event.recurring = data.recurring
+    event.recurring = data.recurring if data.recurring
     event.id = data.id if data.id
     event
 
@@ -33,13 +33,9 @@ Date.prototype.getDayName = ->
     templateSlotCalendar.fullCalendar "unselect"
     $('#template_form').css('display', 'block')
 
+  # TODO HZ: We have many forms here think about it.
   setFormFieldsValue: (event)->
-    $('#template_slot_day').val(event.start.getDayName())
-    $('#from_time_hour').val(("0" + event.start.getHours()).slice(-2))
-    $('#from_time_minute').val(("0" + event.start.getMinutes()).slice(-2))
-    $('#to_time_hour').val(("0" + event.end.getHours()).slice(-2))
-    $('#to_time_minute').val(("0" + event.end.getMinutes()).slice(-2))
-    $('#template_slot_recurring').val(event.recurring || 0)
+    currentForm.setValues(event)
 
   successHandler: (event, data)->
     $('#template_form').html('')
@@ -97,3 +93,14 @@ Date.prototype.getDayName = ->
         error: (xhr, textStatus, errorThrown) ->
           FormHandler.displayErros xhr.responseJSON.errors
           revertFunc() if revertFunc
+
+@currentForm =
+  setValues: (event)->
+    if $('#new_template_slot')
+      $('#template_slot_day').val(event.start.getDayName())
+      $('#from_time_hour').val(("0" + event.start.getHours()).slice(-2))
+      $('#from_time_minute').val(("0" + event.start.getMinutes()).slice(-2))
+      $('#to_time_hour').val(("0" + event.end.getHours()).slice(-2))
+      $('#to_time_minute').val(("0" + event.end.getMinutes()).slice(-2))
+      $('#template_slot_recurring').val(event.recurring || 0)
+    # else if $('#new_appointment')

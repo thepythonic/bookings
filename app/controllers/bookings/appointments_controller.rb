@@ -10,6 +10,7 @@ module Bookings
     # GET /appointments
     def index
       @appointments = Appointment.all
+      @appointment = Appointment.new
       respond_with(@appointments)
     end
 

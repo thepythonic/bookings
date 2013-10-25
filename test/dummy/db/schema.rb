@@ -11,21 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025141558) do
+ActiveRecord::Schema.define(version: 20131025160508) do
 
   create_table "bookings_appointments", force: true do |t|
-    t.datetime "from"
-    t.integer  "duration"
-    t.integer  "position"
+    t.datetime "from_time"
+    t.datetime "to_time"
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "reservable_id"
     t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "bookings_appointments", ["customer_id"], name: "index_bookings_appointments_on_customer_id"
-  add_index "bookings_appointments", ["reservable_id"], name: "index_bookings_appointments_on_reservable_id"
 
   create_table "bookings_template_slots", force: true do |t|
     t.string   "day"
