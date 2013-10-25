@@ -18,6 +18,7 @@ $(document).ready ->
     selectable: true
     selectHelper: true
     editable: true
+    unselectAuto: false
     
     events: (start, end, callback) ->
       $.ajax

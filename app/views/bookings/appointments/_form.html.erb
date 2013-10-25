@@ -14,11 +14,11 @@
 
   <div class="field">
     <%= f.label :from_time %><br>
-    <%= f.datetime_select :from_time %>
+    <%= f.time_select :from_time, minute_step: 15 %>
   </div>
   <div class="field">
     <%= f.label :to_time %><br>
-    <%= f.datetime_select :to_time %>
+    <%= f.time_select :to_time, minute_step: 15 %>
   </div>
   <div class="field">
     <%= f.label :note %><br>
