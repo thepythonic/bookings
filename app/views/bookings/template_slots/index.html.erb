@@ -1,5 +1,13 @@
 
-<br>
+<div id="calendar-contianer">
+  <div id="template_form"></div>  
+  <div id="copy_template">
+    <%= form_tag "#{template_copy_to_time_slots_path}" do %>
+      <button id="copy_to_diary">Copy to my Diary</button>
+    <% end %>
+  </div>
+  <div id="calendar"></div>
+</div>
 
 <%= link_to 'New Template slot', new_template_slot_path %>
 

@@ -16,6 +16,10 @@ module Bookings
       render json: @template_slots_by_day, each_serializer: TemplateSlotsSerializer
     end
 
+    def copy_to_time_slots
+
+    end
+
     # GET /template_slots/1
     def show
     end

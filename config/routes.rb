@@ -5,6 +5,8 @@ Bookings::Engine.routes.draw do
 
   resources :appointments
 
+  post 'template/copy_to_time_slots', to: 'template_slots#copy_to_time_slots'
+  
   get 'template/slots', to: 'template_slots#slots'
   get 'appointments/for/:reservable', to: 'appointments#appointments_for_reservable'
   

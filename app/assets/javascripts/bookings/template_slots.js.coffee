@@ -1,10 +1,6 @@
 
 $(document).ready ->
-  date = new Date()
-  d = date.getDate()
-  m = date.getMonth()
-  y = date.getFullYear()
-
+  
   window.templateSlotCalendar = $("#calendar").fullCalendar
     theme: false
     minTime: config.minTime || '0'
