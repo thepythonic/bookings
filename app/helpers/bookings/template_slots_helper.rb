@@ -2,7 +2,7 @@ module Bookings
   module TemplateSlotsHelper
 
     def minutes_span_options
-      (0..60).step(15).to_a.map{|t| [t, "%02d"%t ]}
+      (0..59).step(15).to_a.map{|t| [t, "%02d"%t ]}
     end
     def hours_span_options
       (0..23).map{|t| [t, "%02d"%t]}

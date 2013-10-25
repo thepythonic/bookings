@@ -5,7 +5,7 @@ $(document).ready ->
     theme: false
     minTime: config.minTime || '0'
     maxTime: config.maxTime || '24'
-    slotMinutes: 15
+    slotMinutes: config.slotMinutes
     allDaySlot: false
     defaultView: 'agendaWeek'
     columnFormat: 'dddd'  #display dayName without date

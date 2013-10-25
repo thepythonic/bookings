@@ -1,111 +1,16 @@
-<h1>Week View</h1>
-<style type="text/css">
-.calendar-week{
-  text-align: center;
-}
-</style>
-<div class="row calendar-week">
-  <div class="small-1 columns">D</div>
-  <div class="small-1 columns">
-    <div class="row">Saturday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">
-    <div class="row">Sunday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">
-    <div class="row">Monday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">
-    <div class="row">Tuesday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">
-    <div class="row">Wednesday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">
-    <div class="row">Thursday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">
-    <div class="row">Friday</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-    <div class="row">A</div>
-  </div>
-  <div class="small-1 columns">D</div>
+<div id="calendar-contianer">
+  <div id="template_form"></div>  
+  <div id="calendar"></div>
 </div>
 
-<h1>Listing appointments</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>From</th>
-      <th>Duration</th>
-      <th>Position</th>
-      <th>Note</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<script type="text/javascript">
+//TODO HZ: get these values dynamically
+var config = {
+  minTime: '8:00',
+  maxTime: '18:00',
+  slotMinutes: 15
+};
+</script>
 
-  <tbody>
-    <% @appointments.each do |appointment| %>
-      <tr>
-        <td><%= appointment.from %></td>
-        <td><%= appointment.duration %></td>
-        <td><%= appointment.position %></td>
-        <td><%= appointment.note %></td>
-        <td><%= link_to 'Show', appointment %></td>
-        <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
-        <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Appointment', new_appointment_path %>
+<%= javascript_include_tag "bookings/appointments" %>
