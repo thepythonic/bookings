@@ -18,7 +18,8 @@ module Bookings
 
     def copy_to_time_slots
       TemplateSlot.all.each do |ts|
-        Bookings.TimeSlot.create(from_time: ts.from_time, to_time: ts.to_time)
+        #TODO HZ: what about exisiting time_slots?
+        current_user.time_slots.create(from_time: ts.from_time, to_time: ts.to_time)
       end
     end
 
