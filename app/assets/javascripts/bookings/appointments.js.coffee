@@ -1,7 +1,7 @@
 
 $(document).ready ->
   
-  window.templateSlotCalendar = $("#calendar").fullCalendar
+  window.calendar = $("#calendar").fullCalendar
     theme: false
     minTime: config.minTime || '0'
     maxTime: config.maxTime || '24'
@@ -51,5 +51,5 @@ $(document).ready ->
     #   FormHandler.sumitUpdateForm(event)
     
     # # create new event
-    # select: (start, end, allDay) ->
-    #   FormHandler.showForm( {start: start, end: end, isNew: true} )
+    select: (start, end, allDay) ->
+      FormHandler.showForm( {start: start, end: end, isNew: true} )
