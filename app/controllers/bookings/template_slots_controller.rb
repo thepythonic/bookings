@@ -8,16 +8,18 @@ module Bookings
 
     # GET /template_slots
     def index
-      @template_slot = TemplateSlot.new
+      @template_slot = current_user.template_slots.new
     end
 
     def slots
-      @template_slots_by_day = TemplateSlot.all
-      render json: @template_slots_by_day, each_serializer: TemplateSlotsSerializer
+      @template_slots = TemplateSlot.all
+      render json: @template_slots, each_serializer: TemplateSlotsSerializer
     end
 
     def copy_to_time_slots
-
+      TemplateSlot.all.each do |ts|
+        Bookings.TimeSlot.create(from_time: ts.from_time, to_time: ts.to_time)
+      end
     end
 
     # GET /template_slots/1
@@ -76,7 +78,7 @@ module Bookings
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_template_slot
-        @template_slot = TemplateSlot.find(params[:id])
+        @template_slot = current_user.template_slots.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.
