@@ -8,7 +8,7 @@ module Bookings
     validate :no_intersection
     validate :from_less_than_to
 
-    after_save :merge_template_slots
+    before_save :merge_template_slots
 
     def no_intersection
     	# TODO HZ: reservable.time_slots.where
@@ -28,12 +28,21 @@ module Bookings
 
     def merge_template_slots
       # TODO HZ: reservable.time_slots.where
-      puts  "S" * 50
       results = Bookings::TemplateSlot.where('day = :day AND (from_time = :to_time OR to_time = :from_time)', {day: day, to_time: to_time, from_time: from_time})
-      puts results
-      unless results.empty?
+      return if results.empty?
+      
+      puts "S" * 50
+      puts results.map(&:from_time).min
+      puts "S" * 50
+      puts results.map(&:to_time).max
 
-      end
+      min_from = [results.map(&:from_time).min, from_time].min
+      max_to = [results.map(&:to_time).max, to_time].max
+      puts min_from
+      puts max_to
+      self.from_time = min_from
+      self.to_time = max_to
+      # results.map(&:destroy)
     end
 
   end
