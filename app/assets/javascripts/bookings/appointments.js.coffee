@@ -64,10 +64,8 @@ $(document).ready ->
             dataType: "json",
             success: (data)->
               response $.map( data.customers, (item)-> 
-                    console.log item
-                    {
                       label: item.customers.email
                       value: item.customers.id
-                    }
+                    
                     )
         
