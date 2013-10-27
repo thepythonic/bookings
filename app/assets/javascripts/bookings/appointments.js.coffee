@@ -39,8 +39,8 @@ $(document).ready ->
           callback(events)  
 
     eventAfterRender: (event, element, view)->
-      console.log view.constructor
-      element.css('width', 60 ) if view instanceof AgendaDayView
+      console.log view #typeof view == AgendaDayView
+      element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] 
 
     # # click on event
     # eventClick: (event, element) ->
