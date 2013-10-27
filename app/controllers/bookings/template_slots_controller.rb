@@ -12,12 +12,12 @@ module Bookings
     end
 
     def slots
-      @template_slots = TemplateSlot.all
+      @template_slots = current_user.template_slots.all
       render json: @template_slots, each_serializer: TemplateSlotsSerializer
     end
 
     def copy_to_time_slots
-      TemplateSlot.all.each do |ts|
+      current_user.template_slots.all.each do |ts|
         #TODO HZ: what about exisiting time_slots?
         current_user.time_slots.create(from_time: ts.from_time, to_time: ts.to_time)
       end
@@ -30,7 +30,7 @@ module Bookings
 
     # GET /template_slots/new
     def new
-      @template_slot = TemplateSlot.new
+      @template_slot = current_user.template_slots.new
     end
 
     # GET /template_slots/1/edit
@@ -39,7 +39,7 @@ module Bookings
 
     # POST /template_slots
     def create
-      @template_slot = TemplateSlot.new(template_slot_params)
+      @template_slot = current_user.template_slots.new(template_slot_params)
       @template_slot.from_time = "#{params[:from_time_hour]}:#{params[:from_time_minute]}"
       @template_slot.to_time = "#{params[:to_time_hour]}:#{params[:to_time_minute]}"
       @template_slot.reservable_id =  current_user.id
