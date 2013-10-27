@@ -5,7 +5,11 @@
   *
   */
 
-body {
+.user-info span{
+  color: blue;
+}
+
+#content {
 	margin-top: 40px;
 	text-align: center;
 	font-size: 14px;

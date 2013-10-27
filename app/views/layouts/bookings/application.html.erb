@@ -15,8 +15,16 @@
 <body>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
+  
+  <div class="user-info">
+		<% if current_user %>
+			Current User: <span><%= current_user.email %></span>
+		<%end%>
+	</div>
 
-  <%= yield %>
+	<div id="content">
+  	<%= yield %>
+  </div>
   
 </body>
 </html>
