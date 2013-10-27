@@ -32,18 +32,27 @@ module Bookings
       @appointment = Appointment.new(appointment_params)
 
       if @appointment.save
-        redirect_to @appointment, notice: 'Appointment was successfully created.'
+        respond_with(@appointment, :status => :created, :location => @appointment) do |format|
+          format.html { redirect_to @appointment,  notice: 'Appointment was successfully created.' }
+        end
       else
-        render action: 'new'
+        respond_with(@appointment) do |format|
+          format.html { render :action => :new }
+        end
       end
     end
 
     # PATCH/PUT /appointments/1
     def update
       if @appointment.update(appointment_params)
-        redirect_to @appointment, notice: 'Appointment was successfully updated.'
+        respond_with(@appointment, :status => :created, :location => @appointment) do |format|
+          format.json { render json: @appointment }
+          format.html { redirect_to @appointment,  notice: 'Appointment was successfully updated.' }
+        end
       else
-        render action: 'edit'
+        respond_with(@appointment) do |format|
+          format.html { render :action => :edit }
+        end
       end
     end
 
@@ -80,7 +89,8 @@ module Bookings
 
       # Only allow a trusted parameter "white list" through.
       def appointment_params
-        params.require(:appointment).permit(:from, :duration, :position, :note, :customer_id, :employee_id)
+        params.require(:appointment).permit(:customer_id, 'from_time(1i)', 'from_time(2i)', 'from_time(3i)', 'from_time(4i)', 'from_time(5i', 
+          'to_time(1i)', 'to_time(2i)', 'to_time(3i)', 'to_time(4i)', 'to_time(5i)')
       end
 
       def set_customers_employees
