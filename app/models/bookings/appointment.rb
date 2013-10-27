@@ -1,7 +1,7 @@
 module Bookings
   class Appointment < ActiveRecord::Base
 
-    default_scope -> { order('`from` ASC') }
+    default_scope -> { order('`from_time` ASC') }
 
     #TODO HZ: classes should be configurable
     belongs_to :reservable, class_name: Bookings.reservable_class.to_s

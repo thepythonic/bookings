@@ -24,11 +24,11 @@ $(document).ready ->
     
     events: (start, end, callback) ->
       $.ajax
-        url: "/bookings/template/slots"
+        url: "/bookings/appointment/slots"
         dataType: 'json'
         success: (doc)->
           events = []
-          for slot in doc.template_slots
+          for slot in doc.appointments
             events.push
               title: slot.title.toString()
               start: slot.start
@@ -36,7 +36,9 @@ $(document).ready ->
               id: slot.id.toString()
               recurring: slot.recurring
               allDay: false
-            
+          
+          console.log events
+
           callback(events)  
 
     eventAfterRender: (event, element, view)->

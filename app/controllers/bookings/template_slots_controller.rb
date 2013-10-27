@@ -13,7 +13,7 @@ module Bookings
 
     def slots
       @template_slots = current_user.template_slots.all
-      render json: @template_slots, each_serializer: TemplateSlotsSerializer
+      render json: @template_slots, each_serializer: Bookings::TemplateSlotsSerializer
     end
 
     def copy_to_time_slots
