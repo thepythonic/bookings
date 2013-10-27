@@ -10,6 +10,7 @@ $(document).ready ->
     defaultView: 'agendaDay'
     columnFormat: 'dddd'  #display dayName without date
     allDay: false
+    slotEventOverlap: false
 
     header: 
         left: 'prev,next today'
@@ -39,8 +40,8 @@ $(document).ready ->
           callback(events)  
 
     eventAfterRender: (event, element, view)->
-      console.log view #typeof view == AgendaDayView
-      element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] 
+      element.css('left', 200) unless event.recurring
+      element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] and event.recurring
 
     # # click on event
     # eventClick: (event, element) ->
@@ -68,9 +69,8 @@ $(document).ready ->
             data: {term: request.term},
             dataType: "json",
             success: (data)->
-              response $.map( data.customers, (item)-> 
+              response $.map(data.customers, (item)-> 
                       label: item.customers.email
                       value: item.customers.id
-                    
                     )
         

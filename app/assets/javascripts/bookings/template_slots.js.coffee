@@ -1,7 +1,9 @@
 
 $(document).ready ->
   
-  window.templateSlotCalendar = $("#calendar").fullCalendar
+  @isTemplateSlotView = true
+
+  window.calendar = $("#calendar").fullCalendar
     theme: false
     minTime: config.minTime || '0'
     maxTime: config.maxTime || '24'

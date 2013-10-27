@@ -13,11 +13,16 @@ Date.prototype.getDayName = ->
 
 @FormHandler =
   setEvent: (event, data)->
-    event.start.setHours(data.from_time.split(':')[0])
-    event.start.setMinutes(data.from_time.split(':')[1])
-    event.end.setHours(data.to_time.split(':')[0])
-    event.end.setMinutes(data.to_time.split(':')[1])
-    event.recurring = data.recurring if data.recurring
+    if $('#new_template_slot').length
+      event.start.setHours(data.from_time.split(':')[0])
+      event.start.setMinutes(data.from_time.split(':')[1])
+      event.end.setHours(data.to_time.split(':')[0])
+      event.end.setMinutes(data.to_time.split(':')[1])
+      event.recurring = data.recurring if data.recurring
+    else if $('#new_appointment').length
+      event.start = new Date(data.from_time)
+      event.end = new Date(data.to_time)
+    
     event.id = data.id if data.id
     event
 
@@ -30,7 +35,7 @@ Date.prototype.getDayName = ->
       ul += li + "</li>"
     ul += "</ul>"
     $('#template_form').prepend(ul)
-    templateSlotCalendar.fullCalendar "unselect"
+    calendar.fullCalendar "unselect"
     $('#template_form').css('display', 'block')
 
   # TODO HZ: We have many forms here think about it.
@@ -41,11 +46,12 @@ Date.prototype.getDayName = ->
     $('#template_form').html('')
     $('#template_form').html('<p class="success">Saved Successfully</p>')
     event = FormHandler.setEvent event, data
+
     unless event.isNew # refresh events if update
-      templateSlotCalendar.fullCalendar 'rerenderEvents' 
+      calendar.fullCalendar 'rerenderEvents' 
     else
       event.isNew = false
-      templateSlotCalendar.fullCalendar "renderEvent",
+      calendar.fullCalendar "renderEvent",
         title: data.id.toString()
         start: event.start
         recurring: data.recurring
@@ -104,7 +110,6 @@ Date.prototype.getDayName = ->
       $('#to_time_minute').val(("0" + event.end.getMinutes()).slice(-2))
       $('#template_slot_recurring').val(event.recurring || 0)
     else if $('#new_appointment').length
-      console.log  event
       $('#appointment_from_time_4i').val(("0" + event.start.getHours()).slice(-2))
       $('#appointment_from_time_5i').val(("0" + event.start.getMinutes()).slice(-2))
       $('#appointment_to_time_4i').val(("0" + event.end.getHours()).slice(-2))
