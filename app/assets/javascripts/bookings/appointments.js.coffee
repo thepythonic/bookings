@@ -10,7 +10,7 @@ $(document).ready ->
     defaultView: 'agendaDay'
     columnFormat: 'dddd'  #display dayName without date
     allDay: false
-    
+
     header: 
         left: 'prev,next today'
         center: 'title'
@@ -39,7 +39,8 @@ $(document).ready ->
           callback(events)  
 
     eventAfterRender: (event, element, view)->
-      element.css('width', 60 )
+      console.log view.constructor
+      element.css('width', 60 ) if view instanceof AgendaDayView
 
     # # click on event
     # eventClick: (event, element) ->
