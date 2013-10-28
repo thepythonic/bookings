@@ -30,8 +30,8 @@ $(document).ready ->
           for slot in doc.time_slots 
             events.push
               title: slot.title.toString()
-              start: slot.start
-              end: slot.end
+              start: moment(slot.start).format()
+              end: moment(slot.end).format()
               id: slot.id.toString()
               recurring: slot.recurring
               allDay: false

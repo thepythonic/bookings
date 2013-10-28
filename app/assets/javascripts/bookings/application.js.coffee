@@ -1,7 +1,9 @@
 
 #= require ./jquery/jquery
 #= require ./jquery-ui/ui/jquery-ui
+#= require ./jquery-ui/ui/jquery-ui-timepicker-addon
 #= require ./full_calendar/fullcalendar
+#= require ./moment
 
 Date.prototype.getMonthName = ->
   m = ['January','February','March','April','May','June','July', 'August','September','October','November','December']
@@ -13,17 +15,11 @@ Date.prototype.getDayName = ->
 
 @FormHandler =
   setEvent: (event, data)->
-    if $('#new_template_slot').length
-      event.start.setHours(data.from_time.split(':')[0])
-      event.start.setMinutes(data.from_time.split(':')[1])
-      event.end.setHours(data.to_time.split(':')[0])
-      event.end.setMinutes(data.to_time.split(':')[1])
-      event.recurring = data.recurring if data.recurring
-    else if $('#new_appointment').length
-      event.start = new Date(data.from_time)
-      event.end = new Date(data.to_time)
-    
+    event.recurring = data.recurring if data.recurring
     event.id = data.id if data.id
+    event.start = moment(data.from_time).format("YYYY-MM-DD HH:mm")
+    event.end =   moment(data.to_time).format("YYYY-MM-DD HH:mm")
+    console.log event
     event
 
   displayErros: (errors)->
@@ -53,10 +49,10 @@ Date.prototype.getDayName = ->
       event.isNew = false
       calendar.fullCalendar "renderEvent",
         title: data.id.toString()
-        start: event.start
-        recurring: data.recurring
-        end: event.end
+        start: moment(event.start).format("YYYY-MM-DD HH:mm")
+        end: moment(event.end).format("YYYY-MM-DD HH:mm")
         id: data.id
+        recurring: data.recurring
         allDay: false
       , true # make the event "stick"
     $('#template_form').css('display', 'block')
@@ -77,6 +73,19 @@ Date.prototype.getDayName = ->
   showForm: (event, revertFunc=null)->
     $('#template_form').html(config.form)
     FormHandler.setFormFieldsValue(event)
+    
+    $('#time_slot_from_time').datetimepicker
+      dateFormat: 'yy-mm-dd'
+      timeFormat: 'HH:mm'
+      stepMinute: 15
+
+    $('#time_slot_to_time').datetimepicker
+      dateFormat: 'yy-mm-dd'
+      timeFormat: 'HH:mm'
+      stepMinute: 15
+
+    $('#time_slot_from_time').css('width', 500)
+    $('#time_slot_to_time').css('width', 500)
 
     $('#template_form form').on 'submit', (e) ->
       e.preventDefault()
@@ -104,13 +113,9 @@ Date.prototype.getDayName = ->
 @currentForm =
   setValues: (event)->
     if $('#new_time_slot').length
-      $('#from_time_hour').val(("0" + event.start.getHours()).slice(-2))
-      $('#from_time_minute').val(("0" + event.start.getMinutes()).slice(-2))
-      $('#to_time_hour').val(("0" + event.end.getHours()).slice(-2))
-      $('#to_time_minute').val(("0" + event.end.getMinutes()).slice(-2))
+      $('#time_slot_from_time').val moment(event.start).format("YYYY-MM-DD HH:mm")
+      $('#time_slot_to_time').val moment(event.end).format("YYYY-MM-DD HH:mm")
       $('#time_slot_recurring').val(event.recurring || 0)
     else if $('#new_appointment').length
-      $('#appointment_from_time_4i').val(("0" + event.start.getHours()).slice(-2))
-      $('#appointment_from_time_5i').val(("0" + event.start.getMinutes()).slice(-2))
-      $('#appointment_to_time_4i').val(("0" + event.end.getHours()).slice(-2))
-      $('#appointment_to_time_5i').val(("0" + event.end.getMinutes()).slice(-2))
+      $('#appointment_from_time').val moment(event.start).format("YYYY-MM-DD HH:mm")
+      $('#appointment_to_time').val moment(event.end).format("YYYY-MM-DD HH:mm")
