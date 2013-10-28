@@ -13,6 +13,7 @@ module Bookings
 
     # GET /time_slots
     def index
+      puts current_user.time_slots
       @time_slots = current_user.time_slots.all
       @time_slot = current_user.time_slots.new
     end
