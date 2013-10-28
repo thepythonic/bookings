@@ -26,7 +26,7 @@ module Bookings
       end
     end
 
-    def merge_template_slots
+    def merge_time_slots
       # TODO HZ: reservable.time_slots.where
       results = Bookings::TimeSlot.where('from_time = :to_time OR to_time = :from_time', {to_time: to_time, from_time: from_time})
       return if results.empty?

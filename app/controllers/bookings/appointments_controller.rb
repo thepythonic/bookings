@@ -64,7 +64,7 @@ module Bookings
 
     def slots
       #TODO HZ: check here!
-      slots = current_user.template_slots.all.to_a
+      slots = current_user.time_slots.all.to_a
       appointments = Appointment.all.to_a 
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentsSerializer
