@@ -96,8 +96,7 @@ module Bookings
 
       # Only allow a trusted parameter "white list" through.
       def appointment_params
-        params.require(:appointment).permit(:customer_id, 'from_time(1i)', 'from_time(2i)', 'from_time(3i)', 'from_time(4i)', 'from_time(5i', 
-          'to_time(1i)', 'to_time(2i)', 'to_time(3i)', 'to_time(4i)', 'to_time(5i)')
+        params.require(:appointment).permit(:customer_id, 'from_time', 'to_time')
       end
 
       def set_customers_employees

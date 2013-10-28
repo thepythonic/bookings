@@ -78,18 +78,21 @@ Date.prototype.getDayName = ->
       from_field = 'appointment_from_time'
       to_field = 'appointment_to_time'
 
-    $("#{from_field}").datetimepicker
+    console.log from_field
+    console.log to_field
+
+    $("##{from_field}").datetimepicker
       dateFormat: 'M d, yy',
       timeFormat: 'HH:mm Z'
       stepMinute: 15
 
-    $("#{to_field}").datetimepicker
+    $("##{to_field}").datetimepicker
       dateFormat: 'M d, yy',
       timeFormat: 'HH:mm Z'
       stepMinute: 15
 
-    $("#{from_field}").css('width', 300)
-    $("#{to_field}").css('width', 300)
+    $("##{from_field}").css('width', 300)
+    $("##{to_field}").css('width', 300)
 
 
   showForm: (event, revertFunc=null)->

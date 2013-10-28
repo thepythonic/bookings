@@ -8,7 +8,6 @@ $(document).ready ->
     slotMinutes: config.slotMinutes
     allDaySlot: false
     defaultView: 'agendaDay'
-    columnFormat: 'dddd'  #display dayName without date
     allDay: false
     slotEventOverlap: false
 

@@ -33,10 +33,7 @@ module Bookings
     # POST /time_slots
     def create
       @time_slot = current_user.time_slots.new(time_slot_params)
-      puts "S" * 120
-      puts @time_slot.inspect
-      puts time_slot_params
-
+      
       if @time_slot.save
         respond_with(@time_slot, :status => :created, :location => @time_slot) do |format|
           format.html { redirect_to @time_slot,  notice: 'Time slot was successfully created.' }
