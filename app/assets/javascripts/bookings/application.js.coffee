@@ -15,10 +15,11 @@ Date.prototype.getDayName = ->
 
 @FormHandler =
   setEvent: (event, data)->
+    console.log event
     event.recurring = data.recurring if data.recurring
     event.id = data.id if data.id
-    event.start = moment(data.from_time).format("MMM DD, YYYY HH:mm Z")
-    event.end =   moment(data.to_time).format("MMM DD, YYYY HH:mm Z")
+    event.start = new Date(moment(data.from_time).format("MMM DD, YYYY HH:mm Z"))
+    event.end =  new Date(moment(data.to_time).format("MMM DD, YYYY HH:mm Z"))
     console.log event
     event
 
@@ -45,16 +46,17 @@ Date.prototype.getDayName = ->
 
     unless event.isNew # refresh events if update
       calendar.fullCalendar 'rerenderEvents' 
+    else
+      event.isNew = false
+      calendar.fullCalendar "renderEvent",
+        title: data.id.toString()
+        start: moment(event.start).format("MMM DD, YYYY HH:mm Z")
+        end: moment(event.end).format("MMM DD, YYYY HH:mm Z")
+        id: data.id
+        recurring: data.recurring
+        allDay: false
+      , true # make the event "stick"
     
-    event.isNew = false
-    calendar.fullCalendar "renderEvent",
-      title: data.id.toString()
-      start: moment(event.start).format("MMM DD, YYYY HH:mm Z")
-      end: moment(event.end).format("MMM DD, YYYY HH:mm Z")
-      id: data.id
-      recurring: data.recurring
-      allDay: false
-    , true # make the event "stick"
     $('#template_form').css('display', 'block')
     calendar.fullCalendar "unselect"
     event
