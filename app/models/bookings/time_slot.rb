@@ -1,7 +1,7 @@
 module Bookings
   class TimeSlot < ActiveRecord::Base
 
-  	belongs_to :reservable
+  	belongs_to :reservable, class_name: Bookings.reservable_class.to_s
   	belongs_to :parent, class_name: 'Bookings::TimeSlot'
   	has_many :children, class_name: 'Bookings::TimeSlot', foreign_key: "parent_id"
 

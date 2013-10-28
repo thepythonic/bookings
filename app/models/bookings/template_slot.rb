@@ -1,6 +1,6 @@
 module Bookings
   class TemplateSlot < ActiveRecord::Base
-    belongs_to :reservable
+    belongs_to :reservable, class_name: Bookings.reservable_class.to_s
 
     validates :from_time, :to_time, presence: true
     validates :day, inclusion: DateTime::DAYNAMES
