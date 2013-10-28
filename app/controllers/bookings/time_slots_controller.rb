@@ -22,7 +22,7 @@ module Bookings
 
     # GET /time_slots/new
     def new
-      @time_slot = TimeSlot.new
+      @time_slot = current_user.time_slots.new
     end
 
     # GET /time_slots/1/edit
@@ -31,22 +31,34 @@ module Bookings
 
     # POST /time_slots
     def create
-      @time_slot = TimeSlot.new(time_slot_params)
+      @time_slot = current_user.time_slots.new(time_slot_params)
 
       if @time_slot.save
-        redirect_to @time_slot, notice: 'Time slot was successfully created.'
+        respond_with(@time_slot, :status => :created, :location => @time_slot) do |format|
+          format.html { redirect_to @time_slot,  notice: 'Time slot was successfully created.' }
+        end
       else
-        render action: 'new'
+        respond_with(@time_slot) do |format|
+          format.html { render :action => :new }
+        end
       end
+
     end
 
     # PATCH/PUT /time_slots/1
     def update
+      # TODO HZ: check for recurring attribute, and create the children
       if @time_slot.update(time_slot_params)
-        redirect_to @time_slot, notice: 'Time slot was successfully updated.'
+        respond_with(@time_slot, :status => :created, :location => @time_slot) do |format|
+          format.json { render json: @time_slot }
+          format.html { redirect_to @time_slot,  notice: 'Time slot was successfully updated.' }
+        end
       else
-        render action: 'edit'
+        respond_with(@time_slot) do |format|
+          format.html { render :action => :edit }
+        end
       end
+
     end
 
     # DELETE /time_slots/1
@@ -58,12 +70,12 @@ module Bookings
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_time_slot
-        @time_slot = TimeSlot.find(params[:id])
+        @time_slot = current_user.time_slots.find(params[:id])
       end
-
       # Only allow a trusted parameter "white list" through.
       def time_slot_params
-        params.require(:time_slot).permit(:from_time, :to_time, :reservable_id)
+        params.require(:time_slot).permit(:from_time_hour, :from_time_minute, 
+                                          :to_time_hour, :to_time_minute, :recurring)
       end
   end
 end
