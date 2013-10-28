@@ -14,6 +14,7 @@ module Bookings
     # GET /time_slots
     def index
       @time_slots = current_user.time_slots.all
+      @time_slot = current_user.time_slots.new
     end
 
     # GET /time_slots/1
