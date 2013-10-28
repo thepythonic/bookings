@@ -30,12 +30,11 @@ $(document).ready ->
           for slot in doc.time_slots 
             events.push
               title: slot.title.toString()
-              start: moment(slot.start).format()
-              end: moment(slot.end).format()
+              start: moment(slot.start).format("MMM DD, YYYY HH:mm Z")
+              end: moment(slot.end).format("MMM DD, YYYY HH:mm Z")
               id: slot.id.toString()
               recurring: slot.recurring
               allDay: false
-          console.log events
           callback(events)  
 
     # click on event

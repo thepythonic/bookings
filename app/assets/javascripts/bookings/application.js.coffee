@@ -17,8 +17,8 @@ Date.prototype.getDayName = ->
   setEvent: (event, data)->
     event.recurring = data.recurring if data.recurring
     event.id = data.id if data.id
-    event.start = moment(data.from_time).format("YYYY-MM-DD HH:mm")
-    event.end =   moment(data.to_time).format("YYYY-MM-DD HH:mm")
+    event.start = moment(data.from_time).format("MMM DD, YYYY HH:mm Z")
+    event.end =   moment(data.to_time).format("MMM DD, YYYY HH:mm Z")
     console.log event
     event
 
@@ -45,16 +45,16 @@ Date.prototype.getDayName = ->
 
     unless event.isNew # refresh events if update
       calendar.fullCalendar 'rerenderEvents' 
-    else
-      event.isNew = false
-      calendar.fullCalendar "renderEvent",
-        title: data.id.toString()
-        start: moment(event.start).format("YYYY-MM-DD HH:mm")
-        end: moment(event.end).format("YYYY-MM-DD HH:mm")
-        id: data.id
-        recurring: data.recurring
-        allDay: false
-      , true # make the event "stick"
+    
+    event.isNew = false
+    calendar.fullCalendar "renderEvent",
+      title: data.id.toString()
+      start: moment(event.start).format("MMM DD, YYYY HH:mm Z")
+      end: moment(event.end).format("MMM DD, YYYY HH:mm Z")
+      id: data.id
+      recurring: data.recurring
+      allDay: false
+    , true # make the event "stick"
     $('#template_form').css('display', 'block')
     calendar.fullCalendar "unselect"
     event
@@ -75,13 +75,13 @@ Date.prototype.getDayName = ->
     FormHandler.setFormFieldsValue(event)
     
     $('#time_slot_from_time').datetimepicker
-      dateFormat: 'yy-mm-dd'
-      timeFormat: 'HH:mm'
+      dateFormat: 'M d, yy',
+      timeFormat: 'HH:mm Z'
       stepMinute: 15
 
     $('#time_slot_to_time').datetimepicker
-      dateFormat: 'yy-mm-dd'
-      timeFormat: 'HH:mm'
+      dateFormat: 'M d, yy',
+      timeFormat: 'HH:mm Z'
       stepMinute: 15
 
     $('#time_slot_from_time').css('width', 500)
@@ -113,9 +113,9 @@ Date.prototype.getDayName = ->
 @currentForm =
   setValues: (event)->
     if $('#new_time_slot').length
-      $('#time_slot_from_time').val moment(event.start).format("YYYY-MM-DD HH:mm")
-      $('#time_slot_to_time').val moment(event.end).format("YYYY-MM-DD HH:mm")
+      $('#time_slot_from_time').val moment(event.start).format("MMM DD, YYYY HH:mm Z")
+      $('#time_slot_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")
       $('#time_slot_recurring').val(event.recurring || 0)
     else if $('#new_appointment').length
-      $('#appointment_from_time').val moment(event.start).format("YYYY-MM-DD HH:mm")
-      $('#appointment_to_time').val moment(event.end).format("YYYY-MM-DD HH:mm")
+      $('#appointment_from_time').val moment(event.start).format("MMM DD, YYYY HH:mm Z")
+      $('#appointment_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")
