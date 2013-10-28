@@ -35,9 +35,7 @@ $(document).ready ->
               id: slot.id.toString()
               recurring: slot.recurring
               allDay: false
-          
-          console.log events
-
+              
           callback(events)  
 
     eventAfterRender: (event, element, view)->

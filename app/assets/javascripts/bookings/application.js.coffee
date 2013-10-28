@@ -80,9 +80,6 @@ Date.prototype.getDayName = ->
       from_field = 'appointment_from_time'
       to_field = 'appointment_to_time'
 
-    console.log from_field
-    console.log to_field
-
     $("##{from_field}").datetimepicker
       dateFormat: 'M d, yy',
       timeFormat: 'HH:mm Z'
@@ -101,8 +98,6 @@ Date.prototype.getDayName = ->
     $('#template_form').html(config.form)
     FormHandler.setFormFieldsValue(event)
     FormHandler.setDateTimePickerFields()
-    
-    
 
     $('#template_form form').on 'submit', (e) ->
       e.preventDefault()
