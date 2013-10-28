@@ -3,7 +3,7 @@ module Bookings
 
   	belongs_to :reservable
   	belongs_to :parent, class_name: 'Bookings::TimeSlot'
-  	has_many :children, class_name: 'Bookings::TimeSlot'
+  	has_many :children, class_name: 'Bookings::TimeSlot', foreign_key: "parent_id"
 
     validates :from_time, :to_time, presence: true
     
