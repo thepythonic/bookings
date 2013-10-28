@@ -103,13 +103,12 @@ Date.prototype.getDayName = ->
 
 @currentForm =
   setValues: (event)->
-    if $('#new_template_slot').length
-      $('#template_slot_day').val(event.start.getDayName())
+    if $('#new_time_slot').length
       $('#from_time_hour').val(("0" + event.start.getHours()).slice(-2))
       $('#from_time_minute').val(("0" + event.start.getMinutes()).slice(-2))
       $('#to_time_hour').val(("0" + event.end.getHours()).slice(-2))
       $('#to_time_minute').val(("0" + event.end.getMinutes()).slice(-2))
-      $('#template_slot_recurring').val(event.recurring || 0)
+      $('#time_slot_recurring').val(event.recurring || 0)
     else if $('#new_appointment').length
       $('#appointment_from_time_4i').val(("0" + event.start.getHours()).slice(-2))
       $('#appointment_from_time_5i').val(("0" + event.start.getMinutes()).slice(-2))

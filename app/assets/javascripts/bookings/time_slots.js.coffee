@@ -10,12 +10,11 @@ $(document).ready ->
     slotMinutes: config.slotMinutes
     allDaySlot: false
     defaultView: 'agendaWeek'
-    columnFormat: 'dddd'  #display dayName without date
     allDay: false
-    header:
-      left: ""
-      center: ""
-      right: ""
+    header: 
+      left: 'prev,next today'
+      center: 'title'
+      right: 'month,agendaWeek,agendaDay'
 
     selectable: true
     selectHelper: true

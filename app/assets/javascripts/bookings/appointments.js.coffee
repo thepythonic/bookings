@@ -13,9 +13,9 @@ $(document).ready ->
     slotEventOverlap: false
 
     header: 
-        left: 'prev,next today'
-        center: 'title'
-        right: 'month,agendaWeek,agendaDay'
+      left: 'prev,next today'
+      center: 'title'
+      right: 'month,agendaWeek,agendaDay'
 
     selectable: true
     selectHelper: true
