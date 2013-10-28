@@ -42,7 +42,7 @@ $(document).ready ->
           callback(events)  
 
     eventAfterRender: (event, element, view)->
-      element.css('left', 200) unless event.recurring
+      # element.css('left', 200) unless event.recurring
       element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] and event.recurring
 
     # # click on event

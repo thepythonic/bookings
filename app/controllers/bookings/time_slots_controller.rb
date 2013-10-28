@@ -3,10 +3,17 @@ require_dependency "bookings/application_controller"
 module Bookings
   class TimeSlotsController < ApplicationController
     before_action :set_time_slot, only: [:show, :edit, :update, :destroy]
+    
+    respond_to :json, :html
+
+    def slots
+      @time_slots = current_user.time_slots.all
+      render json: @time_slots, each_serializer: Bookings::TimeSlotsSerializer
+    end
 
     # GET /time_slots
     def index
-      @time_slots = TimeSlot.all
+      @time_slots = current_user.time_slots.all
     end
 
     # GET /time_slots/1

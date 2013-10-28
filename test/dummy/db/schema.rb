@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131027194306) do
+ActiveRecord::Schema.define(version: 20131028083253) do
 
   create_table "bookings_appointments", force: true do |t|
     t.datetime "from_time"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20131027194306) do
     t.string   "to_time"
     t.integer  "recurring"
     t.integer  "reservable_id"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20131027194306) do
     t.datetime "from_time"
     t.datetime "to_time"
     t.integer  "reservable_id"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

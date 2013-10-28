@@ -6,6 +6,7 @@ class CreateBookingsTemplateSlots < ActiveRecord::Migration
       t.string :to_time
       t.integer :recurring
       t.integer :reservable_id, index: true
+      t.integer :parent_id, index: true
       
       t.timestamps
     end

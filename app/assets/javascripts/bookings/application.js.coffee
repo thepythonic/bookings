@@ -60,6 +60,7 @@ Date.prototype.getDayName = ->
         allDay: false
       , true # make the event "stick"
     $('#template_form').css('display', 'block')
+    calendar.fullCalendar "unselect"
     event
 
   sumitUpdateForm: (event)->
