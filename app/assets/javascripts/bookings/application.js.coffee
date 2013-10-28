@@ -70,22 +70,34 @@ Date.prototype.getDayName = ->
     $('#template_form form').attr('action', $('#template_form form').attr('action') + "/#{event.id}")
     $('#template_form form').attr('method', 'patch')
 
+  setDateTimePickerFields: ->
+    if $('#new_time_slot').length
+      from_field = 'time_slot_from_time'
+      to_field = 'time_slot_to_time'
+    else if $('#new_appointment').length
+      from_field = 'appointment_from_time'
+      to_field = 'appointment_to_time'
+
+    $("#{from_field}").datetimepicker
+      dateFormat: 'M d, yy',
+      timeFormat: 'HH:mm Z'
+      stepMinute: 15
+
+    $("#{to_field}").datetimepicker
+      dateFormat: 'M d, yy',
+      timeFormat: 'HH:mm Z'
+      stepMinute: 15
+
+    $("#{from_field}").css('width', 300)
+    $("#{to_field}").css('width', 300)
+
+
   showForm: (event, revertFunc=null)->
     $('#template_form').html(config.form)
     FormHandler.setFormFieldsValue(event)
+    FormHandler.setDateTimePickerFields()
     
-    $('#time_slot_from_time').datetimepicker
-      dateFormat: 'M d, yy',
-      timeFormat: 'HH:mm Z'
-      stepMinute: 15
-
-    $('#time_slot_to_time').datetimepicker
-      dateFormat: 'M d, yy',
-      timeFormat: 'HH:mm Z'
-      stepMinute: 15
-
-    $('#time_slot_from_time').css('width', 500)
-    $('#time_slot_to_time').css('width', 500)
+    
 
     $('#template_form form').on 'submit', (e) ->
       e.preventDefault()
