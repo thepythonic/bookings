@@ -33,6 +33,9 @@ module Bookings
     # POST /time_slots
     def create
       @time_slot = current_user.time_slots.new(time_slot_params)
+      puts "S" * 120
+      puts @time_slot.inspect
+      puts time_slot_params
 
       if @time_slot.save
         respond_with(@time_slot, :status => :created, :location => @time_slot) do |format|
@@ -75,8 +78,7 @@ module Bookings
       end
       # Only allow a trusted parameter "white list" through.
       def time_slot_params
-        params.require(:time_slot).permit(:from_time_hour, :from_time_minute, 
-                                          :to_time_hour, :to_time_minute, :recurring)
+        params.require(:time_slot).permit(:from_time, :to_time, :recurring)
       end
   end
 end

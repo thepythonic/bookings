@@ -30,3 +30,15 @@
 p.success{
   color: green;
 }
+
+/*
+TODO HZ: look here!
+*/
+div#ui-datepicker-div{
+  z-index: 5 !important;
+  font-size: 80%;
+}
+dd.ui_tpicker_second, dt.ui_tpicker_second_label, dd.ui_tpicker_timezone, dt.ui_tpicker_timezone_label{
+  display:none;
+}
+}
