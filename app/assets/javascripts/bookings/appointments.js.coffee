@@ -45,28 +45,28 @@ $(document).ready ->
       element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] and event.recurring
 
     # # click on event
-    # eventClick: (event, element) ->
-    #   FormHandler.showUpdateForm(event)
+    eventClick: (event, element) ->
+      FormHandler.showUpdateForm(event)
 
-    # # resize event 
-    # eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
-    #   FormHandler.showForm(event, revertFunc)
-    #   FormHandler.sumitUpdateForm(event)    
+    # resize event 
+    eventResize: (event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view)->
+      FormHandler.showForm(event, revertFunc)
+      FormHandler.sumitUpdateForm(event)    
     
-    # # drop and event  
-    # eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
-    #   FormHandler.showForm(event, revertFunc)
-    #   FormHandler.sumitUpdateForm(event)
+    # drop and event  
+    eventDrop: (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, viw)->
+      FormHandler.showForm(event, revertFunc)
+      FormHandler.sumitUpdateForm(event)
     
     # # create new event
     select: (start, end, allDay) ->
       FormHandler.showForm( {start: start, end: end, isNew: true} )
-      $('#appointment_customer').autocomplete
+      $('#appointment_customer_id').autocomplete
         autoFocus: true 
         minLength: 3
         source: (request, response)->
           $.ajax
-            url: '/bookings/customers'
+            url: '/bookings/customers/find'
             data: {term: request.term},
             dataType: "json",
             success: (data)->
