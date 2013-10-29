@@ -15,12 +15,12 @@ Date.prototype.getDayName = ->
 
 @FormHandler =
   setEvent: (event, data)->
-    console.log event
     event.recurring = data.recurring if data.recurring
     event.id = data.id if data.id
-    event.start = new Date(moment(data.from_time).format("MMM DD, YYYY HH:mm Z"))
-    event.end =  new Date(moment(data.to_time).format("MMM DD, YYYY HH:mm Z"))
-    console.log event
+    event.title = data.id.toString() if data.id
+    event.start = new Date(moment(data.start).format("MMM DD, YYYY HH:mm Z"))
+    event.end =  new Date(moment(data.end).format("MMM DD, YYYY HH:mm Z"))
+    event.allDay = false
     event
 
   displayErros: (errors)->
@@ -42,20 +42,14 @@ Date.prototype.getDayName = ->
   successHandler: (event, data)->
     $('#template_form').html('')
     $('#template_form').html('<p class="success">Saved Successfully</p>')
-    event = FormHandler.setEvent event, data
-
+    
+    event = FormHandler.setEvent(event, data.time_slots[0])
+    
     unless event.isNew # refresh events if update
       calendar.fullCalendar 'rerenderEvents' 
     else
       event.isNew = false
-      calendar.fullCalendar "renderEvent",
-        title: data.id.toString()
-        start: moment(event.start).format("MMM DD, YYYY HH:mm Z")
-        end: moment(event.end).format("MMM DD, YYYY HH:mm Z")
-        id: data.id
-        recurring: data.recurring
-        allDay: false
-      , true # make the event "stick"
+      calendar.fullCalendar "renderEvent", event , false # make the event "stick"
     
     $('#template_form').css('display', 'block')
     calendar.fullCalendar "unselect"
