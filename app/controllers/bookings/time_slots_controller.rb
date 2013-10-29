@@ -61,10 +61,7 @@ module Bookings
     def update
       # TODO HZ: check for recurring attribute, and create the children
       if @time_slot.update(time_slot_params)
-        respond_with(@time_slot, :status => :created, :location => @time_slot) do |format|
-          format.json { render json: @time_slot }
-          format.html { redirect_to @time_slot,  notice: 'Time slot was successfully updated.' }
-        end
+        render json: [@time_slot], each_serializer: Bookings::TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
           format.html { render :action => :edit }

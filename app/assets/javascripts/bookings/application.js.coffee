@@ -43,7 +43,8 @@ Date.prototype.getDayName = ->
     $('#template_form').html('')
     $('#template_form').html('<p class="success">Saved Successfully</p>')
     
-    event = FormHandler.setEvent(event, data.time_slots[0])
+    for k, values of data
+      event = FormHandler.setEvent(event, values[0])
     
     unless event.isNew # refresh events if update
       calendar.fullCalendar 'rerenderEvents' 

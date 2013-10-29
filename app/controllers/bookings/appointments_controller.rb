@@ -32,9 +32,7 @@ module Bookings
       @appointment = Appointment.new(appointment_params)
 
       if @appointment.save
-        respond_with(@appointment, :status => :created, :location => @appointment) do |format|
-          format.html { redirect_to @appointment,  notice: 'Appointment was successfully created.' }
-        end
+        render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
       else
         respond_with(@appointment) do |format|
           format.html { render :action => :new }
@@ -45,10 +43,7 @@ module Bookings
     # PATCH/PUT /appointments/1
     def update
       if @appointment.update(appointment_params)
-        respond_with(@appointment, :status => :created, :location => @appointment) do |format|
-          format.json { render json: @appointment }
-          format.html { redirect_to @appointment,  notice: 'Appointment was successfully updated.' }
-        end
+        render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
       else
         respond_with(@appointment) do |format|
           format.html { render :action => :edit }
@@ -67,7 +62,7 @@ module Bookings
       slots = current_user.time_slots.all.to_a
       appointments = Appointment.all.to_a 
       all = appointments + slots
-      render json: all, each_serializer: Bookings::AppointmentsSerializer
+      render json: all, each_serializer: Bookings::AppointmentSerializer
     end
 
     def appointments_for_employee
