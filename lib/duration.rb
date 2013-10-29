@@ -13,8 +13,8 @@ module Duration
           
           def no_intersection
             # TODO HZ: reservable.time_slots.where
-            results = self.class.where("(from_time >= :from_time AND from_time < :to_time) OR
-                      (:from_time >= from_time AND :from_time < to_time)", {from_time: from_time, to_time: to_time})
+            results = self.class.where("reservable_id = :reservable_id (from_time >= :from_time AND from_time < :to_time) OR
+                      (:from_time >= from_time AND :from_time < to_time)", {reservable_id: reservable_id ,from_time: from_time, to_time: to_time})
             results = results.where("id != ?",  id) unless new_record?
             errors.add(:from_date, "Can't overlap another slot") if results.exists?
           end

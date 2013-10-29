@@ -124,5 +124,6 @@ Date.prototype.getDayName = ->
       $('#time_slot_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")
       $('#time_slot_recurring').val(event.recurring || 0)
     else if $('#new_appointment').length
+      $('#appointment_reservable_id').val $('#reservable_id').val()
       $('#appointment_from_time').val moment(event.start).format("MMM DD, YYYY HH:mm Z")
       $('#appointment_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")

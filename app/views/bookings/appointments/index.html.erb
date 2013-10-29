@@ -1,3 +1,8 @@
+<div>
+	<%= label_tag "Employee" %>
+	<%= select_tag 'reservable', options_from_collection_for_select(@reservables, "id", "email") %>
+</div>
+
 <div id="calendar-contianer">
   <div id="template_form"></div> 
   <div id="calendar"></div>

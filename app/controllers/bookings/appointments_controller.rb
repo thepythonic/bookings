@@ -3,7 +3,7 @@ require_dependency "bookings/application_controller"
 module Bookings
   class AppointmentsController < ApplicationController
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-    before_action :set_customers_employees, only: [:new, :edit]
+    before_action :set_customers_employees, only: [:index]
 
     respond_to :json, :html
 
@@ -60,7 +60,7 @@ module Bookings
     def slots
       #TODO HZ: check here!
       slots = current_user.time_slots.all.to_a
-      appointments = Appointment.all.to_a 
+      appointments = Appointment.all.to_a
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentSerializer
     end
@@ -72,9 +72,11 @@ module Bookings
     end
 
     def appointments_for_reservable
-      @customer = Customer.find(params[:customer])
-      @appointments = @customer.appointments
-      render :index
+      reservable = Bookings.reservable_class.to_s.constantize.find(params[:reservable_id])
+      slots = reservable.time_slots.all.to_a
+      appointments = reservable.appointments.all.to_a
+      all = appointments + slots
+      render json: all, each_serializer: Bookings::AppointmentSerializer
     end
 
     def within_date_range
@@ -95,8 +97,8 @@ module Bookings
       end
 
       def set_customers_employees
-        @customers = Bookings.customer_class.to_s.constantize.all
-        @employees = Bookings.reservable_class.to_s.constantize.all
+        # @customers = Bookings.customer_class.to_s.constantize.all
+        @reservables = Bookings.reservable_class.to_s.constantize.all
       end
   end
 end
