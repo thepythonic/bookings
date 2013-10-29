@@ -8,7 +8,7 @@ module Bookings
 
     def slots
       @time_slots = current_user.time_slots.all
-      render json: @time_slots, each_serializer: Bookings::TimeSlotsSerializer
+      render json: @time_slots, each_serializer: Bookings::TimeSlotSerializer
     end
 
     # GET /time_slots
@@ -34,11 +34,21 @@ module Bookings
     # POST /time_slots
     def create
       @time_slot = current_user.time_slots.new(time_slot_params)
-      
+      recurring = time_slot_params[:recurring].to_i
+      @slots = []
       if @time_slot.save
-        respond_with(@time_slot, :status => :created, :location => @time_slot) do |format|
-          format.html { redirect_to @time_slot,  notice: 'Time slot was successfully created.' }
+        @time_slot.update_attribute(:parent, @time_slot)
+        @slots << @time_slot
+        from_time = Time.parse(time_slot_params[:from_time])
+        to_time = Time.parse(time_slot_params[:to_time]) 
+        (1...recurring).each do |i| 
+          params[:time_slot][:from_time] =  from_time + i.weeks
+          params[:time_slot][:to_time] = to_time + i.weeks
+          params[:time_slot][:parent] = @time_slots
+          
+          @slots << current_user.time_slots.create(time_slot_params)
         end
+        render json: @slots, each_serializer: Bookings::TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
           format.html { render :action => :new }
