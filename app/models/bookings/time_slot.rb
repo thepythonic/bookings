@@ -28,6 +28,9 @@ module Bookings
         self.class.create(from_time: from_time + (i-index).weeks, to_time: to_time + (i-index).weeks, 
                           parent: self, recurring: recurring, reservable_id: reservable_id)
       end
+      if recurring < lnth
+        children[recurring .. -1].map(&:destroy)
+      end
     end
 
   end
