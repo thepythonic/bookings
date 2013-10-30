@@ -13,7 +13,6 @@ module Bookings
 
     # GET /time_slots
     def index
-      @time_slots = current_user.time_slots.all
       @time_slot = current_user.time_slots.new
     end
 
@@ -32,15 +31,16 @@ module Bookings
 
     # POST /time_slots
     def create
+      #TODO HZ: handle no recurring value.
       @time_slot = current_user.time_slots.new(time_slot_params)
-      recurring = time_slot_params[:recurring].to_i
-      @slots = []
+      
+      # @slots = []
       if @time_slot.save
         @time_slot.update_attribute(:parent, @time_slot)
-        @slots << @time_slot
-        @slots + @time_slot.create_children
+        # @slots << @time_slot
+        # @slots + @time_slot.create_children
         
-        render json: @slots, each_serializer: Bookings::TimeSlotSerializer
+        render json: @slot, serializer: Bookings::TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
           format.html { render :action => :new }
@@ -73,6 +73,7 @@ module Bookings
       def set_time_slot
         @time_slot = current_user.time_slots.find(params[:id])
       end
+      
       # Only allow a trusted parameter "white list" through.
       def time_slot_params
         params.require(:time_slot).permit(:from_time, :to_time, :recurring)

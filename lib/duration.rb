@@ -12,7 +12,6 @@ module Duration
           validate :from_less_than_to
           
           def no_intersection
-            # TODO HZ: reservable.time_slots.where
             results = self.class.where("(from_time >= :from_time AND from_time < :to_time) OR
                       (:from_time >= from_time AND :from_time < to_time)", {from_time: from_time, to_time: to_time})
             results = results.where("id != ?",  id) unless new_record?
@@ -23,7 +22,6 @@ module Duration
           def from_less_than_to
             if from_time && to_time && from_time >= to_time
               self.errors.add(:to_time, "should be after from_time.")
-              return false
             end
           end
         end
