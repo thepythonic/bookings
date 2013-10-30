@@ -34,6 +34,7 @@ $(document).ready ->
               end: moment(slot.end).format("MMM DD, YYYY HH:mm Z")
               id: slot.id.toString()
               recurring: slot.recurring
+              color: "#00ff00" if slot.recurring
               allDay: false
               
           callback(events)  
