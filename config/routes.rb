@@ -13,11 +13,10 @@ Bookings::Engine.routes.draw do
     resources :appointments
   end
 
-  get 'appointments/for/:reservable_id', to: 'appointments#appointments_for_reservable'
+  get '/reservable/:reservable_id/appointments_slots/', to: 'appointments#appointments_for_reservable', as: :reservable_appointments_slots
   
   get 'appointments/customers/:customer', to: 'appointments#appointments_for_customer'
   get 'appointments/start/:start/end/:end', to: 'appointments#within_date_range'
 
-  resources :appointments
 
 end

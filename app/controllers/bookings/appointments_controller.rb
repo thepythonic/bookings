@@ -59,9 +59,8 @@ module Bookings
     end
 
     def slots
-      #TODO HZ: check here!
-      slots = current_user.time_slots.all.to_a
-      appointments = Appointment.all.to_a
+      slots = @reservable.time_slots.all.to_a
+      appointments = @reservable.appointments.all.to_a
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentSerializer
     end

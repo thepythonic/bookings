@@ -5,6 +5,12 @@
   *
   */
 
+a.current{
+  pointer-events: none;
+  cursor: default;
+  text-decoration:none;
+  color: gray;
+}
 .user-info span{
   color: blue;
 }

@@ -1,6 +1,7 @@
-<div>
-	<%= label_tag "Employee" %>
-	<%= select_tag 'reservable', options_from_collection_for_select(@reservables, "id", "email", @reservable.id) %>
+<div class="">
+	<% @reservables.each do |reservable| %>
+		<%= link_to reservable.email, reservable_appointments_path(reservable), class: ("current" if reservable == @reservable)  %>|
+	<% end %>
 </div>
 
 <div id="calendar-contianer">
@@ -15,7 +16,8 @@ var config = {
   form: '<%=j render "form", locals: @appointment %>',
   minTime: '8:00',
   maxTime: '18:00',
-  slotMinutes: 15
+  slotMinutes: 15,
+  appointments_url: "<%=j reservable_appointments_slots_path(@reservable) %>"
 };
 </script>
 

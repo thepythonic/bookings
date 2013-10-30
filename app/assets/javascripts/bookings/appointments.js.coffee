@@ -23,7 +23,7 @@ $(document).ready ->
     
     events: (start, end, callback) ->
       $.ajax
-        url: "/bookings/appointments/for/#{$('#reservable').val()}"
+        url: config.appointments_url
         dataType: 'json'
         success: (doc)->
           events = []
