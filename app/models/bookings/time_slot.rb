@@ -8,20 +8,27 @@ module Bookings
     require 'duration'
     include Duration
 
-    
-    
-
-    def merge_time_slots
-      # TODO HZ: reservable.time_slots.where
-      results = Bookings::TimeSlot.where('from_time = :to_time OR to_time = :from_time', {to_time: to_time, from_time: from_time})
-      return if results.empty?
-
-      min_from = [results.map(&:from_time).min, from_time].min
-      max_to = [results.map(&:to_time).max, to_time].max
-
-      self.from_time = min_from
-      self.to_time = max_to
-      # results.map(&:destroy)
+    def create_children
+      (1...recurring).collect do |i| 
+        self.class.create(from_time: from_time + i.weeks, to_time: to_time + i.weeks, 
+                          parent: self, recurring: recurring, reservable_id: reservable_id)
+      end
     end
+    def update_children
+      children = self.parent.children
+      index = children.index(self)
+      slots = []
+      children.each_with_index do |slot, i|
+        slots << slot.update_attributes(from_time: from_time - (index-i).weeks, to_time: to_time - (index-i).weeks, 
+                               parent: self, recurring: recurring, reservable_id: reservable_id)
+      end
+      lnth = children.length
+
+      slots += (lnth...recurring).to_a.collect do |i|
+        self.class.create(from_time: from_time + (i-index).weeks, to_time: to_time + (i-index).weeks, 
+                          parent: self, recurring: recurring, reservable_id: reservable_id)
+      end
+    end
+
   end
 end

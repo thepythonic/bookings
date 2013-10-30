@@ -13,7 +13,6 @@ module Bookings
 
     # GET /time_slots
     def index
-      puts current_user.time_slots
       @time_slots = current_user.time_slots.all
       @time_slot = current_user.time_slots.new
     end
@@ -39,15 +38,8 @@ module Bookings
       if @time_slot.save
         @time_slot.update_attribute(:parent, @time_slot)
         @slots << @time_slot
-        from_time = Time.parse(time_slot_params[:from_time])
-        to_time = Time.parse(time_slot_params[:to_time]) 
-        (1...recurring).each do |i| 
-          params[:time_slot][:from_time] =  from_time + i.weeks
-          params[:time_slot][:to_time] = to_time + i.weeks
-          params[:time_slot][:parent] = @time_slots
-          
-          @slots << current_user.time_slots.create(time_slot_params)
-        end
+        @slots + @time_slot.create_children
+        
         render json: @slots, each_serializer: Bookings::TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
@@ -59,8 +51,8 @@ module Bookings
 
     # PATCH/PUT /time_slots/1
     def update
-      # TODO HZ: check for recurring attribute, and create the children
       if @time_slot.update(time_slot_params)
+        @time_slot.update_children
         render json: [@time_slot], each_serializer: Bookings::TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
