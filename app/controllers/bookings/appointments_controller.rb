@@ -10,9 +10,9 @@ module Bookings
 
     # GET /appointments
     def index
-      @appointments = @reservable.appointments.all
+      # @appointments = @reservable.appointments.all
       @appointment = @reservable.appointments.new
-      respond_with(@appointments)
+      # respond_with(@appointments)
     end
 
     # GET /appointments/1
@@ -58,43 +58,27 @@ module Bookings
       redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
     end
 
-    def slots
+     def appointments_for_reservable
       slots = @reservable.time_slots.all.to_a
       appointments = @reservable.appointments.all.to_a
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentSerializer
     end
 
-    def appointments_for_employee
-      @employee = Employee.find(params[:employee])
-      @appointments = @employee.appointments
-      render :index
-    end
-
-    def appointments_for_reservable
-      slots = @reservable.time_slots.all.to_a
-      appointments = @reservable.appointments.all.to_a
-      all = appointments + slots
-      render json: all, each_serializer: Bookings::AppointmentSerializer
-    end
-
-    def within_date_range
-      @appointments = Appointment.where("`from` <= ? and `from` >= ?", DateTime.strptime(params[:end], "%s"), DateTime.strptime(params[:start], "%s"))
-      @appointments = @appointments.group_by { |t| t.from.beginning_of_day }
-      respond_with(@appointments)
-    end
-
+  
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_reservable
-        @reservable = params[:reservable_id] ? Bookings.reservable_class.to_s.constantize.find(params[:reservable_id]) : current_user
+        @reservable =  Bookings.reservable_class.to_s.constantize.find(params[:reservable_id])
       end
+
       def set_appointment
         @appointment = @reservable.appointments.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.
       def appointment_params
+        #TODO HZ: get customer from current_user
         params.require(:appointment).permit(:customer_id, 'from_time', 'to_time')
       end
 

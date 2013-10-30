@@ -1,7 +1,7 @@
 module Bookings
   class AppointmentSerializer < ActiveModel::Serializer
     attributes :id, :start, :end, :title, :recurring
-
+    #TODO HZ: refactor, add attribute time_slot
     def recurring
       begin
         object.recurring
