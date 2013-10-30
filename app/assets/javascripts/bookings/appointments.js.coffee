@@ -27,7 +27,35 @@ $(document).ready ->
         dataType: 'json'
         success: (doc)->
           events = []
-          for slot in doc.appointments
+          allAppointments = doc.appointments
+          slots = allAppointments.filter (item)->
+                    item if item.recurring
+          appointments = allAppointments.filter (item)->
+                    item if ! item.recurring
+
+          #for slot in slots
+          i=0
+          while i < slots.length # length changes while going through the loop
+            console.log slots.length
+            slot = slots[i]
+            i++
+            for appointment in appointments
+              if appointment.start >= slot.start && appointment.end <= slot.end
+                first = jQuery.extend({}, slot)
+                second = jQuery.extend({}, slot)
+                first.start = slot.start 
+                first.end = appointment.start
+                second.start = appointment.end
+                second.end = slot.end
+                slots.push first if appointment.start > slot.start
+                slots.push second if appointment.end < slot.end
+                slots.splice(slots.indexOf(slot), 1)
+                appointments.splice(appointments.indexOf(appointment), 1)
+                break
+           
+          # allAppointments = appointments.concat slots
+
+          for slot in allAppointments
             events.push
               title: slot.title.toString()
               start: moment(slot.start).format("MMM DD, YYYY HH:mm Z")
