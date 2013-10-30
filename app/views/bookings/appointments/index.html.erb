@@ -1,6 +1,6 @@
 <div>
 	<%= label_tag "Employee" %>
-	<%= select_tag 'reservable', options_from_collection_for_select(@reservables, "id", "email") %>
+	<%= select_tag 'reservable', options_from_collection_for_select(@reservables, "id", "email", @reservable.id) %>
 </div>
 
 <div id="calendar-contianer">

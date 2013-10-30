@@ -1,6 +1,6 @@
 <h2>TODO: Create/Search for Patient</h2>
 
-<%= form_for(@appointment) do |f| %>
+<%= form_for(@appointment, url: reservable_appointments_path(@reservable, @appointment)) do |f| %>
   <% if @appointment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>

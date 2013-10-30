@@ -2,6 +2,7 @@ require_dependency "bookings/application_controller"
 
 module Bookings
   class AppointmentsController < ApplicationController
+    before_action :set_reservable
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
     before_action :set_customers_employees, only: [:index]
 
@@ -9,8 +10,8 @@ module Bookings
 
     # GET /appointments
     def index
-      @appointments = Appointment.all
-      @appointment = Appointment.new
+      @appointments = @reservable.appointments.all
+      @appointment = @reservable.appointments.new
       respond_with(@appointments)
     end
 
@@ -29,7 +30,7 @@ module Bookings
 
     # POST /appointments
     def create
-      @appointment = Appointment.new(appointment_params)
+      @appointment = @reservable.appointments.new(appointment_params)
 
       if @appointment.save
         render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
@@ -72,9 +73,8 @@ module Bookings
     end
 
     def appointments_for_reservable
-      reservable = Bookings.reservable_class.to_s.constantize.find(params[:reservable_id])
-      slots = reservable.time_slots.all.to_a
-      appointments = reservable.appointments.all.to_a
+      slots = @reservable.time_slots.all.to_a
+      appointments = @reservable.appointments.all.to_a
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentSerializer
     end
@@ -87,8 +87,11 @@ module Bookings
 
     private
       # Use callbacks to share common setup or constraints between actions.
+      def set_reservable
+        @reservable = params[:reservable_id] ? Bookings.reservable_class.to_s.constantize.find(params[:reservable_id]) : current_user
+      end
       def set_appointment
-        @appointment = Appointment.find(params[:id])
+        @appointment = @reservable.appointments.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.
