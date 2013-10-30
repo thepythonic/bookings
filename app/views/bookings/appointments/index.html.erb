@@ -1,7 +1,5 @@
 <div class="">
-	<% @reservables.each do |reservable| %>
-		<%= link_to reservable.email, reservable_appointments_path(reservable), class: ("current" if reservable == @reservable)  %>|
-	<% end %>
+	<%= reservables_links %>
 </div>
 
 <div id="calendar-contianer">
