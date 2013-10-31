@@ -9,25 +9,20 @@ module Bookings
 
     respond_to :json, :html
 
-    # GET /appointments
     def index
       @appointment = @reservable.appointments.new
     end
 
-    # GET /appointments/1
     def show
     end
 
-    # GET /appointments/new
     def new
-      @appointment = Appointment.new
+      @appointment =  @reservable.appointments.new
     end
 
-    # GET /appointments/1/edit
     def edit
     end
 
-    # POST /appointments
     def create
       @appointment = @reservable.appointments.new(appointment_params)
 
@@ -40,7 +35,6 @@ module Bookings
       end
     end
 
-    # PATCH/PUT /appointments/1
     def update
       if @appointment.update(appointment_params)
         render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
@@ -51,7 +45,6 @@ module Bookings
       end
     end
 
-    # DELETE /appointments/1
     def destroy
       @appointment.destroy
       redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
@@ -74,7 +67,7 @@ module Bookings
       end
 
       def set_reservable
-        @reservable =  Bookings.reservable_class.to_s.constantize.find(params[:reservable_id])
+        @reservable =  Bookings.reservable.find(params[:reservable_id])
       end
 
       def set_appointment
@@ -82,7 +75,7 @@ module Bookings
       end
 
       def set_reservables
-        @reservables = Bookings.reservable_class.to_s.constantize.all
+        @reservables = Bookings.reservable.all
       end
   end
 end
