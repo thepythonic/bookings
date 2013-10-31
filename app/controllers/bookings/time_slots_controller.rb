@@ -8,7 +8,7 @@ module Bookings
 
     def slots
       @time_slots = current_user.time_slots.all
-      render json: @time_slots, each_serializer: Bookings::TimeSlotSerializer
+      render json: @time_slots, each_serializer: TimeSlotSerializer
     end
 
     def index
@@ -32,7 +32,7 @@ module Bookings
         @time_slot.update_attribute(:parent, @time_slot)
         @time_slot.create_children
         
-        render json: @slot, serializer: Bookings::TimeSlotSerializer
+        render json: [@time_slot], each_serializer: TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
           format.html { render :action => :new }
@@ -43,7 +43,8 @@ module Bookings
     def update
       if @time_slot.update(time_slot_params)
         @time_slot.update_children
-        render json: [@time_slot], each_serializer: Bookings::TimeSlotSerializer
+        #TODO HZ: check if @time_slot still exist not deleted by the update_children
+        render json: [@time_slot], each_serializer: TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
           format.html { render :action => :edit }

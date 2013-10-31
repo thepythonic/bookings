@@ -120,7 +120,7 @@ Date.prototype.getDayName = ->
 
 @currentForm =
   setValues: (event)->
-    if event.isTimeSlot
+    if event.isTimeSlot || $('#new_time_slot').length
       $('#time_slot_from_time').val moment(event.start).format("MMM DD, YYYY HH:mm Z")
       $('#time_slot_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")
       $('#time_slot_recurring').val(event.recurring || 0)
