@@ -16,18 +16,15 @@ module Bookings
     end
 
     def update_children
-      #TODO HZ: Add comments here
       children = self.parent.children
       index = children.index(self)
-      slots = []
-
       update_all_my_parent_children(children, index)
       create_or_delete_remainings(children, index)
-   
     end
 
     private
       def update_all_my_parent_children(children, index)
+        # update all my parent's children with my attribute
         children.each_with_index do |slot, i|
           delta = index - i
           slot.update_attributes(from_time: from_time - delta.weeks, to_time: to_time - delta.weeks, 
@@ -36,6 +33,8 @@ module Bookings
       end
       
       def create_or_delete_remainings(children, index)
+        # recurring value increased? then create new time slots
+        # recurring value decreased? then delete latest children.
         lnth = children.length
 
         if recurring < lnth
