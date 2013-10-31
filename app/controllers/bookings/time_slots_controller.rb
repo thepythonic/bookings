@@ -11,34 +11,27 @@ module Bookings
       render json: @time_slots, each_serializer: Bookings::TimeSlotSerializer
     end
 
-    # GET /time_slots
     def index
       @time_slot = current_user.time_slots.new
     end
 
-    # GET /time_slots/1
     def show
     end
 
-    # GET /time_slots/new
     def new
       @time_slot = current_user.time_slots.new
     end
 
-    # GET /time_slots/1/edit
     def edit
     end
 
-    # POST /time_slots
     def create
       #TODO HZ: handle no recurring value.
       @time_slot = current_user.time_slots.new(time_slot_params)
       
-      # @slots = []
       if @time_slot.save
         @time_slot.update_attribute(:parent, @time_slot)
-        # @slots << @time_slot
-        # @slots + @time_slot.create_children
+        @time_slot.create_children
         
         render json: @slot, serializer: Bookings::TimeSlotSerializer
       else
@@ -49,7 +42,6 @@ module Bookings
 
     end
 
-    # PATCH/PUT /time_slots/1
     def update
       if @time_slot.update(time_slot_params)
         @time_slot.update_children
@@ -62,19 +54,16 @@ module Bookings
 
     end
 
-    # DELETE /time_slots/1
     def destroy
       @time_slot.destroy
       redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.'
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
       def set_time_slot
         @time_slot = current_user.time_slots.find(params[:id])
       end
-      
-      # Only allow a trusted parameter "white list" through.
+
       def time_slot_params
         params.require(:time_slot).permit(:from_time, :to_time, :recurring)
       end
