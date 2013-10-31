@@ -9,7 +9,7 @@ module Bookings
   end
 
   def self.reservable
-  	Bookings.customer_class_name.to_s.constantize
+  	Bookings.reservable_class_name.to_s.constantize
   end
 
 end

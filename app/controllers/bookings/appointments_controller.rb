@@ -52,7 +52,7 @@ module Bookings
 
     def appointments_for_reservable
       slots = @reservable.time_slots.all.to_a
-      appointments = @reservable.appointments.all.order('from_time ASC').to_a
+      appointments = @reservable.appointments.order('from_time ASC').all.to_a
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentSerializer
     end
