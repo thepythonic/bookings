@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   #TODO HZ:: add logic here!
   def is_admin?
   	if self.is_a? Patient
-  		return true
+  		return false
   	end
-  	false
+  	true
   end
 end

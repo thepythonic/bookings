@@ -13,10 +13,12 @@
     </div>
   <% end %>
 
+  <% if current_user.is_admin? %>
   <div class="field">
     <%= f.label :customer %><br>
     <%= f.text_field :customer_id %>
   </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :from_time %><br>
