@@ -2,17 +2,16 @@ require_dependency "bookings/application_controller"
 
 module Bookings
   class AppointmentsController < ApplicationController
+    before_action :set_customer
     before_action :set_reservable
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-    before_action :set_customers_employees, only: [:index]
+    before_action :set_reservables, only: [:index]
 
     respond_to :json, :html
 
     # GET /appointments
     def index
-      # @appointments = @reservable.appointments.all
       @appointment = @reservable.appointments.new
-      # respond_with(@appointments)
     end
 
     # GET /appointments/1
@@ -58,16 +57,22 @@ module Bookings
       redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
     end
 
-     def appointments_for_reservable
+    def appointments_for_reservable
       slots = @reservable.time_slots.all.to_a
-      appointments = @reservable.appointments.all.to_a
+      appointments = @reservable.appointments.all.order('from_time ASC').to_a
       all = appointments + slots
       render json: all, each_serializer: Bookings::AppointmentSerializer
     end
-
   
     private
-      # Use callbacks to share common setup or constraints between actions.
+      def appointment_params
+        params.require(:appointment).permit(:customer_id, 'from_time', 'to_time')
+      end
+
+      def set_customer
+        @customer =  current_user if current_user.is_a? Bookings.customer
+      end
+
       def set_reservable
         @reservable =  Bookings.reservable_class.to_s.constantize.find(params[:reservable_id])
       end
@@ -76,14 +81,7 @@ module Bookings
         @appointment = @reservable.appointments.find(params[:id])
       end
 
-      # Only allow a trusted parameter "white list" through.
-      def appointment_params
-        #TODO HZ: get customer from current_user
-        params.require(:appointment).permit(:customer_id, 'from_time', 'to_time')
-      end
-
-      def set_customers_employees
-        # @customers = Bookings.customer_class.to_s.constantize.all
+      def set_reservables
         @reservables = Bookings.reservable_class.to_s.constantize.all
       end
   end

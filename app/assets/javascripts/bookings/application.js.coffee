@@ -35,7 +35,6 @@ Date.prototype.getDayName = ->
     calendar.fullCalendar "unselect"
     $('#template_form').css('display', 'block')
 
-  # TODO HZ: We have many forms here think about it.
   setFormFieldsValue: (event)->
     currentForm.setValues(event)
 
