@@ -52,8 +52,9 @@ $(document).ready ->
                 slots.splice(slots.indexOf(slot), 1)
                 appointments.splice(appointments.indexOf(appointment), 1)
                 break
-           
-          # allAppointments = appointments.concat slots
+          
+          if config.isCustomer
+            allAppointments = appointments.concat slots
 
           for slot in allAppointments
             events.push

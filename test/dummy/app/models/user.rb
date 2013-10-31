@@ -11,4 +11,11 @@ class User < ActiveRecord::Base
   	end
   	true
   end
+
+  def is_customer?
+  	if self.is_a? Patient
+  		return true
+  	end
+  	false
+  end
 end

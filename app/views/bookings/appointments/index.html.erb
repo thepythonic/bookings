@@ -15,7 +15,8 @@ var config = {
   minTime: '8:00',
   maxTime: '18:00',
   slotMinutes: 15,
-  appointments_url: "<%=j reservable_appointments_slots_path(@reservable) %>"
+  appointments_url: "<%=j reservable_appointments_slots_path(@reservable) %>",
+  isCustomer: "<% current_user.is_customer? %>"
 };
 </script>
 
