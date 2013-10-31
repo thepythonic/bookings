@@ -97,8 +97,10 @@ $(document).ready ->
             data: {term: request.term},
             dataType: "json",
             success: (data)->
-              response $.map(data.customers, (item)-> 
-                      label: item.customers.email
-                      value: item.customers.id
-                    )
-        
+              unless data.errors
+                response $.map(data.customers, (item)-> 
+                        label: item.customers.email
+                        value: item.customers.id
+                      )
+              else
+                FormHandler.displayErros data.errors

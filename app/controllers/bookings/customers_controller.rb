@@ -12,7 +12,9 @@ module Bookings
     end
 
     def admin_only
-    	current_user && current_user.is_admin?
+    	unless current_user && current_user.is_admin?
+    		render json: {errors: {error: ["action not allowed"]}}
+    	end
     end
   end
 end

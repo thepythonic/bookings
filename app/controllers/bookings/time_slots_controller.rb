@@ -26,7 +26,6 @@ module Bookings
     end
 
     def create
-      #TODO HZ: handle no recurring value.
       @time_slot = current_user.time_slots.new(time_slot_params)
       
       if @time_slot.save
