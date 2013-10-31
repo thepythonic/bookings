@@ -1,6 +1,6 @@
 module Bookings
   class AppointmentSerializer < ActiveModel::Serializer
-    attributes :id, :start, :end, :title, :recurring, :time_slot
+    attributes :id, :start, :end, :title, :recurring, :time_slot, :customer_id
 
     def recurring
       begin
@@ -29,5 +29,14 @@ module Bookings
     def title
       object.id
     end
+
+    def customer_id
+      begin
+        object.customer_id
+      rescue
+        nil
+      end
+    end
+
   end
 end

@@ -61,6 +61,7 @@ $(document).ready ->
               start: moment(slot.start).format("MMM DD, YYYY HH:mm Z")
               end: moment(slot.end).format("MMM DD, YYYY HH:mm Z")
               id: slot.id.toString()
+              customer_id: slot.customer_id unless slot.time_slot
               recurring: slot.recurring
               isTimeSlot: slot.time_slot
               color: "#00ff00" if slot.time_slot

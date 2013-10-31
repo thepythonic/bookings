@@ -16,6 +16,7 @@ Date.prototype.getDayName = ->
 @FormHandler =
   setEvent: (event, data)->
     event.recurring = data.recurring if data.time_slot
+    event.customer_id = data.customer_id unless data.time_slot
     event.isTimeSlot = data.time_slot
     event.id = data.id if data.id
     event.title = data.id.toString() if data.id
@@ -119,10 +120,11 @@ Date.prototype.getDayName = ->
 
 @currentForm =
   setValues: (event)->
-    if $('#new_time_slot').length
+    if event.isTimeSlot
       $('#time_slot_from_time').val moment(event.start).format("MMM DD, YYYY HH:mm Z")
       $('#time_slot_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")
       $('#time_slot_recurring').val(event.recurring || 0)
-    else if $('#new_appointment').length
+    else 
       $('#appointment_from_time').val moment(event.start).format("MMM DD, YYYY HH:mm Z")
       $('#appointment_to_time').val moment(event.end).format("MMM DD, YYYY HH:mm Z")
+      $('#appointment_customer_id').val event.customer_id
