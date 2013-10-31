@@ -2,7 +2,7 @@ require_dependency "bookings/application_controller"
 
 module Bookings
   class AppointmentsController < ApplicationController
-    before_action :set_customer
+    before_action :set_customer, only: [:create, :update]
     before_action :set_reservable
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
     before_action :set_reservables, only: [:index]
@@ -25,6 +25,7 @@ module Bookings
 
     def create
       @appointment = @reservable.appointments.new(appointment_params)
+      @appointment.customer = @customer
 
       if @appointment.save
         render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
@@ -59,11 +60,15 @@ module Bookings
   
     private
       def appointment_params
-        params.require(:appointment).permit(:customer_id, 'from_time', 'to_time')
+        params.require(:appointment).permit('from_time', 'to_time')
       end
 
       def set_customer
-        @customer =  current_user if current_user.is_a? Bookings.customer
+        if current_user.is_a? Bookings.customer
+          @customer =  current_user 
+        elsif current_user.is_admin?
+          @customer = Bookings.customer.find(params[:appointment][:customer_id])
+        end
       end
 
       def set_reservable
