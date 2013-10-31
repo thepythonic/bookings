@@ -4,5 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  
+  #TODO HZ:: add logic here!
+  def is_admin?
+  	return true
+  end
 end

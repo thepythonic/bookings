@@ -1,7 +1,10 @@
 module Bookings
   class TimeSlotSerializer < ActiveModel::Serializer
-    attributes :id, :start, :end, :title, :recurring
+    attributes :id, :start, :end, :title, :recurring, :time_slot
 
+    def time_slot
+        true    
+    end
 
     def start
     	object.from_time

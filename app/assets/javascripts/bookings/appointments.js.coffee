@@ -29,9 +29,9 @@ $(document).ready ->
           events = []
           allAppointments = doc.appointments
           slots = allAppointments.filter (item)->
-                    item if item.recurring
+                    item if item.time_slot
           appointments = allAppointments.filter (item)->
-                    item if ! item.recurring
+                    item if ! item.time_slot
 
           #for slot in slots
           i=0
@@ -62,14 +62,14 @@ $(document).ready ->
               end: moment(slot.end).format("MMM DD, YYYY HH:mm Z")
               id: slot.id.toString()
               recurring: slot.recurring
-              color: "#00ff00" if slot.recurring
+              isTimeSlot: slot.time_slot
+              color: "#00ff00" if slot.time_slot
               allDay: false
               
           callback(events)  
 
     eventAfterRender: (event, element, view)->
-      # element.css('left', 200) unless event.recurring
-      element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] and event.recurring
+      element.css('width', 60 ) if view.name in ['agendaDay','agendaWeek'] and event.isTimeSlot
 
     # # click on event
     eventClick: (event, element) ->

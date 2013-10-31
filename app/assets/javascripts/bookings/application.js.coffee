@@ -15,7 +15,8 @@ Date.prototype.getDayName = ->
 
 @FormHandler =
   setEvent: (event, data)->
-    event.recurring = data.recurring if data.recurring
+    event.recurring = data.recurring if data.time_slot
+    event.isTimeSlot = data.time_slot
     event.id = data.id if data.id
     event.title = data.id.toString() if data.id
     event.start = new Date(moment(data.start).format("MMM DD, YYYY HH:mm Z"))
