@@ -5,15 +5,14 @@ module Bookings
   	before_action :admin_only
 
     def find
-    	# TODO HZ: from configuration
-    	# TODO HZ: Admin only
+    	# TODO HZ: search attributes from configuration
       @customers = Bookings.customer.where("id = ? OR email LIKE ?", params[:term], "%#{params[:term]}%")
       render json: @customers
     end
 
     def admin_only
     	unless current_user && current_user.is_admin?
-    		render json: {errors: {error: ["action not allowed"]}}
+    		render json: errors: {error: ["action not allowed"]}
     	end
     end
   end
