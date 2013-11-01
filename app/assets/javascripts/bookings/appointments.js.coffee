@@ -14,7 +14,7 @@ $(document).ready ->
     header: 
       left: 'prev,next today'
       center: 'title'
-      right: 'month,agendaWeek'
+      right: 'month,agendaWeek,agendaDay'
 
     selectable: true
     selectHelper: true

@@ -3,8 +3,8 @@ module Bookings
     require 'duration'
 
   	belongs_to :reservable, class_name: Bookings.reservable_class_name
-  	belongs_to :parent, class_name: 'Bookings::TimeSlot'
-  	has_many :children, class_name: 'Bookings::TimeSlot', foreign_key: "parent_id"
+  	belongs_to :parent, class_name: 'TimeSlot'
+  	has_many :children, class_name: 'TimeSlot', foreign_key: "parent_id"
 
     include Duration
 

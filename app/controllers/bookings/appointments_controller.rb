@@ -28,7 +28,7 @@ module Bookings
       @appointment.customer = @customer
 
       if @appointment.save
-        render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
+        render json: [@appointment], each_serializer: AppointmentSerializer
       else
         respond_with(@appointment) do |format|
           format.html { render :action => :new }
@@ -38,7 +38,7 @@ module Bookings
 
     def update
       if @appointment.update(appointment_params)
-        render json: [@appointment], each_serializer: Bookings::AppointmentSerializer
+        render json: [@appointment], each_serializer: AppointmentSerializer
       else
         respond_with(@appointment) do |format|
           format.html { render :action => :edit }
@@ -55,7 +55,7 @@ module Bookings
       slots = @reservable.time_slots.all.to_a
       appointments = @reservable.appointments.order('from_time ASC').all.to_a
       all = appointments + slots
-      render json: all, each_serializer: Bookings::AppointmentSerializer
+      render json: all, each_serializer: AppointmentSerializer
     end
   
     private
