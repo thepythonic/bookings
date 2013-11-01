@@ -10,6 +10,8 @@ FactoryGirl.define do
     end
     password "12341234"
     type 'Doctor'
+
+    after(:create) { |dr| dr.time_slots << FactoryGirl.create(:time_slot) }
   end
 
   factory :patient, class: Patient do
@@ -28,11 +30,9 @@ FactoryGirl.define do
   end
 
   factory :time_slot, class: Bookings::TimeSlot do
-    from_time DateTime.now + 1.hour
-    to_time DateTime.now + 1.5.hour
-    recurring 1
-    association :reservable, factory: :doctor 
-    association :parent, factory: :time_slot 
+    from_time 1.hour.ago
+    to_time DateTime.now + 7.hour
+    recurring 1 
   end
 
 end
