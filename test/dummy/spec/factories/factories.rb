@@ -1,0 +1,38 @@
+# Read about factories at https://github.com/thoughtbot/factory_girl
+
+
+
+FactoryGirl.define do
+
+  factory :doctor, class: Doctor do
+    sequence :email do |t| 
+      "dr#{t}@test.com"
+    end
+    password "12341234"
+    type 'Doctor'
+  end
+
+  factory :patient, class: Patient do
+    sequence :email do |t| 
+      "patient#{t}@test.com"
+    end
+    password "12341234"
+    type 'Patient'
+  end
+
+  factory :appointment, class: Bookings::Appointment do
+    from_time DateTime.now + 1.hour
+    to_time DateTime.now + 1.5.hour
+    association :reservable, factory: :doctor 
+    association :customer, factory: :patient
+  end
+
+  factory :time_slot, class: Bookings::TimeSlot do
+    from_time DateTime.now + 1.hour
+    to_time DateTime.now + 1.5.hour
+    recurring 1
+    association :reservable, factory: :doctor 
+    association :parent, factory: :time_slot 
+  end
+
+end
