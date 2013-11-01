@@ -24,6 +24,10 @@ module Duration
               self.errors.add(:to_time, "should be after from_time.")
             end
           end
+
+          def not_in_the_past
+            self.from_time > DateTime.now
+          end
         end
       end
     end

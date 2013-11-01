@@ -8,7 +8,8 @@ module Bookings
     include Duration
 
     validate :appointment_in_time_slot
-
+    validate :not_in_the_past
+    
     def appointment_in_time_slot
     	slots = reservable.time_slots.where("from_time <= :from_time AND to_time >= :to_time", {from_time: from_time, to_time: to_time})
     	errors.add(:from_time, "You tried to book an appointment where reservable is not available.") unless slots.exists?

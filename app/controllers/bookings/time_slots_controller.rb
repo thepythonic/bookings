@@ -43,7 +43,7 @@ module Bookings
     def update
       if @time_slot.update(time_slot_params)
         @time_slot.update_children
-        #TODO HZ: check if @time_slot still exist not deleted by the update_children
+        #TODO HZ:: check if @time_slot still exist not deleted by the update_children
         render json: [@time_slot], each_serializer: TimeSlotSerializer
       else
         respond_with(@time_slot) do |format|
