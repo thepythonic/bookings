@@ -26,7 +26,7 @@ module Duration
           end
 
           def not_in_the_past
-            self.from_time > DateTime.now
+            self.errors.add(:from_time, "can't be in the past.") if self.from_time < DateTime.now
           end
         end
       end

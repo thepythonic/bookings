@@ -50,6 +50,10 @@ describe Bookings::Appointment do
       end
 
       it "should not be able to book if appointment time is in the past" do
+        expect{ FactoryGirl.create(:appointment, 
+                customer: customers[0], reservable: reservable,
+                from_time: now - 0.5.hours, 
+                to_time: now) }.to raise_error(ActiveRecord::RecordInvalid)
       end
       
       it "should not be able to reschedule if appointment time is not within reservable availablility" do
