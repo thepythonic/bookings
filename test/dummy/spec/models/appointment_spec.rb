@@ -69,6 +69,10 @@ describe Bookings::Appointment do
       end
 
       it "should not be able to reschedule if appointment time intersects with another appointment" do
+        FactoryGirl.create(:appointment, from_time: valid_from_time, to_time: valid_to_time)
+        expect{
+          FactoryGirl.create(:appointment, from_time: valid_from_time - 0.5.hours, to_time: valid_to_time + 0.5.hours)
+        }.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it "should not be able to cancel an appointment after a deadline (configured)" do
