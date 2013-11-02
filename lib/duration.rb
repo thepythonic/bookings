@@ -21,7 +21,7 @@ module Duration
 
           def from_less_than_to
             if from_time && to_time && from_time >= to_time
-              self.errors.add(:to_time, "should be after from_time.")
+              self.errors.add(:to_time, "should be after from time.")
             end
           end
 

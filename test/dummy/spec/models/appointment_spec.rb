@@ -44,6 +44,9 @@ describe Bookings::Appointment do
       end
 
       it "should not be able to book if to_time is less than from_time" do
+        expect{ FactoryGirl.create(:appointment, 
+          from_time: valid_from_time, 
+          to_time: valid_from_time - 1.hours)}.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it "should not be able to book if appointment time is in the past" do
