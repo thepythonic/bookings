@@ -2,27 +2,28 @@ require 'spec_helper'
 
 describe Bookings::Appointment do
 
-  let(:reservable){FactoryGirl.create(:doctor)}
-  let(:customers){FactoryGirl.create_list(:patient, 3)}
+  let(:reservable) { FactoryGirl.create(:doctor) }
+  let(:customers) { FactoryGirl.create_list(:patient, 3) }
+  let(:appointment) { FactoryGirl.create(:appointment, customer: customers[0], reservable: reservable) }
+  let(:now) { DateTime.now }
+  let(:valid_from_time) { now + 2.hours }
+  let(:valid_to_time) { now + 2.5.hours }
 
 
   describe "Customer" do
     context "using valid data" do
       it "should be able to book an appointment" do
-        appointment = FactoryGirl.create(:appointment, customer: customers[0], reservable: reservable)
         expect(appointment.id).to eq(1)
       end
 
       it "should be able to reschedule an appointment" do
-        appointment = FactoryGirl.create(:appointment, customer: customers[0], reservable: reservable)
-        from_time = DateTime.now+2.hours
-        to_time = DateTime.now+2.5.hours
-        appointment.update_attributes(from_time: from_time, to_time: to_time)
-        expect(appointment.from_time).to eq(from_time)
-        expect(appointment.to_time).to eq(to_time)
+        appointment.update_attributes(from_time: valid_from_time, to_time: valid_to_time)
+        expect(appointment.from_time).to eq(valid_from_time)
+        expect(appointment.to_time).to eq(valid_to_time)
       end
 
       it "should be able to cancel an appointment before a deadline (configured)" do
+        #add status field to appointment
       end
 
       it "should be able to change the appointment's reservable" do    
