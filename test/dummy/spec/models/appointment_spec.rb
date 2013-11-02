@@ -38,6 +38,9 @@ describe Bookings::Appointment do
       it "should not be able to book if appointment is not within reservable availablility" do
       end
 
+      it "should not be able to book if to_time is less than from_time" do
+      end
+
       it "should not be able to book if appointment time is in the past" do
       end
       
