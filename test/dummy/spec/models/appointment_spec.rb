@@ -8,6 +8,8 @@ describe Bookings::Appointment do
   let(:now) { DateTime.now }
   let(:valid_from_time) { now + 2.hours }
   let(:valid_to_time) { now + 2.5.hours }
+  let(:invalid_from_time) { now + 2.weeks }
+  let(:invalid_to_time) { now + 2.5.weeks }
 
 
   describe "Customer" do
@@ -33,9 +35,12 @@ describe Bookings::Appointment do
 
     context "using invalid data" do
       it "should not be able to book if not logged in" do
+        #not related to model test
       end
 
       it "should not be able to book if appointment is not within reservable availablility" do
+        appointment.update_attributes(from_time: invalid_from_time, to_time: invalid_to_time)
+        expect(appointment.errors.empty?).to_not be_true
       end
 
       it "should not be able to book if to_time is less than from_time" do
