@@ -39,24 +39,33 @@ describe Bookings::Appointment do
       end
 
       it "should not be able to book if appointment is not within reservable availablility" do
-        appointment.update_attributes(from_time: invalid_from_time, to_time: invalid_to_time)
-        expect(appointment.errors.empty?).to_not be_true
+        expect{ 
+          FactoryGirl.create(:appointment, 
+          from_time: invalid_from_time, 
+          to_time: invalid_to_time)
+        }.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it "should not be able to book if to_time is less than from_time" do
-        expect{ FactoryGirl.create(:appointment, 
+        expect{ 
+          FactoryGirl.create(:appointment, 
           from_time: valid_from_time, 
-          to_time: valid_from_time - 1.hours)}.to raise_error(ActiveRecord::RecordInvalid)
+          to_time: valid_from_time - 1.hours)
+        }.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it "should not be able to book if appointment time is in the past" do
-        expect{ FactoryGirl.create(:appointment, 
-                customer: customers[0], reservable: reservable,
-                from_time: now - 0.5.hours, 
-                to_time: now) }.to raise_error(ActiveRecord::RecordInvalid)
+        expect{ 
+          FactoryGirl.create(:appointment, 
+          customer: customers[0], reservable: reservable,
+          from_time: now - 0.5.hours, 
+          to_time: now) 
+        }.to raise_error(ActiveRecord::RecordInvalid)
       end
       
       it "should not be able to reschedule if appointment time is not within reservable availablility" do
+        appointment.update_attributes(from_time: invalid_from_time, to_time: invalid_to_time)
+        expect(appointment.errors.empty?).not_to be_true
       end
 
       it "should not be able to reschedule if appointment time intersects with another appointment" do
