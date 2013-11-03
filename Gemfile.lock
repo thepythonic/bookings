@@ -1,17 +1,3 @@
-GIT
-  remote: git://github.com/sporkrb/spork-rails.git
-  revision: 0dd45e59d3237b4c8f9efc215b46d9c07072a95e
-  specs:
-    spork-rails (4.0.0)
-      rails (>= 3.0.0, < 5)
-      spork (>= 1.0rc0)
-
-GIT
-  remote: git://github.com/sporkrb/spork.git
-  revision: a94412c9493a07b7a000e35777b0f76b94de9061
-  specs:
-    spork (1.0.0rc4)
-
 PATH
   remote: .
   specs:
@@ -54,8 +40,8 @@ GEM
     builder (3.1.4)
     celluloid (0.15.2)
       timers (~> 1.1.0)
-    childprocess (0.3.9)
-      ffi (~> 1.0, >= 1.0.11)
+    childprocess (0.3.6)
+      ffi (~> 1.0, >= 1.0.6)
     coderay (1.0.9)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -64,6 +50,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    database_cleaner (1.2.0)
     devise (3.1.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -162,7 +149,15 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     slop (3.4.6)
+    spork (1.0.0rc4)
+    spork-rails (4.0.0)
+      rails (>= 3.0.0, < 5)
+      spork (>= 1.0rc0)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -192,6 +187,7 @@ DEPENDENCIES
   active_model_serializers
   bookings!
   coffee-rails
+  database_cleaner
   devise
   factory_girl_rails
   guard-livereload
@@ -202,6 +198,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   rspec-rails (~> 2.0)
-  spork!
-  spork-rails!
+  simplecov
+  spork
+  spork-rails
   sqlite3

@@ -23,14 +23,17 @@ group :development, :test do
 
   gem 'guard-minitest'
   gem 'guard-rspec'
-  
-  gem 'spork', :github => 'sporkrb/spork'
-	gem 'spork-rails', :github => 'sporkrb/spork-rails'
   gem 'guard-spork'
+  gem 'spork-rails'
+  gem 'spork'
+	
+  gem 'database_cleaner'
   	
   gem 'guard-livereload'
 
   gem 'launchy'
   gem 'rb-fsevent'
   gem 'rb-inotify', :require => false
+
+  gem 'simplecov', :require => false
 end

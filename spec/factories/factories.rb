@@ -1,10 +1,8 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-
-
 FactoryGirl.define do
-
-  factory :doctor, class: Doctor do
+  
+  factory :doctor, class: Bookings.reservable do
     sequence :email do |t| 
       "dr#{t}@test.com"
     end
@@ -14,7 +12,7 @@ FactoryGirl.define do
     after(:create) { |dr| dr.time_slots << FactoryGirl.create(:time_slot) }
   end
 
-  factory :patient, class: Patient do
+  factory :patient, class: Bookings.customer do
     sequence :email do |t| 
       "patient#{t}@test.com"
     end

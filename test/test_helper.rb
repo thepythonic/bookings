@@ -1,15 +1,21 @@
-# Configure Rails Environment
-ENV["RAILS_ENV"] = "test"
+# # Configure Rails Environment
+# ENV["RAILS_ENV"] = "test"
+# require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
-require "rails/test_help"
+# require 'rspec/rails'
+# require 'factory_girl'
+# FactoryGirl.find_definitions
 
-Rails.backtrace_cleaner.remove_silencers!
+# ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 
-# Load support files
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+# Dir[File.join(ENGINE_RAILS_ROOT, "spec/**/*.rb")].each {|f| require f }
+# Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 
-# Load fixtures from the engine
-if ActiveSupport::TestCase.method_defined?(:fixture_path=)
-  ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
-end
+# RSpec.configure do |config|
+#   config.use_transactional_fixtures = true
+# end
+
+# require 'simplecov'
+# SimpleCov.start
+
+# Rails.backtrace_cleaner.remove_silencers!
