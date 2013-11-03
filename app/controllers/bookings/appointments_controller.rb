@@ -3,11 +3,17 @@ require_dependency "bookings/application_controller"
 module Bookings
   class AppointmentsController < ApplicationController
     before_action :set_customer, only: [:create, :update]
-    before_action :set_reservable
+    before_action :set_reservable, except: [:my_appointments, :welcome]
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-    before_action :set_reservables, only: [:index]
+    before_action :set_reservables, only: [:index, :welcome]
+
+    before_action :reservable_only, only:[:my_appointments]
 
     respond_to :json, :html
+
+    def welcome
+
+    end
 
     def index
       @appointment = @reservable.appointments.new
@@ -49,6 +55,13 @@ module Bookings
     def destroy
       @appointment.destroy
       redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
+    end
+
+    def my_appointments
+      @reservable = current_user
+      @reservables = [current_user]
+      @appointment = @reservable.appointments.new
+      render :index
     end
 
     def appointments_for_reservable
