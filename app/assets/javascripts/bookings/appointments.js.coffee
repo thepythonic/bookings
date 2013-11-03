@@ -40,6 +40,7 @@ $(document).ready ->
             i++
             for appointment in appointments
               if appointment.start >= slot.start && appointment.end <= slot.end
+                continue if appointment.customer_id.toString() == config.customerID.toString() 
                 first = jQuery.extend({}, slot)
                 second = jQuery.extend({}, slot)
                 first.start = slot.start 
