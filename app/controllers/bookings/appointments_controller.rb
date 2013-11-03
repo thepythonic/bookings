@@ -9,6 +9,8 @@ module Bookings
 
     before_action :reservable_only, only:[:my_appointments]
 
+    before_action :authenticate_user!
+
     respond_to :json, :html
 
     def welcome
@@ -88,12 +90,13 @@ module Bookings
         @reservable =  Bookings.reservable.find(params[:reservable_id])
       end
 
+      def set_reservables
+        @reservables = Bookings.reservable.all
+      end
+
       def set_appointment
         @appointment = @reservable.appointments.find(params[:id])
       end
 
-      def set_reservables
-        @reservables = Bookings.reservable.all
-      end
   end
 end

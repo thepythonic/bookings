@@ -3,7 +3,9 @@ require_dependency "bookings/application_controller"
 module Bookings
   class TimeSlotsController < ApplicationController
     before_action :set_time_slot, only: [:show, :edit, :update, :destroy]
+    before_action :set_reservable
     
+
     respond_to :json, :html
 
     def slots
@@ -65,5 +67,10 @@ module Bookings
       def time_slot_params
         params.require(:time_slot).permit(:from_time, :to_time, :recurring)
       end
+
+      def set_reservable
+        @reservable =  current_user
+      end
+
   end
 end

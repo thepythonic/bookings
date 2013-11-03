@@ -1,7 +1,6 @@
 module Bookings
   class ApplicationController < ActionController::Base
 
-
   	private 
   		def reservable_only
   			unless current_user && current_user.is_a?(Bookings.reservable)

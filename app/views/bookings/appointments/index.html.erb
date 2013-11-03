@@ -1,6 +1,16 @@
-<div class="">
-	<%= reservables_links %>
-</div>
+<ul>
+  <% if current_user.is_admin? ||  current_user.is_reservable? %>
+    <li>
+      <%= link_to "Time Slots", time_slots_path %>
+    </li>
+  <% end %>
+  <% if current_user.is_admin? %>
+    <li>
+      <%= reservables_links %>
+    </li>
+  <% end %>
+</ul>
+
 <div id="calendar-contianer">
   <div id="template_form"></div> 
   <div id="calendar"></div>
