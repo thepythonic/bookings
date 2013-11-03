@@ -36,7 +36,6 @@ $(document).ready ->
           #for slot in slots
           i=0
           while i < slots.length # length changes while going through the loop
-            console.log slots.length
             slot = slots[i]
             i++
             for appointment in appointments
@@ -53,6 +52,7 @@ $(document).ready ->
                 appointments.splice(appointments.indexOf(appointment), 1)
                 break
           
+          console.log config.isCustomer
           if config.isCustomer
             allAppointments = appointments.concat slots
 

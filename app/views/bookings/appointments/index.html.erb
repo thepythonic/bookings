@@ -23,7 +23,7 @@ var config = {
   maxTime: '18:00',
   slotMinutes: 15,
   appointments_url: "<%=j reservable_appointments_slots_path(@reservable) %>",
-  isCustomer: "<%= current_user.is_customer? %>",
+  isCustomer: <%= current_user.is_customer? %>,
   customerID: "<%= current_user.is_customer? ? current_user.id : '' %>"
 };
 </script>
