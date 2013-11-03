@@ -1,12 +1,10 @@
 <ul>
-  <% if current_user.is_admin? ||  current_user.is_reservable? %>
+  <li>
+    <%= reservables_links %>
+  </li>
+  <% if current_user.id == @reservable.id %>
     <li>
       <%= link_to "Time Slots", time_slots_path %>
-    </li>
-  <% end %>
-  <% if current_user.is_admin? %>
-    <li>
-      <%= reservables_links %>
     </li>
   <% end %>
 </ul>

@@ -10,7 +10,7 @@ module Bookings
     before_action :set_reservables, only: [:index, :welcome]
     before_action :reservable_only, only:[:my_appointments]
 
-    before_action :me_or_admin, except: [:my_appointments, :welcome]
+    # before_action :me_or_admin, except: [:my_appointments, :welcome]
 
 
     respond_to :json, :html
@@ -101,9 +101,6 @@ module Bookings
       end
 
       def me_or_admin
-        puts current_user.id
-        puts @reservable.id
-        puts "s" * 120
         unless current_user.id == @reservable.id || current_user.is_admin?
           redirect_to appointments_welcome_path , alert: 'you are not allowed to visit that url!'
         end
