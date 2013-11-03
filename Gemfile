@@ -20,4 +20,17 @@ gem 'devise'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'factory_girl_rails'
+
+  gem 'guard-minitest'
+  gem 'guard-rspec'
+  
+  gem 'spork', :github => 'sporkrb/spork'
+	gem 'spork-rails', :github => 'sporkrb/spork-rails'
+  gem 'guard-spork'
+  	
+  gem 'guard-livereload'
+
+  gem 'launchy'
+  gem 'rb-fsevent'
+  gem 'rb-inotify', :require => false
 end
