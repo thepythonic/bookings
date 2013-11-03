@@ -28,33 +28,33 @@ $(document).ready ->
         success: (doc)->
           events = []
           allAppointments = doc.appointments
-          slots = allAppointments.filter (item)->
-                    item if item.time_slot
-          appointments = allAppointments.filter (item)->
-                    item if ! item.time_slot
+          # slots = allAppointments.filter (item)->
+          #           item if item.time_slot
+          # appointments = allAppointments.filter (item)->
+          #           item if ! item.time_slot
 
-          #for slot in slots
-          i=0
-          while i < slots.length # length changes while going through the loop
-            slot = slots[i]
-            i++
-            for appointment in appointments
-              if appointment.start >= slot.start && appointment.end <= slot.end
-                continue if appointment.customer_id.toString() == config.customerID.toString() 
-                first = jQuery.extend({}, slot)
-                second = jQuery.extend({}, slot)
-                first.start = slot.start 
-                first.end = appointment.start
-                second.start = appointment.end
-                second.end = slot.end
-                slots.push first if appointment.start > slot.start
-                slots.push second if appointment.end < slot.end
-                slots.splice(slots.indexOf(slot), 1)
-                appointments.splice(appointments.indexOf(appointment), 1)
-                break
+          # #for slot in slots
+          # i=0
+          # while i < slots.length # length changes while going through the loop
+          #   slot = slots[i]
+          #   i++
+          #   for appointment in appointments
+          #     if appointment.start >= slot.start && appointment.end <= slot.end
+          #       continue if appointment.customer_id.toString() == config.customerID.toString() 
+          #       first = jQuery.extend({}, slot)
+          #       second = jQuery.extend({}, slot)
+          #       first.start = slot.start 
+          #       first.end = appointment.start
+          #       second.start = appointment.end
+          #       second.end = slot.end
+          #       slots.push first if appointment.start > slot.start
+          #       slots.push second if appointment.end < slot.end
+          #       slots.splice(slots.indexOf(slot), 1)
+          #       appointments.splice(appointments.indexOf(appointment), 1)
+          #       break
           
-          if config.isCustomer
-            allAppointments = appointments.concat slots
+          # if config.isCustomer
+          #   allAppointments = appointments.concat slots
 
           for slot in allAppointments
             events.push

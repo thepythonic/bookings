@@ -71,7 +71,35 @@ module Bookings
     def appointments_for_reservable
       slots = @reservable.time_slots.all.to_a
       appointments = @reservable.appointments.order('from_time ASC').all.to_a
+      # patient should only see his appointments
+      if current_user.is_customer?
+        slots.each do |slot|
+          appointments.each do |appointment|
+            if appointment.from_time >= slot.from_time && appointment.to_time <= slot.to_time
+              next if appointment.customer_id.to_s == current_user.id.to_s 
+              first = TimeSlot.new(slot.attributes)
+              second = TimeSlot.new(slot.attributes)
+              
+              first.from_time = slot.from_time 
+              first.to_time = appointment.from_time
+              
+              second.from_time = appointment.to_time
+              second.to_time = slot.to_time
+              
+              slots.push first if appointment.from_time > slot.from_time
+              slots.push second if appointment.to_time < slot.to_time
+              
+              slot.from_time = nil
+              slot.to_time = nil
+              appointments.delete(appointment)
+              break
+            end
+          end
+        end
+      end
+
       all = appointments + slots
+      
       render json: all, each_serializer: AppointmentSerializer
     end
   
