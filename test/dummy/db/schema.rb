@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131029182501) do
+ActiveRecord::Schema.define(version: 20131103171323) do
 
   create_table "bookings_appointments", force: true do |t|
     t.datetime "from_time"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20131029182501) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "type"
+    t.boolean  "admin"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

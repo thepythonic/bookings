@@ -1,3 +1,10 @@
+<ul>
+  <% if current_user.is_admin? ||  current_user.is_reservable? %>
+    <li>
+      <%= link_to "Appointments", reservable_appointments_path(current_user) %>
+    </li>
+  <% end %>
+</ul>
 
 <div id="calendar-contianer">
   <div id="template_form"></div>

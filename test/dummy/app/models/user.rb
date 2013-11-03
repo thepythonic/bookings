@@ -6,10 +6,7 @@ class User < ActiveRecord::Base
 
   #TODO HZ:: add logic here!
   def is_admin?
-    if self.is_a? Patient
-      return false
-    end
-    true
+    self.admin
   end
 
   def is_reservable?

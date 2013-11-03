@@ -2,14 +2,16 @@ require_dependency "bookings/application_controller"
 
 module Bookings
   class AppointmentsController < ApplicationController
+    before_action :authenticate_user!
+
     before_action :set_customer, only: [:create, :update]
     before_action :set_reservable, except: [:my_appointments, :welcome]
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
     before_action :set_reservables, only: [:index, :welcome]
-
     before_action :reservable_only, only:[:my_appointments]
 
-    before_action :authenticate_user!
+    before_action :me_or_admin, except: [:my_appointments, :welcome]
+
 
     respond_to :json, :html
 
@@ -96,6 +98,15 @@ module Bookings
 
       def set_appointment
         @appointment = @reservable.appointments.find(params[:id])
+      end
+
+      def me_or_admin
+        puts current_user.id
+        puts @reservable.id
+        puts "s" * 120
+        unless current_user.id == @reservable.id || current_user.is_admin?
+          redirect_to appointments_welcome_path , alert: 'you are not allowed to visit that url!'
+        end
       end
 
   end
