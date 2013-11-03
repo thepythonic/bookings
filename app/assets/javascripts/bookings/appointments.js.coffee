@@ -53,7 +53,6 @@ $(document).ready ->
                 appointments.splice(appointments.indexOf(appointment), 1)
                 break
           
-          console.log config.isCustomer
           if config.isCustomer
             allAppointments = appointments.concat slots
 
