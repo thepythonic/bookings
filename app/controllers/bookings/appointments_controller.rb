@@ -76,18 +76,9 @@ module Bookings
             # customer can see his appointments only
             if appointment.from_time >= slot.from_time && appointment.to_time <= slot.to_time
               next if appointment.customer_id.to_s == current_user.id.to_s 
-              first = TimeSlot.new(slot.attributes)
-              second = TimeSlot.new(slot.attributes)
-              
-              first.from_time = slot.from_time 
-              first.to_time = appointment.from_time
-              
-              second.from_time = appointment.to_time
-              second.to_time = slot.to_time
-              
-              slots.push first if appointment.from_time > slot.from_time
-              slots.push second if appointment.to_time < slot.to_time
-              
+              TimeSlot.split_by_appointment(slot, appointment).each do |s|
+                slots.push s
+              end
               slot.from_time = nil
               slot.to_time = nil
               appointments.delete(appointment)

@@ -15,6 +15,25 @@ module Bookings
       end
     end
 
+    def self.split_by_appointment(slot, appointment)
+      # to hide other customers appointments from current customer.
+      # split time slot if appointment intersects with it.
+      slots = []
+      first = TimeSlot.new(slot.attributes)
+      second = TimeSlot.new(slot.attributes)
+      
+      first.from_time = slot.from_time 
+      first.to_time = appointment.from_time
+      
+      second.from_time = appointment.to_time
+      second.to_time = slot.to_time
+
+      slots.push first if appointment.from_time > slot.from_time
+      slots.push second if appointment.to_time < slot.to_time
+
+      slots
+    end
+
     def update_children
       children = self.parent.children
       index = children.index(self)
