@@ -15,5 +15,19 @@ module Bookings
     	end
     	mail(to: to, subject: "Appointment is Rescheduled")
     end
+
+    def appointment_cancel(user, appointment)
+    	@user = user
+    	@appointment = appointment
+
+    	to = if user.is_admin?
+    		[appointment.reservable.email, appointment.customer.email]
+    	elsif user.is_customer?
+    		appointment.reservable.email
+    	elsif user.is_reservable?
+    		appointment.customer.email
+    	end
+    	mail(to: to, subject: "Appointment is Cancelled")
+    end
   end
 end

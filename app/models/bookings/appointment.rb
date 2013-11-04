@@ -27,5 +27,13 @@ module Bookings
       updated
     end
 
+    def cancel(current_user)
+      old_appointment = self.dup  
+      self.delete
+      if self.customer.allow_notification?
+        AppointmentNotifierMailer.appointment_cancel(current_user, old_appointment).deliver 
+      end
+    end
+
   end
 end

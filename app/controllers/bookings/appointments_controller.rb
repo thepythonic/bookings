@@ -54,7 +54,7 @@ module Bookings
     end
 
     def destroy
-      @appointment.destroy
+      @appointment.cancel(current_user) 
       # redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
       render json: {success: true}
     end
