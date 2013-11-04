@@ -44,7 +44,7 @@ module Bookings
     end
 
     def update
-      if @appointment.update(appointment_params)
+      if @appointment.reschedule_by(current_user, appointment_params)
         render json: [@appointment], each_serializer: AppointmentSerializer
       else
         respond_with(@appointment) do |format|

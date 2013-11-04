@@ -23,4 +23,8 @@ class User < ActiveRecord::Base
   	false
   end
 
+  def allow_notification?
+    true
+  end
+
 end
