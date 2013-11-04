@@ -39,6 +39,25 @@ Date.prototype.getDayName = ->
 
   setFormFieldsValue: (event)->
     currentForm.setValues(event)
+    if event.id
+      $('#cancel_event').show()
+      $('#cancel_event').click (e)->
+        e.preventDefault
+        url = $('#template_form form').attr('action') + '.json'
+        type = 'delete'
+        data = _method: 'patch'
+      
+        $.ajax
+          type: type
+          url: url
+          dataType: 'json'
+          success: (data)->
+            calendar.fullCalendar 'removeEvents', event.id
+            $('#template_form').html('')
+            $('#template_form').html('<p class="success">Successfully Cancelled</p>')
+    
+
+        false
 
   successHandler: (event, data)->
     $('#template_form').html('')

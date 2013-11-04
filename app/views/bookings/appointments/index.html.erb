@@ -1,6 +1,14 @@
-<div class="">
-	<%= reservables_links %>
-</div>
+<ul>
+  <li>
+    <%= reservables_links %>
+  </li>
+  <% if current_user.id == @reservable.id %>
+    <li>
+      <%= link_to "Time Slots", time_slots_path %>
+    </li>
+  <% end %>
+</ul>
+
 <div id="calendar-contianer">
   <div id="template_form"></div> 
   <div id="calendar"></div>
@@ -15,7 +23,7 @@ var config = {
   maxTime: '18:00',
   slotMinutes: 15,
   appointments_url: "<%=j reservable_appointments_slots_path(@reservable) %>",
-  isCustomer: "<%= current_user.is_customer? %>",
+  isCustomer: <%= current_user.is_customer? %>,
   customerID: "<%= current_user.is_customer? ? current_user.id : '' %>"
 };
 </script>
