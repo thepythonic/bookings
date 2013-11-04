@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20131103171323) do
   create_table "bookings_time_slots", force: true do |t|
     t.datetime "from_time"
     t.datetime "to_time"
-    t.integer  "recurring"
+    t.integer  "recurring",     default: 1
     t.integer  "reservable_id"
     t.integer  "parent_id"
     t.datetime "created_at"

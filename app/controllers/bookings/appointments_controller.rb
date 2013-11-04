@@ -73,6 +73,7 @@ module Bookings
       if current_user.is_customer?
         slots.each do |slot|
           appointments.each do |appointment|
+            # customer can see his appointments only
             if appointment.from_time >= slot.from_time && appointment.to_time <= slot.to_time
               next if appointment.customer_id.to_s == current_user.id.to_s 
               first = TimeSlot.new(slot.attributes)
@@ -94,6 +95,9 @@ module Bookings
             end
           end
         end
+      elsif current_user.is_reservable? && current_user.id != @reservable.id
+        # reservables can't see each othere's appointments
+        appointments = []
       end
 
       all = appointments + slots
