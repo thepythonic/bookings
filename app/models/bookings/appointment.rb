@@ -1,10 +1,10 @@
 module Bookings
   class Appointment < ActiveRecord::Base
-    
+    require 'duration'
+        
     belongs_to :reservable, class_name: Bookings.reservable_class_name
     belongs_to :customer, class_name: Bookings.customer_class_name
 
-    require 'duration'
     include Duration
 
     validate :appointment_in_time_slot
