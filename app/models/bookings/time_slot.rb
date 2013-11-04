@@ -18,6 +18,12 @@ module Bookings
     def update_children
       children = self.parent.children
       index = children.index(self)
+      # user can update time_slots either from the first, middle or last recurrent slots.
+      # in all cases, we will get the parent time_slot, which is the first one.
+      # then update all its children.
+      # we have two cases if current recurring value is changed:
+      # if user increased the current recurring value, then we should create new time slots.
+      # if user descreased the current recurring value, then we should delete the remaining time slots from the end.
       update_all_my_parent_children(children, index)
       create_or_delete_remainings(children, index)
     end
