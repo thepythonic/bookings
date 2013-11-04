@@ -95,7 +95,8 @@ module Bookings
             end
           end
         end
-      elsif current_user.is_reservable? && current_user.id != @reservable.id
+        #in some cases reservable could be admin too. so he should see eveything 0_0
+      elsif current_user.is_reservable? && current_user.id != @reservable.id && ! current_user.is_admin?
         # reservables can't see each othere's appointments
         appointments = []
       end
