@@ -1,4 +1,4 @@
-module Bookings
-	Bookings.reservable_class_name = 'Doctor'
-  Bookings.customer_class_name = 'Patient'
+Bookings.setup do |config|
+  config.reservable_class_name = 'Doctor'
+  config.customer_class_name = 'Patient'
 end
