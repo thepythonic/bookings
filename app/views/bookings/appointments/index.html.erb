@@ -16,7 +16,6 @@
 
 
 <script type="text/javascript">
-//TODO HZ: get these values dynamically
 var config = {
   <% unless current_user.is_reservable? %>
   form: '<%=j render "form", locals: @appointment %>',
