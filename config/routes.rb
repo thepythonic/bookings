@@ -4,10 +4,6 @@ Bookings::Engine.routes.draw do
   
   get 'customers/find', to: 'customers#find'
 
-  resources :time_slots
-
-  #get time slots
-  
   
   resources :reservable do
     resources :appointments
