@@ -69,7 +69,7 @@ module Bookings
       end
 
       def set_reservable
-        @reservable =  current_user
+        @reservable =  current_user.is_reservable? ? current_user  : nil
       end
 
   end

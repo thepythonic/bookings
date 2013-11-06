@@ -1,7 +1,7 @@
 <ul>
-  <% if current_user.is_admin? ||  current_user.is_reservable? %>
+  <% if @reservable %>
     <li>
-      <%= link_to "Appointments", reservable_appointments_path(current_user) %>
+      <%= link_to "Appointments", reservable_appointments_path(@reservable) %>
     </li>
   <% end %>
 </ul>
