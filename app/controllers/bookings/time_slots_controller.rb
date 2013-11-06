@@ -6,7 +6,7 @@ module Bookings
 
     before_action :set_time_slot, only: [:show, :edit, :update, :destroy]
     before_action :set_reservable, except: [:my_time_slots]
-    before_action :set_reservables, only: [:index]
+    before_action :set_reservables, only: [:index, :my_time_slots]
     before_action :reservable_only, only:[:my_time_slots]
 
     respond_to :json, :html
@@ -64,7 +64,7 @@ module Bookings
 
     def my_time_slots
       @reservable = current_user
-      @reservables = [current_user]
+      @reservables = [current_user] unless current_user.is_admin?
       @time_slot = @reservable.time_slots.new
       render :index
     end

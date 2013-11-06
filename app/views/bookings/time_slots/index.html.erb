@@ -2,7 +2,7 @@
   <% if current_user.is_admin? %>
     <% @reservables.each do |reservable| %>
     <li>
-      <%= link_to "#{reservable.email}", reservable_time_slots_path(@reservable) %>
+      <%= link_to "#{reservable.email}", reservable_time_slots_path(reservable) %>
     </li>
     <% end %>
   <% elsif current_user.id == @reservable.id %>
