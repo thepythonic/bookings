@@ -2,13 +2,16 @@ require_dependency "bookings/application_controller"
 
 module Bookings
   class TimeSlotsController < ApplicationController
+    before_action :authenticate_user!
+
     before_action :set_time_slot, only: [:show, :edit, :update, :destroy]
     before_action :set_reservable, except: [:my_time_slots]
-    
+    before_action :set_reservables, only: [:index]
+    before_action :reservable_only, only:[:my_time_slots]
 
     respond_to :json, :html
 
-    def slots
+    def configure_slots
       @time_slots = @reservable.time_slots.all
       render json: @time_slots, each_serializer: TimeSlotSerializer
     end

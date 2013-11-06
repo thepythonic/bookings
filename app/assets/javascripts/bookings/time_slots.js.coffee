@@ -23,7 +23,7 @@ $(document).ready ->
     
     events: (start, end, callback) ->
       $.ajax
-        url: "/bookings/time/slots"
+        url: config.configure_slots_url
         dataType: 'json'
         success: (doc)->
           events = []
