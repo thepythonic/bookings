@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-  <% if current_user.is_admin? %>
+  <% if current_user.can_find_customers? %>
   <div class="field">
     <%= f.label :customer %><br>
     <%= f.text_field :customer_id %>

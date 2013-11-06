@@ -14,7 +14,10 @@ module Bookings
   mattr_accessor :slot_minutes
   @@slot_minutes = 15
 
-
+  # mattr_accessor :allow_cancellation
+  # @@allow_cancellation = ture
+  #  mattr_accessor :allow_reschedule
+  # @@allow_reschedule = ture
 
   def self.customer
   	Bookings.customer_class_name.to_s.constantize

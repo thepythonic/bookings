@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   def is_admin?
     self.admin
   end
+  def can_find_customers?
+    self.admin
+  end
 
   # TODO HZ: provided by user
   def is_reservable?
