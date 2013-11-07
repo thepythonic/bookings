@@ -17,11 +17,7 @@
 
 <script type="text/javascript">
 var config = {
-  <% unless current_user.is_reservable? %>
   form: '<%=j render "form", locals: @appointment %>',
-  <% else %>
-  form: '',
-  <% end %>
   minTime: '<%= Bookings.min_time %>',
   maxTime: '<%= Bookings.max_time %>',
   slotMinutes: <%= Bookings.slot_minutes %>,
