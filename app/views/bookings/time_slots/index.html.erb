@@ -1,7 +1,13 @@
 <ul>
-  <% if current_user.is_admin? ||  current_user.is_reservable? %>
+  <% if current_user.is_admin? %>
+    <% @reservables.each do |reservable| %>
     <li>
-      <%= link_to "Appointments", reservable_appointments_path(current_user) %>
+      <%= link_to "#{reservable.email}", reservable_time_slots_path(reservable) %>
+    </li>
+    <% end %>
+  <% elsif current_user.id == @reservable.id %>
+    <li>
+      <%= link_to "My Appointments", my_appointments_path %>
     </li>
   <% end %>
 </ul>
@@ -11,14 +17,14 @@
   <div id="calendar"></div>
 </div>
 
-<%= link_to 'New Template slot', new_time_slot_path %>
 
 <script type="text/javascript">
 var config = {
   form: '<%=j render "form", locals: @time_slot %>',
   minTime: '<%= Bookings.min_time %>',
   maxTime: '<%= Bookings.max_time %>',
-  slotMinutes: <%= Bookings.slot_minutes %>
+  slotMinutes: <%= Bookings.slot_minutes %>,
+  configure_slots_url: "<%=j reservable_configure_slots_path(@reservable) %>"
 };
 </script>
 

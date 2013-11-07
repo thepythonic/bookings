@@ -1,4 +1,4 @@
-<%= form_for(@time_slot) do |f| %>
+<%= form_for(@time_slot, url: reservable_time_slots_path(@reservable, @time_slot)) do |f| %>
   <% if @time_slot.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@time_slot.errors.count, "error") %> prohibited this time_slot from being saved:</h2>

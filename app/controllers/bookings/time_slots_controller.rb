@@ -2,33 +2,36 @@ require_dependency "bookings/application_controller"
 
 module Bookings
   class TimeSlotsController < ApplicationController
+    before_action :authenticate_user!
+
     before_action :set_time_slot, only: [:show, :edit, :update, :destroy]
-    before_action :set_reservable
-    
+    before_action :set_reservable, except: [:my_time_slots]
+    before_action :set_reservables, only: [:index, :my_time_slots]
+    before_action :reservable_only, only:[:my_time_slots]
 
     respond_to :json, :html
 
-    def slots
-      @time_slots = current_user.time_slots.all
+    def configure_slots
+      @time_slots = @reservable.time_slots.all
       render json: @time_slots, each_serializer: TimeSlotSerializer
     end
 
     def index
-      @time_slot = current_user.time_slots.new
+      @time_slot = @reservable.time_slots.new
     end
 
     def show
     end
 
     def new
-      @time_slot = current_user.time_slots.new
+      @time_slot = @reservable.time_slots.new
     end
 
     def edit
     end
 
     def create
-      @time_slot = current_user.time_slots.new(time_slot_params)
+      @time_slot = @reservable.time_slots.new(time_slot_params)
       
       if @time_slot.save
         @time_slot.update_attribute(:parent, @time_slot)
@@ -59,6 +62,13 @@ module Bookings
       redirect_to time_slots_url, notice: 'Time slot was successfully destroyed.'
     end
 
+    def my_time_slots
+      @reservable = current_user
+      @reservables = [current_user] unless current_user.is_admin?
+      @time_slot = @reservable.time_slots.new
+      render :index
+    end
+
     private
       def set_time_slot
         @time_slot = current_user.time_slots.find(params[:id])
@@ -69,7 +79,11 @@ module Bookings
       end
 
       def set_reservable
-        @reservable =  current_user
+        @reservable =  Bookings.reservable.find(params[:reservable_id])
+      end
+
+      def set_reservables
+        @reservables = Bookings.reservable.all
       end
 
   end
