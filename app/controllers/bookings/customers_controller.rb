@@ -5,8 +5,10 @@ module Bookings
   	before_action :admin_only
 
     def find
-    	# TODO HZ: search attributes from configuration
-      @customers = Bookings.customer.where("id = ? OR email LIKE ?", params[:term], "%#{params[:term]}%")
+    	search_fields = Bookings.customer_search_fields.collect do |field|
+        "#{field.to_s} LIKE :term"
+      end
+      @customers = Bookings.customer.where("id = :id OR #{search_fields.join(' OR ')}", {id: params[:term], term: "%#{params[:term]}%"})
       render json: @customers
     end
 

@@ -14,6 +14,9 @@ module Bookings
   mattr_accessor :slot_minutes
   @@slot_minutes = 15
 
+  mattr_accessor :customer_search_fields
+  @@customer_search_fields = [:email, :time_zone]
+
   # mattr_accessor :allow_cancellation
   # @@allow_cancellation = ture
   #  mattr_accessor :allow_reschedule
