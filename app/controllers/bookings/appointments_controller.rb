@@ -71,7 +71,7 @@ module Bookings
       end_d = if params[:mode] == 'agendaWeek'
         start_d + 7.days
       elsif params[:mode] == 'agendaDay'
-        start_d + 1.days
+        start_d + 1.day
       elsif params[:mode] == 'month'
         start_d + 31.days
       end

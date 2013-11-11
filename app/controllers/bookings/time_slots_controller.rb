@@ -14,7 +14,7 @@ module Bookings
     def configure_slots
       start_d = DateTime.strptime(params[:start].to_s, "%s")
       end_d = if params[:mode] == 'agendaWeek'
-        start_d + 7.days
+        start_d + 7.day
       elsif params[:mode] == 'month'
         start_d + 31.days
       end
