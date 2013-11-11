@@ -67,8 +67,18 @@ module Bookings
     end
 
     def appointments_for_reservable
-      slots = @reservable.time_slots.all.to_a
-      appointments = @reservable.appointments.order('from_time ASC').all.to_a
+      start_d = DateTime.strptime(params[:start].to_s, "%s")
+      end_d = if params[:mode] == 'agendaWeek'
+        start_d + 7.days
+      elsif params[:mode] == 'agendaDay'
+        start_d + 1.days
+      elsif params[:mode] == 'month'
+        start_d + 31.days
+      end
+
+      slots = @reservable.time_slots.where('from_time > ? and to_time < ?', start_d, end_d).to_a
+      appointments = @reservable.appointments.order('from_time ASC').where('from_time > ? and to_time < ?', start_d, end_d).to_a
+      
       # patient should only see his appointments
       if current_user.is_customer?
         slots.each do |slot|
