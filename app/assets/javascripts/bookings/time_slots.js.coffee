@@ -22,8 +22,14 @@ $(document).ready ->
     unselectAuto: false
     
     events: (start, end, callback) ->
+      current_view = $('#calendar').fullCalendar('getView')
+      data = 
+        start: moment(current_view.start).unix()
+        mode: current_view.name
+
       $.ajax
         url: config.configure_slots_url
+        data: data
         dataType: 'json'
         success: (doc)->
           events = []

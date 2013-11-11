@@ -12,7 +12,13 @@ module Bookings
     respond_to :json, :html
 
     def configure_slots
-      @time_slots = @reservable.time_slots.all
+      start_d = DateTime.strptime(params[:start].to_s, "%s")
+      end_d = if params[:mode] == 'agendaWeek'
+        start_d + 7.days
+      elsif params[:mode] == 'month'
+        start_d + 31.days
+      end
+      @time_slots = @reservable.time_slots.where('from_time > ? and to_time < ?', start_d, end_d)
       render json: @time_slots, each_serializer: TimeSlotSerializer
     end
 
