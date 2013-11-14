@@ -10,6 +10,7 @@ Gemfile
 
 ```ruby
 gem 'bookings', path: PATH_TO_REPO
+bundle install
 ```
 
 ###Reservable is the item/person that will be booked  (lesson, doctor)
