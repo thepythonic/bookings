@@ -1,4 +1,4 @@
-= Bookings
+# Bookings
 
 This project rocks and uses MIT-LICENSE.
 
