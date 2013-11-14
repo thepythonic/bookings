@@ -26,7 +26,9 @@ Bookings.setup do |config|
 end
 ```
 
-your User model must provide the follwoing interface.
+### User must have a time_zone field
+
+User model must provide the follwoing methods.
 
 ```ruby
   def is_reservable?
@@ -93,4 +95,6 @@ end
   config.allow_reschedule = true
   #default is true
 ```
+
+
 
