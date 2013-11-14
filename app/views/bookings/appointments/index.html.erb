@@ -23,7 +23,9 @@ var config = {
   slotMinutes: <%= Bookings.slot_minutes %>,
   appointments_url: "<%=j reservable_appointments_slots_path(@reservable) %>",
   isCustomer: <%= current_user.is_customer? %>,
-  customerID: "<%= current_user.is_customer? ? current_user.id : '' %>"
+  customerID: "<%= current_user.is_customer? ? current_user.id : '' %>",
+  allowCancellation: <%= Bookings.allow_cancellation %>,
+  allowReschedule: <%= Bookings.allow_reschedule %>
 };
 </script>
 

@@ -34,6 +34,8 @@
   </div>
   <div class="actions">
     <%= f.submit %>
-    <%= f.submit 'Cancel', style: 'display:none', id: 'cancel_event' %>
+    <% if Bookings.allow_cancellation %>
+      <%= f.submit 'Cancel', style: 'display:none', id: 'cancel_event' %>
+    <% end %>
   </div>
 <% end %>

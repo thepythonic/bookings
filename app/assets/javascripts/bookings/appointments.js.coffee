@@ -45,7 +45,7 @@ $(document).ready ->
               recurring: slot.recurring
               isTimeSlot: slot.time_slot
               color: "#00ff00" if slot.time_slot
-              editable: false if slot.time_slot
+              editable: false if slot.time_slot || not config.allowReschedule
               allDay: false
               
           callback(events)  
@@ -55,6 +55,7 @@ $(document).ready ->
 
     # # click on event
     eventClick: (event, element) ->
+      return if not config.allowReschedule
       FormHandler.showUpdateForm(event)
 
     # resize event 

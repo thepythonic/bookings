@@ -17,6 +17,13 @@ module Bookings
   mattr_accessor :customer_search_fields
   @@customer_search_fields = [:email, :time_zone]
 
+  # controle if
+  mattr_accessor :allow_cancellation
+  @@allow_cancellation = true
+
+  mattr_accessor :allow_reschedule
+  @@allow_reschedule = true
+
   # mattr_accessor :allow_cancellation
   # @@allow_cancellation = ture
   #  mattr_accessor :allow_reschedule
