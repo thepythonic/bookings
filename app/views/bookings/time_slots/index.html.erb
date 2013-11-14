@@ -5,7 +5,8 @@
       <%= link_to "#{reservable.email}", reservable_time_slots_path(reservable) %>
     </li>
     <% end %>
-  <% elsif current_user.id == @reservable.id %>
+  <% end %>
+  <% if current_user.id == @reservable.id %>
     <li>
       <%= link_to "My Appointments", my_appointments_path %>
     </li>

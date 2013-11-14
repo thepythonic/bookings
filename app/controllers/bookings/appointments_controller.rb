@@ -7,7 +7,7 @@ module Bookings
     before_action :set_customer, only: [:create, :update]
     before_action :set_reservable, except: [:my_appointments, :welcome]
     before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-    before_action :set_reservables, only: [:index, :welcome]
+    before_action :set_reservables, only: [:index, :welcome, :my_appointments]
     before_action :reservable_only, only:[:my_appointments]
 
     respond_to :json, :html
@@ -61,7 +61,7 @@ module Bookings
 
     def my_appointments
       @reservable = current_user
-      @reservables = [current_user]
+      @reservables = [current_user] unless current_user.is_admin?
       @appointment = @reservable.appointments.new
       render :index
     end

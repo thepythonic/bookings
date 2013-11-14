@@ -6,12 +6,6 @@
     <li>
       <%= link_to "My Time Slots", my_time_slots_path %>
     </li>
-  <% elsif current_user.is_admin? %>
-    <% @reservables.each do |reservable| %>
-    <li>
-      <%= link_to "#{reservable.email}", reservable_appointments_path(@reservable) %>
-    </li>
-    <% end %>
   <% end %>
 </ul>
 
