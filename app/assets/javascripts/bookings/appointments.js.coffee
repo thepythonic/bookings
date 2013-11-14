@@ -45,6 +45,7 @@ $(document).ready ->
               recurring: slot.recurring
               isTimeSlot: slot.time_slot
               color: "#00ff00" if slot.time_slot
+              editable: false if slot.time_slot
               allDay: false
               
           callback(events)  
