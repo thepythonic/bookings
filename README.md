@@ -1,6 +1,6 @@
 # Bookings
 
-This project rocks and uses MIT-LICENSE.
+This project is not stable yet. 
 
 ```ruby
 git clone git@github.com:thepythonic/bookings.git
